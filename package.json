@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install:all": "npm install && npm install --prefix ./frontend && npm install --prefix ./backend",
-    "prestart": "npm run build --prefix ./frontend",
-    "start": "npm run start --prefix ./backend",
-    "dev:frontend": "npm run dev --prefix ./frontend",
-    "dev:backend": "npm run dev --prefix ./backend",
-    "dev:all": "npm run dev:frontend && npm run dev:backend",
-    "seed": "npm run seed --prefix ./backend"
+    "install:all": "npm install && npm install --prefix frontend && npm install --prefix backend",
+    "prestart": "npm run build --prefix frontend",
+    "start": "npm run start --prefix backend",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "seed": "npm run seed --prefix backend"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/leightongrant/profession-link-step8up#readme",
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "prettier": "^3.6.2"
   }
 }

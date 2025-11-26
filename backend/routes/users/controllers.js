@@ -1,9 +1,12 @@
 import { User } from '../../models/user.js'
+import { seedData } from '../../seeds/seedData.js'
 
+// Get all users
 export const getAllUsers = async (req, res) => {
   try {
-    const result = await User.findAll()
-    res.status(200).json(result)
+    //const result = await User.findAll()
+    const users = seedData.Users
+    res.status(200).json(users)
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).json(error)
@@ -13,14 +16,14 @@ export const getAllUsers = async (req, res) => {
   }
 }
 
+// Create user
 export const createUser = async (req, res) => {
-  await User.sync({ force: true })
   const result = await User.create({
-    name: 'Oneal',
-    email: 'oneal@example.com',
+    name: 'david',
+    email: 'david@example.com',
     password_hash: 'oansdofhodshohfods',
     role: 'admin',
-    location: 'Grantham',
+    location: 'London',
   })
   console.log(result)
   res.status(200).json({ message: 'User created' })
