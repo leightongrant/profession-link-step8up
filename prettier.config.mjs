@@ -3,13 +3,13 @@ const config = {
   tabWidth: 2,
   semi: false,
   singleQuote: true,
-  trailingComma: "es5",
+  trailingComma: 'es5',
   printWidth: 80,
-  arrowParens: "always",
-  endOfLine: "lf",
+  arrowParens: 'always',
+  endOfLine: 'lf',
   bracketSpacing: true,
   jsxBracketSameLine: false,
-  proseWrap: "preserve",
-};
+  proseWrap: 'preserve',
+}
 
-export default config;
+export default config

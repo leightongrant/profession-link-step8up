@@ -28,16 +28,16 @@ const syncDb = async () => {
   }
 }
 
-//connect()
-//syncDb()
+// connect()
+// syncDb()
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(cors())
-app.use(express.static(path.join(__dirname, '../frontend/dist')))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use('/api', users)
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`)
+  console.log(`Server listening on port http://localhost:${PORT}`)
 })

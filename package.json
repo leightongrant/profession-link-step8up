@@ -1,29 +1,27 @@
 {
-  "name": "profession-link-step8up",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "install:all": "npm install && npm install --prefix frontend && npm install --prefix backend",
-    "prestart": "npm run build --prefix frontend",
-    "start": "npm run start --prefix backend",
-    "backend": "npm run dev --prefix backend",
-    "frontend": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "seed": "npm run seed --prefix backend"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/leightongrant/profession-link-step8up.git"
+    "dev": "concurrently  \"node --env-file=.env --watch-path=./ --watch server.js\" \"npm run dev --prefix frontend\"",
+    "frontend": "npm install --prefix frontend",
+    "install:all": "npm install && npm run frontend ",
+    "build": "npm run build --prefix frontend",
+    "start": "node server.js",
+    "seed": "node --env-file=.env seeds/seed.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
-  "bugs": {
-    "url": "https://github.com/leightongrant/profession-link-step8up/issues"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.3",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
   },
-  "homepage": "https://github.com/leightongrant/profession-link-step8up#readme",
   "devDependencies": {
     "concurrently": "^9.2.1",
     "prettier": "^3.6.2"

@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize'
+import mysql2 from 'mysql2'
 
 const dbName = process.env.DB_NAME
 const dbUser = process.env.DB_USER
@@ -10,4 +11,5 @@ export const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost,
   dialect: dbDialect,
   logging: false,
+  dialectModule: mysql2,
 })

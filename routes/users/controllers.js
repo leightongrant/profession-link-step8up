@@ -4,7 +4,7 @@ import { seedData } from '../../seeds/seedData.js'
 // Get all users
 export const getAllUsers = async (req, res) => {
   try {
-    //const result = await User.findAll()
+    // const result = await User.findAll()
     const users = seedData.Users
     res.status(200).json(users)
   } catch (error) {
