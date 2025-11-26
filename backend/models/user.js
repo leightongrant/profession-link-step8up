@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../connection/connection.js'
+import { sequelize } from '../connection/db.js'
 
-const User = sequelize.define(
+export const User = sequelize.define(
   'User',
   {
     user_id: {
@@ -40,5 +40,3 @@ const User = sequelize.define(
     timestamps: false,
   }
 )
-
-export default User

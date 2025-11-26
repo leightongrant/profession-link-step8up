@@ -1,26 +1,30 @@
 {
-	"name": "profession-link-step8up",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"dev": "cd backend && npm run dev & cd frontend && npm run dev",
-		"prestart": "cd frontend && npm run build",
-		"start": "cd backend && npm run start"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/leightongrant/profession-link-step8up.git"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"type": "module",
-	"bugs": {
-		"url": "https://github.com/leightongrant/profession-link-step8up/issues"
-	},
-	"homepage": "https://github.com/leightongrant/profession-link-step8up#readme",
-	"devDependencies": {
-		"prettier": "^3.6.2"
-	}
+  "name": "profession-link-step8up",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix ./frontend && npm install --prefix ./backend",
+    "prestart": "npm run build --prefix ./frontend",
+    "start": "npm run start --prefix ./backend",
+    "dev:frontend": "npm run dev --prefix ./frontend",
+    "dev:backend": "npm run dev --prefix ./backend",
+    "dev:all": "npm run dev:frontend && npm run dev:backend",
+    "seed": "npm run seed --prefix ./backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leightongrant/profession-link-step8up.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/leightongrant/profession-link-step8up/issues"
+  },
+  "homepage": "https://github.com/leightongrant/profession-link-step8up#readme",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
 }
