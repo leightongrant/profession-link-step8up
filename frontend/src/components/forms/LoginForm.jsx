@@ -40,6 +40,7 @@ export const LoginForm = () => {
           )}
           <Form.Control
             placeholder="Password"
+            type="password"
             {...register('password', { required: true })}
           />
         </Form.Group>
