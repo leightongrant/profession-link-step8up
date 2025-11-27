@@ -38,9 +38,18 @@ export const Header = () => {
                 role="button"
                 className="btn btn-dark"
                 aria-disabled="true"
-                tabindex="0"
+                tabIndex="0"
               >
                 Login
+              </Link>
+              <Link
+                to="/signup"
+                role="button"
+                className="btn btn-dark ml-2"
+                aria-disabled="true"
+                tabIndex="1"
+              >
+                Signup
               </Link>
             </Nav>
           </Navbar.Collapse>
