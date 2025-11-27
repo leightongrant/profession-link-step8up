@@ -3,14 +3,16 @@ import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 export const Header = () => {
   return (
     <Stack as="header">
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand><Link to='/'> Professional Link </Link></Navbar.Brand>
+          <Navbar.Brand>
+            <Link to="/"> Professional Link </Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
@@ -31,10 +33,15 @@ export const Header = () => {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Nav.Link><Link to='/login'> Login </Link></Nav.Link>
-              <Nav.Link>
-                <Link to='/signup'> Signup </Link>
-              </Nav.Link>
+              <Link
+                to="/login"
+                role="button"
+                className="btn btn-dark"
+                aria-disabled="true"
+                tabindex="0"
+              >
+                Login
+              </Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

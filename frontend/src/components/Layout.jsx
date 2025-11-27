@@ -1,12 +1,15 @@
 import { Header } from './Header'
 import { Footer } from './Footer'
 import './Layout.css'
+import { useLocation } from 'react-router-dom'
 export const Layout = ({ children }) => {
+  const { pathname } = useLocation()
+  console.log(pathname === '/login')
   return (
     <div as="div" className="page-wrapper">
-      <Header />
+      {pathname === '/login' || pathname === '/signup' ? '' : <Header />}
       {children}
-      <Footer />
+      {pathname === '/login' || pathname === '/signup' ? '' : <Footer />}
     </div>
   )
 }
