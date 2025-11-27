@@ -14,10 +14,10 @@ export const Profile = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: User, // reference the Users table
+        model: User,
         key: 'user_id',
       },
-      onDelete: 'CASCADE', // matches your SQL constraint
+      onDelete: 'CASCADE',
     },
     specialization: {
       type: DataTypes.STRING(100),
