@@ -67,6 +67,7 @@ export const SignUpForm = () => {
           )}
           <Form.Control
             placeholder="Confirm password"
+            type="password"
             {...register('confirmPassword', { required: true })}
           />
         </Form.Group>
