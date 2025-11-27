@@ -8,3 +8,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.form-control:focus {
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  border-color: none;
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: lightgray;
+}
