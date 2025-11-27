@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 // import Layout from './../components/Layout';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
 
 const Login = () => {
 
@@ -25,28 +28,23 @@ const Login = () => {
 
         return (
             <div>
-                <form onSubmit={handleSubmit} class="mt-10">                  
-                    <label for="email">Email:</label>
-                    <input 
-                        className={'box-shadow'}
-                        type="email"
-                        name="email"
-                        id="email"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    
-                    <label for="tel">Password:</label>
-                    <input 
-                        className={'box-shadow'}
-                        type="password"
-                        name="password"
-                        id="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        />
-                    
-                    <button type="submit" class="bg-blue-400 rounded-xl text-lg p-3">Submit</button>
-                    <p class="text-danger mt-5">{error}</p>
-                </form>
+                <main>
+                    <Form className="mx-5">
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                        </Form.Group>
+                        <Button variant="primary" type="submit" onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                        <p className="text-danger mt-5 ml-2">{error}</p>
+                    </Form>
+                </main>
             </div>
         )
 }
