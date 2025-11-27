@@ -25,10 +25,7 @@ export const User = sequelize.define(
     role: {
       type: DataTypes.ENUM('lawyer', 'accountant', 'client', 'admin'),
       allowNull: false,
-    },
-    location: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
+      defaultValue: 'client',
     },
     created_at: {
       type: DataTypes.DATE,

@@ -6,7 +6,6 @@ export const seedData = {
       email: 'alice.law@example.com',
       password_hash: 'hashed_pw_1',
       role: 'lawyer',
-      location: 'London, UK',
       created_at: '2025-11-01T10:00:00Z',
     },
     {
@@ -15,7 +14,6 @@ export const seedData = {
       email: 'brian.acc@example.com',
       password_hash: 'hashed_pw_2',
       role: 'accountant',
-      location: 'Manchester, UK',
       created_at: '2025-11-02T11:00:00Z',
     },
     {
@@ -24,7 +22,6 @@ export const seedData = {
       email: 'clara.client@example.com',
       password_hash: 'hashed_pw_3',
       role: 'client',
-      location: 'Grantham, UK',
       created_at: '2025-11-03T12:00:00Z',
     },
     {
@@ -33,7 +30,6 @@ export const seedData = {
       email: 'admin@example.com',
       password_hash: 'hashed_pw_4',
       role: 'admin',
-      location: 'Newark, UK',
       created_at: '2025-11-04T13:00:00Z',
     },
   ],
@@ -47,7 +43,7 @@ export const seedData = {
       bio: 'Specialist in contract drafting and compliance for SMEs.',
       rating_avg: 4.7,
       profile_photo_url: 'https://example.com/photos/alice.jpg',
-      phone_number: '+44 7000 111111',
+      location: 'London, UK',
     },
     {
       profile_id: 2,
@@ -57,7 +53,7 @@ export const seedData = {
       bio: 'Helping businesses with tax planning and compliance.',
       rating_avg: 4.5,
       profile_photo_url: 'https://example.com/photos/brian.jpg',
-      phone_number: '+44 7000 222222',
+      location: 'Manchester, UK',
     },
   ],
 

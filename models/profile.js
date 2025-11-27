@@ -21,15 +21,15 @@ export const Profile = sequelize.define(
     },
     specialization: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
     },
     experience_years: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     },
     bio: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
     rating_avg: {
       type: DataTypes.FLOAT,
@@ -37,6 +37,10 @@ export const Profile = sequelize.define(
     },
     profile_photo_url: {
       type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    location: {
+      type: DataTypes.STRING(100),
       allowNull: true,
     },
   },
