@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import Stack from 'react-bootstrap/esm/Stack'
+import Stack from 'react-bootstrap/Stack'
 import { Link } from 'react-router-dom'
 import './LoginForm.css'
 
@@ -57,7 +57,7 @@ export const SignUpForm = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formConfirmPassword">
           <Form.Label>Confirm Password</Form.Label>
           {errors.confirmPassword?.type === 'required' && (
             <small role="alert" className="text-danger d-block mt-2">
@@ -70,7 +70,7 @@ export const SignUpForm = () => {
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Login
+          Signup
         </Button>
         <p>
           Already registered?{' '}
