@@ -37,3 +37,11 @@ const upgradeSchema = Joi.object({
   experience_years: Joi.number().min(0).required(),
   bio: Joi.string().max(500).required(),
 })
+
+export const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string()
+    .min(8)
+    .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])'))
+    .required(),
+})

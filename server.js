@@ -4,6 +4,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { sequelize } from './connection/db.js'
 import { router as users } from './routes/users/routes.js'
+import { router as login } from './routes/auth/login.js'
 import morgan from 'morgan'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -39,6 +40,7 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/api', users)
+app.use(login)
 
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`)
