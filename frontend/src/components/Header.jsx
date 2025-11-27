@@ -11,7 +11,7 @@ export const Header = () => {
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand>
-            <Link to="/"> Professional Link </Link>
+            <Link to="/"> Profession Link </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">

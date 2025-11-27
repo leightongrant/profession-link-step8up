@@ -4,7 +4,6 @@ import './Layout.css'
 import { useLocation } from 'react-router-dom'
 export const Layout = ({ children }) => {
   const { pathname } = useLocation()
-  console.log(pathname === '/login')
   return (
     <div as="div" className="page-wrapper">
       {pathname === '/login' || pathname === '/signup' ? '' : <Header />}
