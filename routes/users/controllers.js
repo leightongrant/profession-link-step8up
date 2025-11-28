@@ -12,7 +12,7 @@ export const getAllUsers = async (req, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -26,7 +26,7 @@ export const getOneUser = async (req, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -47,7 +47,7 @@ export const createUser = async (req, res) => {
       .json({ name: result.name, email: result.email, role: result.role })
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -83,7 +83,7 @@ export const updateUser = async (req, res) => {
     return res.status(200).json({ message: 'User updated' })
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -100,7 +100,7 @@ export const deleteUser = async (req, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
