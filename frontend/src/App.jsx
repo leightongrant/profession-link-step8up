@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Layout } from './components/Layout'
-import { Homepage } from './pages/Homepage'
+import { Homepage } from './pages/homepage/Homepage'
 import Signup from './pages/Signup'
 import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/useAuthStore'
