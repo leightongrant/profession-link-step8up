@@ -4,8 +4,34 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { Link } from 'react-router-dom'
+import { useAuthStore } from '../store/useAuthStore'
+import { PiSignOut } from 'react-icons/pi'
+import { MdAccountBox } from 'react-icons/md'
+
+const DropDown = () => {
+  const user = useAuthStore((state) => state.user)
+  const clearAuth = useAuthStore((state) => state.clearAuth)
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken')
+    clearAuth()
+  }
+
+  return (
+    <NavDropdown title={user.name} id="collapsible-nav-dropdown">
+      <NavDropdown.Item href="#action/3.2">
+        <MdAccountBox /> My Account
+      </NavDropdown.Item>
+      <NavDropdown.Divider />
+      <NavDropdown.Item onClick={handleLogout}>
+        <PiSignOut /> Logout
+      </NavDropdown.Item>
+    </NavDropdown>
+  )
+}
 
 export const Header = () => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   return (
     <Stack as="header">
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -18,39 +44,21 @@ export const Header = () => {
             <Nav className="me-auto">
               <Nav.Link>Features</Nav.Link>
               <Nav.Link href="#pricing">Pricing</Nav.Link>
-              <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
             </Nav>
             <Nav>
-              <Link
-                to="/login"
-                role="button"
-                className="btn btn-dark"
-                aria-disabled="true"
-                tabIndex="0"
-              >
-                Login
-              </Link>
-              <Link
-                to="/signup"
-                role="button"
-                className="btn btn-dark ml-2"
-                aria-disabled="true"
-                tabIndex="1"
-              >
-                Signup
-              </Link>
+              {isAuthenticated ? (
+                <DropDown />
+              ) : (
+                <Link
+                  to="/login"
+                  role="button"
+                  className="btn btn-dark"
+                  aria-disabled="true"
+                  tabIndex="0"
+                >
+                  Login
+                </Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

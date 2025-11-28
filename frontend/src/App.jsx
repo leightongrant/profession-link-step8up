@@ -3,8 +3,27 @@ import { Layout } from './components/Layout'
 import { Homepage } from './pages/Homepage'
 import Signup from './pages/Signup'
 import LoginPage from './pages/LoginPage'
+import { useAuthStore } from './store/useAuthStore'
+import { api as axios } from './api'
 
 function App() {
+  const setAuth = useAuthStore((state) => state.setAuth)
+  const clearAuth = useAuthStore((state) => state.clearAuth)
+
+  const verifyToken = async () => {
+    try {
+      const token = localStorage.getItem('authToken')
+      const response = await axios.post('/verify', { token: token })
+      const verified = await response.data
+      setAuth(verified)
+    } catch (error) {
+      localStorage.removeItem('authToken')
+      clearAuth()
+      //console.log(error)
+    }
+  }
+  verifyToken()
+
   return (
     <Layout>
       <Routes>

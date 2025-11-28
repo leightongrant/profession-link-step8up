@@ -8,6 +8,7 @@
     "install:all": "npm install && npm run frontend ",
     "build": "npm run build --prefix frontend",
     "start": "node server.js",
+    "preview": "node --env-file=.env server.js",
     "seed": "node --env-file=.env seeds/seed.js"
   },
   "keywords": [],
