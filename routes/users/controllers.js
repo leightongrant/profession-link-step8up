@@ -2,11 +2,13 @@ import { User } from '../../models/user.js'
 import bcrypt from 'bcryptjs'
 import { seedData } from '../../seeds/seedData.js'
 import { userSchema } from '../../schemas/users.js'
+import { Profile } from '../../models/profile.js'
 
 // Get all users
-export const getAllUsers = async (req, res) => {
+export const getAllUsers = async (_, res) => {
   try {
     const result = await User.findAll({
+      include: [{ model: Profile }],
       attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
     })
     return res.status(200).json(result)
@@ -18,7 +20,23 @@ export const getAllUsers = async (req, res) => {
   }
 }
 
-// Get all users
+// Get users with profiles
+export const getUsersWithProfiles = async (_, res) => {
+  try {
+    const result = await User.findAll({
+      include: [{ model: Profile }],
+      attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+    })
+    return res.status(200).json(result)
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({ message: error.message })
+    }
+    return res.status(500).json({ message: 'An error has occured' })
+  }
+}
+
+// Get users
 export const getOneUser = async (req, res) => {
   try {
     const id = parseInt(req.params.id)
