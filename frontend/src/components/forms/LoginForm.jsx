@@ -12,7 +12,7 @@ import { decodeToken } from 'react-jwt'
 
 export const LoginForm = () => {
   const setAuth = useAuthStore((state) => state.setAuth)
-  const loginError = useAuthStore((state) => state.loginError)
+  const formError = useAuthStore((state) => state.formError)
   const setError = useAuthStore((state) => state.setError)
   const navigate = useNavigate()
 
@@ -45,7 +45,7 @@ export const LoginForm = () => {
       <Form className="mx-5 login-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>Login</h2>
 
-        {loginError && <Alert variant="info">{loginError}</Alert>}
+        {formError && <Alert variant="info">{formError}</Alert>}
 
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email address</Form.Label>

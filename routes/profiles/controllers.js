@@ -9,7 +9,7 @@ export const getAllProfiles = async (_, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -23,7 +23,7 @@ export const getOneProfile = async (req, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -38,7 +38,7 @@ export const createProfile = async (req, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -65,7 +65,7 @@ export const updateProfile = async (req, res) => {
     return res.status(200).json({ message: 'Profile updated' })
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
@@ -82,7 +82,7 @@ export const deleteProfile = async (req, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ mesage: error.message })
+      return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
   }
