@@ -23,15 +23,15 @@ export const getOneReview = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json({ message: 'Invalid review id' })
     }
 
-    const result = await Review.findByPk(id)
-    if (!result) {
+    const review = await Review.findByPk(id)
+    if (!review) {
       return res.status(404).json({ message: 'Review not found' })
     }
 
-    return res.status(200).json(result)
+    return res.status(200).json(review)
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
@@ -45,12 +45,12 @@ export const createReview = async (req, res) => {
   try {
     const body = req.body
 
-    const review = await createReviewSchema.validateAsync(body, {
+    const validatedReview = await createReviewSchema.validateAsync(body, {
       abortEarly: false,
     })
-    const result = await Review.create(review)
+    const review = await Review.create(validatedReview)
 
-    return res.status(201).json(result)
+    return res.status(201).json(review)
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
@@ -67,7 +67,7 @@ export const updateReview = async (req, res) => {
   try {
     const id = Number.parseInt(req.params.id, 10)
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json({ message: 'Invalid review id' })
     }
 
     const body = req.body
@@ -100,15 +100,17 @@ export const deleteReview = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json({ message: 'Invalid review id' })
     }
 
-    const deletedCount = await Review.destroy({ where: { review_id: id } })
-    if (!deletedCount) {
-      return res.status(404).json({ message: 'Review Not found' })
+    const review = await Review.findByPk(id)
+    if (!review) {
+      return res.status(404).json({ message: 'Not found' })
     }
 
-    return res.status(200).json({ message: 'Review deleted', deletedCount })
+    await review.destroy()
+
+    return res.status(200).json({ message: 'Review deleted', review })
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })

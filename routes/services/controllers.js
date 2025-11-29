@@ -7,8 +7,8 @@ import {
 // Get all Services
 export const getAllServices = async (_, res) => {
   try {
-    const result = await Service.findAll()
-    return res.status(200).json(result)
+    const services = await Service.findAll()
+    return res.status(200).json(services)
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
@@ -26,12 +26,12 @@ export const getOneService = async (req, res) => {
       return res.status(400).json({ message: 'Invalid service id' })
     }
 
-    const result = await Service.findByPk(id)
-    if (!result) {
+    const service = await Service.findByPk(id)
+    if (!service) {
       return res.status(404).json({ message: 'Service not found' })
     }
 
-    return res.status(200).json(result)
+    return res.status(200).json(service)
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
@@ -44,11 +44,17 @@ export const getOneService = async (req, res) => {
 export const createService = async (req, res) => {
   try {
     const body = req.body
-    const service = await createServiceSchema.validateAsync(body)
-    const result = await Service.create(service)
-    return res.status(200).json(result)
+    const validatedService = await createServiceSchema.validateAsync(body, {
+      abortEarly: false,
+    })
+    const service = await Service.create(validatedService)
+
+    return res.status(201).json({ message: 'Service created', service })
   } catch (error) {
     if (error instanceof Error) {
+      if ('details' in error) {
+        return res.status(422).json(error.details)
+      }
       return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
@@ -65,22 +71,24 @@ export const updateService = async (req, res) => {
     }
 
     const body = req.body
-    const serviceUpdate = await updateServiceSchema.validateAsync(body)
-
-    const result = await Service.update(serviceUpdate, {
-      where: {
-        service_id: id,
-      },
-      returning: true,
+    const serviceUpdate = await updateServiceSchema.validateAsync(body, {
+      abortEarly: false,
     })
 
-    if (!result[0]) {
+    const service = await Service.findByPk(id)
+
+    if (!service) {
       return res.status(404).json({ message: 'Service Not found' })
     }
 
-    return res.status(201).json({ message: 'Service updated', service: result })
+    await service.update(serviceUpdate)
+
+    return res.status(200).json({ message: 'Service updated', service })
   } catch (error) {
     if (error instanceof Error) {
+      if ('details' in error) {
+        return res.status(422).json(error.details)
+      }
       return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
@@ -96,12 +104,15 @@ export const deleteService = async (req, res) => {
       return res.status(400).json({ message: 'Invalid service id' })
     }
 
-    const result = await Service.destroy({ where: { service_id: id } })
-    if (!result) {
-      return res.status(404).json({ message: 'Service not found' })
+    const service = await Service.findByPk(id)
+
+    if (!service) {
+      return res.status(404).json({ message: 'Service Not found' })
     }
 
-    return res.status(204).json({ message: 'Service deleted', service: result })
+    await service.destroy()
+
+    return res.status(200).json({ message: 'Service deleted', service })
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })

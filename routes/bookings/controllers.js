@@ -7,8 +7,8 @@ import {
 // Get all Bookings
 export const getAllBookings = async (_, res) => {
   try {
-    const result = await Booking.findAll()
-    return res.status(200).json(result)
+    const bookings = await Booking.findAll()
+    return res.status(200).json(bookings)
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
@@ -44,11 +44,12 @@ export const getOneBooking = async (req, res) => {
 export const createBooking = async (req, res) => {
   try {
     const body = req.body
-    const booking = await createBookingSchema.validateAsync(body, {
+    const validatedBooking = await createBookingSchema.validateAsync(body, {
       abortEarly: false,
     })
-    const result = await Booking.create(booking)
-    return res.status(201).json({ message: 'Booking created', booking: result })
+    const booking = await Booking.create(validatedBooking)
+
+    return res.status(201).json({ message: 'Booking created', booking })
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
@@ -80,14 +81,10 @@ export const updateBooking = async (req, res) => {
       return res.status(404).json({ message: 'Booking Not found' })
     }
 
-    await Booking.update(
-      { status: validatedBooking.status, message: validatedBooking.message },
-      {
-        where: {
-          booking_id: id,
-        },
-      }
-    )
+    await booking.update({
+      status: validatedBooking.status,
+      message: validatedBooking.message,
+    })
 
     return res.status(200).json({ message: 'Booking updated', booking })
   } catch (error) {
@@ -110,12 +107,15 @@ export const deleteBooking = async (req, res) => {
       return res.status(400).json({ message: 'Invalid booking id' })
     }
 
-    const deletedCount = await Booking.destroy({ where: { booking_id: id } })
-    if (!deletedCount) {
-      return res.status(404).json({ message: 'Booking not found' })
+    const booking = await Booking.findByPk(id)
+
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking Not found' })
     }
 
-    return res.status(200).json({ message: 'Booking deleted', deletedCount })
+    await booking.destroy()
+
+    return res.status(200).json({ message: 'Booking deleted', booking })
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
