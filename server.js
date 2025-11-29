@@ -9,6 +9,7 @@ import { router as login } from './routes/auth/login.js'
 import { router as verify } from './routes/auth/verify.js'
 import { router as reviews } from './routes/reviews/routes.js'
 import { router as services } from './routes/services/routes.js'
+import { router as bookings } from './routes/bookings/routes.js'
 
 import morgan from 'morgan'
 
@@ -48,6 +49,7 @@ app.use('/api', users)
 app.use('/api', profiles)
 app.use('/api', reviews)
 app.use('/api', services)
+app.use('/api', bookings)
 app.use('/api', login)
 app.use('/api', verify)
 
