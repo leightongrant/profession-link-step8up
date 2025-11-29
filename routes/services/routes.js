@@ -12,14 +12,14 @@ export const router = Router()
 // Get Services
 router.get('/services', getAllServices)
 
-// Get one review
+// Get one Service
 router.get('/services/:id', getOneService)
 
-// Create review
+// Create Service
 router.post('/services', createService)
 
-// Update review
+// Update Service
 router.put('/services/:id', updateService)
 
-// Delete review
+// Delete Service
 router.delete('/services/:id', deleteService)

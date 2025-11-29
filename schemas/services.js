@@ -22,12 +22,12 @@ export const createServiceSchema = Joi.object({
   }),
 
   price_range: Joi.string()
-    .pattern(/^[£$€]?\d+(\–|-)[£$€]?\d+$/)
+    .pattern(/^[£$€]?\d+\s*[-–]\s*[£$€]?\d+$/)
     .required()
     .messages({
       'string.base': 'Price range must be text.',
       'string.pattern.base':
-        'Price range must be in a valid format (e.g., £200-£500).',
+        'Price range must be in a valid format (e.g., £200-£500 or £200 - £500).',
       'any.required': 'Price range is required.',
     }),
 
@@ -54,12 +54,12 @@ export const updateServiceSchema = Joi.object({
   }),
 
   price_range: Joi.string()
-    .pattern(/^[£$€]?\d+(\–|-)[£$€]?\d+$/)
+    .pattern(/^[£$€]?\d+\s*[-–]\s*[£$€]?\d+$/)
     .required()
     .messages({
       'string.base': 'Price range must be text.',
       'string.pattern.base':
-        'Price range must be in a valid format (e.g., £200–£500).',
+        'Price range must be in a valid format (e.g., £200-£500 or £200 - £500).',
       'any.required': 'Price range is required.',
     }),
 
