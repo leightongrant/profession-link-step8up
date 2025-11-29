@@ -44,11 +44,16 @@ export const getOneBooking = async (req, res) => {
 export const createBooking = async (req, res) => {
   try {
     const body = req.body
-    const booking = await createBookingSchema.validateAsync(body)
+    const booking = await createBookingSchema.validateAsync(body, {
+      abortEarly: false,
+    })
     const result = await Booking.create(booking)
     return res.status(201).json({ message: 'Booking created', booking: result })
   } catch (error) {
     if (error instanceof Error) {
+      if ('details' in error) {
+        return res.status(422).json(error.details)
+      }
       return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
