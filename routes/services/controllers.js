@@ -46,7 +46,7 @@ export const createService = async (req, res) => {
     const body = req.body
     const service = await createServiceSchema.validateAsync(body)
     const result = await Service.create(service)
-    return res.status(200).json(result)
+    return res.status(201).json(result)
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
