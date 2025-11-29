@@ -1,10 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
-import { Layout } from './components/Layout'
+import { MainLayout } from './components/layouts/MainLayout'
+import { AdminDashboard } from './pages/admin/AdminDashboard'
 import { Homepage } from './pages/homepage/Homepage'
 import Signup from './pages/Signup'
 import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/useAuthStore'
 import { api as axios } from './api'
+import { ManageUsers } from './pages/admin/ManageUser'
+import { MyAccount } from './pages/admin/MyAccount.jsx'
 
 function App() {
   const setAuth = useAuthStore((state) => state.setAuth)
@@ -19,19 +22,23 @@ function App() {
     } catch (error) {
       localStorage.removeItem('authToken')
       clearAuth()
-      //console.log(error)
     }
   }
   verifyToken()
 
   return (
-    <Layout>
-      <Routes>
+    <Routes>
+      <Route element={<MainLayout />}>
         <Route index element={<Homepage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </Layout>
+      </Route>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<Signup />} />
+
+      <Route path="/admin" element={<AdminDashboard />}>
+        <Route path="/admin/my-account" element={<MyAccount />} />
+        <Route path="/admin/users" element={<ManageUsers />} />
+      </Route>
+    </Routes>
   )
 }
 

@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react'
 import { api as axios } from '../api'
 import { isAxiosError } from 'axios'
 
-export const useFetchUsers = () => {
+export const useFetchUsers = (id = null) => {
   const [data, setData] = useState([])
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  let url = '/users'
+  if (id) url = `/users/${id}`
 
   useEffect(() => {
     getUsers()
@@ -13,7 +16,7 @@ export const useFetchUsers = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get('/users')
+      const response = await axios.get(url)
       const usersData = await response.data
       setData(usersData)
     } catch (error) {

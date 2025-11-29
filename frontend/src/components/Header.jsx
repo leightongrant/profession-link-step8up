@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore'
 import { PiSignOut } from 'react-icons/pi'
 import { MdAccountBox } from 'react-icons/md'
+import { LinkContainer } from 'react-router-bootstrap'
 
 const DropDown = () => {
   const user = useAuthStore((state) => state.user)
@@ -19,9 +20,12 @@ const DropDown = () => {
 
   return (
     <NavDropdown title={user.name} id="collapsible-nav-dropdown">
-      <NavDropdown.Item href="#action/3.2">
-        <MdAccountBox /> My Account
-      </NavDropdown.Item>
+      <LinkContainer to="/admin/my-account">
+        <NavDropdown.Item>
+          <MdAccountBox /> My Account
+        </NavDropdown.Item>
+      </LinkContainer>
+
       <NavDropdown.Divider />
       <NavDropdown.Item onClick={handleLogout}>
         <PiSignOut /> Logout

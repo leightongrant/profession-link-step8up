@@ -41,7 +41,10 @@ export const LoginForm = () => {
   }
 
   return (
-    <Stack className="login-form-container h-100 justify-content-center align-items-center">
+    <Stack
+      className="login-form-container justify-content-center align-items-center"
+      style={{ minHeight: '100vh' }}
+    >
       <Form className="mx-5 login-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>Login</h2>
 
