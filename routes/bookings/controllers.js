@@ -46,7 +46,7 @@ export const createBooking = async (req, res) => {
     const body = req.body
     const booking = await createBookingSchema.validateAsync(body)
     const result = await Booking.create(booking)
-    return res.status(200).json({ message: 'Booking created', booking: result })
+    return res.status(201).json({ message: 'Booking created', booking: result })
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
@@ -65,16 +65,18 @@ export const updateBooking = async (req, res) => {
     }
 
     const body = req.body
-    const booking = await updateBookingSchema.validateAsync(body)
+    const validatedBooking = await updateBookingSchema.validateAsync(body, {
+      abortEarly: false,
+    })
 
-    const foundBooking = await Booking.findByPk(id)
+    const oldBooking = await Booking.findByPk(id)
 
-    if (!foundBooking) {
+    if (!oldBooking) {
       return res.status(404).json({ message: 'Booking Not found' })
     }
 
     await Booking.update(
-      { status: booking.status, message: booking.message },
+      { status: validatedBooking.status, message: validatedBooking.message },
       {
         where: {
           booking_id: id,
@@ -82,11 +84,16 @@ export const updateBooking = async (req, res) => {
       }
     )
 
+    const newBooking = await Booking.findByPk(id)
+
     return res
-      .status(201)
-      .json({ message: 'Booking updated', booking: foundBooking })
+      .status(200)
+      .json({ message: 'Booking updated', booking: newBooking })
   } catch (error) {
     if (error instanceof Error) {
+      if ('details' in error) {
+        return res.status(422).json(error.details)
+      }
       return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })
@@ -107,7 +114,7 @@ export const deleteBooking = async (req, res) => {
       return res.status(404).json({ message: 'Booking not found' })
     }
 
-    return res.status(204).json({ message: 'Booking deleted', booking: result })
+    return res.status(200).json({ message: 'Booking deleted', booking: result })
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
