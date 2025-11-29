@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-export const userSchema = Joi.object({
+export const createUserSchema = Joi.object({
   name: Joi.string().max(100).required().messages({
     'string.base': 'Name must be text.',
     'string.empty': 'Please provide your name.',
@@ -28,15 +28,17 @@ export const userSchema = Joi.object({
     }),
 })
 
-const upgradeSchema = Joi.object({
-  role: Joi.string().valid('lawyer', 'accountant').required().messages({
-    'any.only': 'Role must be either lawyer or accountant.',
-    'any.required': 'Role is required.',
-  }),
-  specialization: Joi.string().required(),
-  experience_years: Joi.number().min(0).required(),
-  bio: Joi.string().max(500).required(),
-})
+export const updateUserSchema = createUserSchema
+  .fork(['name', 'email', 'password'], (field) => field.optional())
+  .append({
+    role: Joi.string()
+      .valid('client', 'lawyer', 'accountant', 'admin')
+      .optional()
+      .messages({
+        'string.base': 'Role must be text.',
+        'any.only': 'Role must be one of: client, lawyer, accountant, admin.',
+      }),
+  })
 
 export const loginSchema = Joi.object({
   email: Joi.string().email().required(),

@@ -44,10 +44,10 @@ export const getOneBooking = async (req, res) => {
 export const createBooking = async (req, res) => {
   try {
     const body = req.body
-    const booking = await createBookingSchema.validateAsync(body, {
+    const validatedBooking = await createBookingSchema.validateAsync(body, {
       abortEarly: false,
     })
-    const result = await Booking.create(booking)
+    const result = await Booking.create(validatedBooking)
     return res.status(201).json({ message: 'Booking created', booking: result })
   } catch (error) {
     if (error instanceof Error) {
