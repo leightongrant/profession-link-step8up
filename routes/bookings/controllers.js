@@ -109,12 +109,12 @@ export const deleteBooking = async (req, res) => {
       return res.status(400).json({ message: 'Invalid booking id' })
     }
 
-    const result = await Booking.destroy({ where: { booking_id: id } })
-    if (!result) {
+    const deletedCount = await Booking.destroy({ where: { booking_id: id } })
+    if (!deletedCount) {
       return res.status(404).json({ message: 'Booking not found' })
     }
 
-    return res.status(200).json({ message: 'Booking deleted', booking: result })
+    return res.status(200).json({ message: 'Booking deleted', deletedCount })
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message })
