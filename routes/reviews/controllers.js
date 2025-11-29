@@ -75,22 +75,14 @@ export const updateReview = async (req, res) => {
       abortEarly: false,
     })
 
-    const oldReview = await Review.findByPk(id)
-    if (!oldReview) {
+    const review = await Review.findByPk(id)
+    if (!review) {
       return res.status(404).json({ message: 'Not found' })
     }
 
-    await Review.update(validatedUpdate, {
-      where: {
-        review_id: id,
-      },
-    })
+    await review.update(validatedUpdate)
 
-    const newReview = await Review.findByPk(id)
-
-    return res
-      .status(200)
-      .json({ message: 'Review updated', review: newReview })
+    return res.status(200).json({ message: 'Review updated', review })
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {

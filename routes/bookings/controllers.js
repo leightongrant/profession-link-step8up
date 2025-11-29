@@ -74,9 +74,9 @@ export const updateBooking = async (req, res) => {
       abortEarly: false,
     })
 
-    const oldBooking = await Booking.findByPk(id)
+    const booking = await Booking.findByPk(id)
 
-    if (!oldBooking) {
+    if (!booking) {
       return res.status(404).json({ message: 'Booking Not found' })
     }
 
@@ -89,11 +89,7 @@ export const updateBooking = async (req, res) => {
       }
     )
 
-    const newBooking = await Booking.findByPk(id)
-
-    return res
-      .status(200)
-      .json({ message: 'Booking updated', booking: newBooking })
+    return res.status(200).json({ message: 'Booking updated', booking })
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
