@@ -5,16 +5,12 @@ import {
   getOneUser,
   deleteUser,
   updateUser,
-  getUsersWithProfiles,
 } from './controllers.js'
 
 export const router = Router()
 
 // Get users
 router.get('/users', getAllUsers)
-
-// Get users with profiles
-router.get('/users-with-profiles', getUsersWithProfiles)
 
 // Get one user
 router.get('/users/:id', getOneUser)

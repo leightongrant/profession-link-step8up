@@ -20,27 +20,14 @@ export const getAllUsers = async (_, res) => {
   }
 }
 
-// Get users with profiles
-export const getUsersWithProfiles = async (_, res) => {
-  try {
-    const result = await User.findAll({
-      include: [{ model: Profile }],
-      attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
-    })
-    return res.status(200).json(result)
-  } catch (error) {
-    if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
-    }
-    return res.status(500).json({ message: 'An error has occured' })
-  }
-}
-
 // Get users
 export const getOneUser = async (req, res) => {
   try {
     const id = parseInt(req.params.id)
-    const result = await User.findByPk(id)
+    const result = await User.findByPk(id, {
+      include: [{ model: Profile }],
+      attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+    })
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
