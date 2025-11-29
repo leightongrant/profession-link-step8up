@@ -31,7 +31,7 @@ export const getOneUser = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid service id' })
+      return res.status(400).json({ message: 'Invalid user id' })
     }
 
     const result = await User.findByPk(id, {
@@ -86,7 +86,7 @@ export const updateUser = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json({ message: 'Invalid user id' })
     }
 
     const body = req.body
@@ -111,11 +111,7 @@ export const updateUser = async (req, res) => {
       userUpdate.password_hash = await bcrypt.hash(validatedUser.password, 10)
     }
 
-    await user.update(userUpdate, {
-      where: {
-        user_id: id,
-      },
-    })
+    await user.update(userUpdate)
 
     return res.status(200).json({ message: 'User updated', user })
   } catch (error) {
@@ -135,7 +131,7 @@ export const deleteUser = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json({ message: 'Invalid user id' })
     }
 
     const user = await User.findByPk(id, {
@@ -145,7 +141,7 @@ export const deleteUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    await user.destroy({ where: { user_id: id } })
+    await user.destroy()
 
     return res.status(200).json({ message: 'User deleted', user })
   } catch (error) {
