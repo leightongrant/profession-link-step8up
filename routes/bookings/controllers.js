@@ -47,9 +47,8 @@ export const createBooking = async (req, res) => {
     const validatedBooking = await createBookingSchema.validateAsync(body, {
       abortEarly: false,
     })
-    const booking = await Booking.create(validatedBooking, {
-      abortEarly: false,
-    })
+    const booking = await Booking.create(validatedBooking)
+
     return res.status(201).json({ message: 'Booking created', booking })
   } catch (error) {
     if (error instanceof Error) {

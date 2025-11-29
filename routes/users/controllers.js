@@ -101,7 +101,7 @@ export const updateUser = async (req, res) => {
       attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
     })
     if (!user) {
-      return res.status(404).json({ message: 'Not found' })
+      return res.status(404).json({ message: 'User not found' })
     }
 
     const userUpdate = {

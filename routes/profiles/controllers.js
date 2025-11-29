@@ -24,6 +24,10 @@ export const getOneProfile = async (req, res) => {
       return res.status(400).json({ message: 'Invalid profile id' })
     }
     const profile = await Profile.findByPk(id)
+    if (!profile) {
+      return res.status(404).json({ message: 'Profile Not found' })
+    }
+
     return res.status(200).json(profile)
   } catch (error) {
     if (error instanceof Error) {
