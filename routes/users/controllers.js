@@ -35,7 +35,10 @@ export const getOneUser = async (req, res) => {
     }
 
     const result = await User.findByPk(id, {
-      include: [{ model: Profile }],
+      include: [
+        { model: Profile, include: [{ model: Service, include: [Review] }] },
+        { model: Booking },
+      ],
       attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
     })
 
