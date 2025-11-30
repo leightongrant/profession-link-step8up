@@ -79,7 +79,7 @@ export const ProfileDetails = () => {
                 <h3>{user.name}</h3>
                 <p className="text-capitalize">{user.role}</p>
                 <p>Email: {user.email} </p>
-                <p>{user.location}</p>
+                <p>{profile.location}</p>
               </Stack>
               <Stack>
                 <h4>About</h4>
@@ -111,7 +111,7 @@ export const ProfileDetails = () => {
         </Row>
       </Container>
       <Container className="py-5">
-        <h3>Reviews</h3>
+        <h3 className="mb-5">Reviews</h3>
         <Row>
           {reviews &&
             reviews.map((review) => {
