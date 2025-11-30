@@ -9,6 +9,7 @@ import Badge from 'react-bootstrap/esm/Badge'
 import { useNavigate } from 'react-router-dom'
 import { ErrorPage } from '../error/ErrorPage.jsx'
 import { LoadingPage } from '../loading/LoadingPage.jsx'
+import { shuffle } from 'moderndash'
 
 const UserCard = ({ user }) => {
   const navigate = useNavigate()
@@ -23,6 +24,7 @@ const UserCard = ({ user }) => {
         <Card.Img
           variant="top"
           src={`https://i.pravatar.cc/150?u=${user.email}`}
+          loading="lazy"
         />
         <Card.Body>
           <Card.Title>
@@ -47,7 +49,7 @@ const UserCard = ({ user }) => {
   )
 }
 
-export const Profiles = () => {
+export const Profiles = ({ title = 'Profiles', limit }) => {
   const { data, error, loading } = useFetchUsers()
 
   if (error) return <ErrorPage />
@@ -56,14 +58,15 @@ export const Profiles = () => {
   return (
     <Stack className="profiles py-5">
       <Container>
-        <h2 className="text-center mb-5">Profiles</h2>
+        <h2 className="text-center mb-5">{title}</h2>
         <Row>
           {data &&
-            data
+            shuffle(data)
               .filter((user) => user.Profile)
               .map((user) => {
                 return <UserCard key={user.user_id} user={user} />
-              })}
+              })
+              .slice(0, limit)}
         </Row>
       </Container>
     </Stack>

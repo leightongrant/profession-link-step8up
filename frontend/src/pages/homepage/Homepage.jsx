@@ -10,7 +10,7 @@ export const Homepage = () => {
   return (
     <Stack as="main">
       <Hero />
-      <Profiles />
+      <Profiles title="Featured Profiles" limit={4} />
     </Stack>
   )
 }

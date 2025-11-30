@@ -10,7 +10,7 @@ export const Hero = () => {
       style={{ maxHeight: 500, minHeight: 500 }}
     >
       <Container>
-        <Stack className="gap-3">
+        <Stack className="gap-3 text-light">
           <span className="display-3 fw-bold">
             Welcome to
             <br /> Profession Link
@@ -19,8 +19,8 @@ export const Hero = () => {
             Where you find the best lawyers and accountants
           </span>
           <Link
-            to="#"
-            className="btn btn-lg btn-outline-dark"
+            to="/about"
+            className="btn btn-lg btn-outline-light"
             style={{ width: 'fit-content' }}
           >
             About Us
