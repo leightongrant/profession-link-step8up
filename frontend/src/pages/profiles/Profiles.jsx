@@ -15,7 +15,7 @@ const UserCard = ({ user }) => {
   const navigate = useNavigate()
   const handleProfileView = (id) => {
     navigate(
-      `/profiles/${user.role}-${user.name.replace(/\s/, '-').toLowerCase()}-${id}`
+      `/profiles/${user.role}-${user.name.replace(/\s+/g, '-').toLowerCase()}-${id}`
     )
   }
   return (
