@@ -37,17 +37,32 @@ const DropDown = () => {
 export const Header = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   return (
-    <Stack as="header">
+    <Stack as="header" className="sticky-top shadow-lg">
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand>
-            <Link to="/"> Profession Link </Link>
+            <Link
+              to="/"
+              className="fw-bold fs-3 text-decoration-none text-light bg-dark rounded px-1"
+            >
+              ProLINK
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link>Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
+              <LinkContainer to="/">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/profiles">
+                <Nav.Link>Profiles</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/about">
+                <Nav.Link>About</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/contact">
+                <Nav.Link>Contact</Nav.Link>
+              </LinkContainer>
             </Nav>
             <Nav>
               {isAuthenticated ? (

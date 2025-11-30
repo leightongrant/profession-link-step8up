@@ -27,6 +27,7 @@ export const getOneReview = async (req, res) => {
     }
 
     const review = await Review.findByPk(id)
+
     if (!review) {
       return res.status(404).json({ message: 'Review not found' })
     }

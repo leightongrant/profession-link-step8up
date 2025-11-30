@@ -1,4 +1,3 @@
-import Stack from 'react-bootstrap/Stack'
 import Container from 'react-bootstrap/Container'
 import { LoginForm } from '../components/forms/LoginForm'
 

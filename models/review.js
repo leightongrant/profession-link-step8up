@@ -52,8 +52,22 @@ export const Review = sequelize.define(
   }
 )
 
-Service.hasMany(Review, { foreignKey: 'service_id', onDelete: 'CASCADE' })
-Review.belongsTo(Service, { foreignKey: 'service_id', onDelete: 'CASCADE' })
+Service.hasMany(Review, {
+  foreignKey: 'service_id',
+  onDelete: 'CASCADE',
+})
+Review.belongsTo(Service, {
+  foreignKey: 'service_id',
+  onDelete: 'CASCADE',
+})
 
-User.hasMany(Review, { foreignKey: 'client_id', onDelete: 'CASCADE' })
-Review.belongsTo(User, { foreignKey: 'client_id', onDelete: 'CASCADE' })
+User.hasMany(Review, {
+  foreignKey: 'client_id',
+  as: 'reviews',
+  onDelete: 'CASCADE',
+})
+Review.belongsTo(User, {
+  foreignKey: 'client_id',
+  as: 'reviewer',
+  onDelete: 'CASCADE',
+})
