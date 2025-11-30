@@ -10,11 +10,8 @@ import { Booking } from '../../models/booking.js'
 export const getAllUsers = async (_, res) => {
   try {
     const result = await User.findAll({
-      include: [
-        { model: Profile, include: [{ model: Service, include: [Review] }] },
-        { model: Booking },
-      ],
       attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+      include: [{ model: Profile }],
     })
     return res.status(200).json(result)
   } catch (error) {
@@ -35,11 +32,30 @@ export const getOneUser = async (req, res) => {
     }
 
     const result = await User.findByPk(id, {
-      include: [
-        { model: Profile, include: [{ model: Service, include: [Review] }] },
-        { model: Booking },
-      ],
       attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+      include: [
+        {
+          model: Profile,
+          include: [
+            {
+              model: Service,
+              include: [
+                { model: Booking },
+                {
+                  model: Review,
+                  include: [
+                    {
+                      model: User,
+                      as: 'reviewer',
+                      attributes: ['user_id', 'name'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     })
 
     if (!result) {
