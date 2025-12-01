@@ -10,7 +10,7 @@ export const MyAccount = () => {
   const [show, setShow] = useState(false)
   const user = useAuthStore((state) => state.user)
   const setAuth = useAuthStore((state) => state.setAuth)
-  const { loading, data, error } = useFetchUsers(user.user_id)
+  const { loading, data, error, refetch } = useFetchUsers(user.user_id)
 
   if (loading) return <CSpinner color="primary" />
   if (error) return <p>{error.message}</p>
@@ -36,6 +36,12 @@ export const MyAccount = () => {
           <strong>Name:</strong> {data.name}
         </p>
         <p>
+          <strong>Specialization:</strong> {data.Profile.specialization}
+        </p>
+        <p>
+          <strong>Location:</strong> {data.Profile.location}
+        </p>
+        <p>
           <strong>Email:</strong> {data.email}
         </p>
         <p>
@@ -51,7 +57,7 @@ export const MyAccount = () => {
             </p>
           </>
         )}
-        {show && <ProfileForm setShow={setShow} />}
+        {show && <ProfileForm setShow={setShow} refetch={refetch} />}
         {data.role === 'lawyer' &&
           !data.Profile &&
           (show ? (

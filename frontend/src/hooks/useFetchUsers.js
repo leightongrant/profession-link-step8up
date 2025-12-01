@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { api as axios } from '../api'
 import { isAxiosError } from 'axios'
+import { useCallback } from 'react'
 
 export const useFetchUsers = (id = null) => {
   const [data, setData] = useState([])
@@ -10,11 +11,7 @@ export const useFetchUsers = (id = null) => {
   let url = '/users'
   if (id) url = `/users/${id}`
 
-  useEffect(() => {
-    getUsers()
-  }, [])
-
-  const getUsers = async () => {
+  const getUsers = useCallback(async () => {
     try {
       const response = await axios.get(url)
       const usersData = await response.data
@@ -31,7 +28,13 @@ export const useFetchUsers = (id = null) => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [url])
 
-  return { data, error, loading }
+  useEffect(() => {
+    getUsers()
+  }, [getUsers])
+
+  const refetch = getUsers
+
+  return { data, error, loading, refetch }
 }
