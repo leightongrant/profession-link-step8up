@@ -10,7 +10,14 @@ import { Booking } from '../../models/booking.js'
 export const getAllUsers = async (_, res) => {
   try {
     const result = await User.findAll({
-      attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+      attributes: [
+        'user_id',
+        'name',
+        'email',
+        'role',
+        'pending_role',
+        'created_at',
+      ],
       include: [{ model: Profile }],
     })
     return res.status(200).json(result)
@@ -32,7 +39,15 @@ export const getOneUser = async (req, res) => {
     }
 
     const result = await User.findByPk(id, {
-      attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+      attributes: [
+        'user_id',
+        'name',
+        'email',
+        'role',
+        'pending_role',
+        'created_at',
+      ],
+
       include: [
         {
           model: Profile,
@@ -114,7 +129,14 @@ export const updateUser = async (req, res) => {
     })
 
     const user = await User.findByPk(id, {
-      attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+      attributes: [
+        'user_id',
+        'name',
+        'email',
+        'role',
+        'pending_role',
+        'created_at',
+      ],
     })
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
@@ -124,6 +146,7 @@ export const updateUser = async (req, res) => {
       name: validatedUser.name,
       email: validatedUser.email,
       role: validatedUser.role,
+      pending_role: validatedUser.pending_role,
     }
 
     if (validatedUser.password) {
@@ -154,7 +177,14 @@ export const deleteUser = async (req, res) => {
     }
 
     const user = await User.findByPk(id, {
-      attributes: ['user_id', 'name', 'email', 'role', 'created_at'],
+      attributes: [
+        'user_id',
+        'name',
+        'email',
+        'role',
+        'pending_role',
+        'created_at',
+      ],
     })
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
@@ -165,6 +195,53 @@ export const deleteUser = async (req, res) => {
     return res.status(200).json({ message: 'User deleted', user })
   } catch (error) {
     if (error instanceof Error) {
+      return res.status(400).json({ message: error.message })
+    }
+    return res.status(500).json({ message: 'An error has occured' })
+  }
+}
+
+// Request role
+export const requestRole = async (req, res) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10)
+
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ message: 'Invalid user id' })
+    }
+
+    const body = req.body
+    // const validatedUser = await updateUserSchema.validateAsync(body, {
+    //   abortEarly: false,
+    // })
+
+    const user = await User.findByPk(id, {
+      attributes: [
+        'user_id',
+        'name',
+        'email',
+        'role',
+        'pending_role',
+        'created_at',
+      ],
+    })
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    const request = {
+      pending_role: body.pending_role,
+    }
+
+    await user.update(request)
+
+    return res.status(200).json(user)
+  } catch (error) {
+    if (error instanceof Error) {
+      // if ('details' in error) {
+      //   return res.status(422).json(error.details)
+      // }
       return res.status(400).json({ message: error.message })
     }
     return res.status(500).json({ message: 'An error has occured' })

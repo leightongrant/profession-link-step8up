@@ -6,6 +6,7 @@ import {
   deleteReview,
   updateReview,
 } from './controllers.js'
+import { authorize } from '../../middleware/authorization.js'
 
 export const router = Router()
 
@@ -16,10 +17,10 @@ router.get('/reviews', getAllReviews)
 router.get('/reviews/:id', getOneReview)
 
 // Create review
-router.post('/reviews', createReview)
+router.post('/reviews', authorize, createReview)
 
 // Delete review
-router.delete('/reviews/:id', deleteReview)
+router.delete('/reviews/:id', authorize, deleteReview)
 
 // Update review
-router.put('/reviews/:id', updateReview)
+router.put('/reviews/:id', authorize, updateReview)

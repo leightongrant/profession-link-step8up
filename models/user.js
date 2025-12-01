@@ -27,6 +27,10 @@ export const User = sequelize.define(
       allowNull: false,
       defaultValue: 'client',
     },
+    pending_role: {
+      type: DataTypes.ENUM('lawyer', 'accountant'),
+      allowNull: true,
+    },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,

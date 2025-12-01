@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { api as axios } from '../../api'
 import {
   CTable,
@@ -13,48 +13,58 @@ import {
   CCardBody,
   CCardHeader,
 } from '@coreui/react'
+import { useFetchUsers } from '../../hooks/useFetchUsers'
+import { MdDeleteOutline } from 'react-icons/md'
 
 export const ManageUsers = () => {
+  const { loading, data: initialData, error } = useFetchUsers()
   const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('/users')
-        const data = await response.data
-        setUsers(data)
-      } catch (err) {
-        console.error('Error fetching users:', err)
-      } finally {
-        setLoading(false)
-      }
+    if (initialData) {
+      setUsers(initialData)
     }
-    fetchUsers()
-  }, [])
+  }, [initialData])
 
   const handleDelete = async (userId) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return
     try {
       await axios.delete(`/users/${userId}`)
-      setUsers(users.filter((u) => u.user_id !== userId))
+      setUsers(data.filter((u) => u.user_id !== userId))
     } catch (err) {
       console.error('Error deleting user:', err)
     }
   }
 
   const handleApproveRole = async (userId, role) => {
+    const originalUsers = users
+    const updatedUsers = users.map((user) =>
+      user.user_id === userId
+        ? { ...user, role: role, pending_role: null }
+        : user
+    )
+    setUsers(updatedUsers)
+
     try {
-      await axios.post(`/users/${userId}/approve-role`, { role })
+      const token = localStorage.getItem('authToken')
+      await axios.put(
+        `/users/${userId}`,
+        { role: role, pending_role: null },
+        {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        }
+      )
       alert(`Approved ${role} role for user ${userId}`)
     } catch (err) {
       console.error('Error approving role:', err)
+      setUsers(originalUsers)
     }
   }
 
-  if (loading) {
-    return <CSpinner color="primary" />
-  }
+  if (error) return <p>Error</p>
+  if (loading) return <CSpinner color="primary" />
 
   return (
     <CCard>
@@ -78,30 +88,41 @@ export const ManageUsers = () => {
                 <CTableDataCell>{user.email}</CTableDataCell>
                 <CTableDataCell>{user.role}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    color="success"
-                    size="sm"
-                    className="me-2"
-                    onClick={() => handleApproveRole(user.user_id, 'lawyer')}
-                  >
-                    Approve Lawyer
-                  </CButton>
-                  <CButton
-                    color="info"
-                    size="sm"
-                    className="me-2"
-                    onClick={() =>
-                      handleApproveRole(user.user_id, 'accountant')
-                    }
-                  >
-                    Approve Accountant
-                  </CButton>
+                  {user.pending_role ? (
+                    <>
+                      {user.pending_role === 'lawyer' ? (
+                        <CButton
+                          color="success"
+                          size="sm"
+                          className="me-2"
+                          onClick={() =>
+                            handleApproveRole(user.user_id, 'lawyer')
+                          }
+                        >
+                          Approve Lawyer
+                        </CButton>
+                      ) : (
+                        <CButton
+                          color="info"
+                          size="sm"
+                          className="me-2"
+                          onClick={() =>
+                            handleApproveRole(user.user_id, 'accountant')
+                          }
+                        >
+                          Approve Accountant
+                        </CButton>
+                      )}
+                    </>
+                  ) : (
+                    ''
+                  )}
                   <CButton
                     color="danger"
                     size="sm"
                     onClick={() => handleDelete(user.user_id)}
                   >
-                    Delete
+                    <MdDeleteOutline />
                   </CButton>
                 </CTableDataCell>
               </CTableRow>

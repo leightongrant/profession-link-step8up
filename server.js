@@ -29,7 +29,7 @@ const connect = async () => {
 
 const syncDb = async () => {
   try {
-    await sequelize.sync({ force: false })
+    await sequelize.sync({ force: false, alter: true })
     console.log('Database synced successfully.')
   } catch (error) {
     console.error('Error syncing database:', error)
@@ -41,7 +41,7 @@ syncDb()
 
 const PORT = process.env.PORT || 3000
 
-app.use(morgan('tiny'))
+app.use(morgan('combined'))
 app.use(express.json())
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
