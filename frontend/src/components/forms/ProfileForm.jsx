@@ -3,48 +3,42 @@ import { useForm } from 'react-hook-form'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Stack from 'react-bootstrap/Stack'
-import { Link } from 'react-router-dom'
-
 import { useAuthStore } from '../../store/useAuthStore'
 import Alert from 'react-bootstrap/Alert'
 import { api as axios } from '../../api'
-import { useNavigate } from 'react-router-dom'
 import { isAxiosError } from 'axios'
 
-export const ProfileForm = ({ setShow }) => {
-  const navigate = useNavigate()
+export const ProfileForm = ({ setShow, refetch }) => {
   const formError = useAuthStore((state) => state.formError)
   const setError = useAuthStore((state) => state.setError)
+  const user = useAuthStore((state) => state.user)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
 
-  const onSubmit = async (profile) => {
-    console.log(profile)
-    setShow(false)
-    // try {
-    //   if (user.password !== user.confirmPassword)
-    //     throw new Error('Passwords must match')
-    //   const userData = {
-    //     name: user.name,
-    //     email: user.email,
-    //     password: user.password,
-    //   }
-    //   await axios.post('/users', userData)
-    //   navigate('/login')
-    // } catch (error) {
-    //   if (isAxiosError(error)) {
-    //     setError(await error.response.data.message)
-    //   } else {
-    //     setError(error.message || 'Passwords must match')
-    //   }
-    // } finally {
-    //   setTimeout(() => {
-    //     setError(null)
-    //   }, 5000)
-    // }
+  const onSubmit = async (profileData) => {
+    try {
+      const token = localStorage.getItem('authToken')
+      await axios.post(
+        '/profiles',
+        { ...profileData, user_id: user.user_id },
+        { headers: { Authorization: 'Bearer ' + token } }
+      )
+      setShow(false)
+      refetch()
+    } catch (error) {
+      if (isAxiosError(error)) {
+        setError(await error.response.data.message)
+      } else {
+        setError(error.message || 'Error creating user profile')
+      }
+    } finally {
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
+    }
   }
 
   return (
