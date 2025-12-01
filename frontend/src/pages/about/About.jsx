@@ -5,8 +5,29 @@ import Card from 'react-bootstrap/esm/Card'
 import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Col'
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { api as axios } from '../../api.js'
 
 export const About = () => {
+
+  const [profilePictures, setProfilePictures] = useState([]);
+  const descriptionList = [
+    'Responsible for the development and day to day management of ProfessionalLink.',
+    'Founder of the website ProfessionalLink. Has worked on the backend and frontend of the application.',
+    'Has a degree in business studies and has worked within the legal sector for the last 8 years.'
+    
+  ]
+  
+  const getPictures = async () => {
+      const profileRes = await axios.get('https://randomuser.me/api/?results=3');
+      const data = profileRes.data;
+      setProfilePictures(data.results);
+      console.log(data.results);
+  }
+  useEffect(() => {
+  	getPictures();
+  }, []);
+
   return (
     <Stack className="about-page py-5" as="main">
       <Container>
@@ -21,12 +42,22 @@ export const About = () => {
             </Col>
           <Col>
             <div className="mt-3 text-center">
-              <Link to='/signup'>Create an account with us today! </Link>
+              <Link to='/signup'><button class="btn btn-primary">Create an account with us today!</button></Link>
             </div>
           </Col>
           </div>
         </Row>
         <Row>
+          <div className="shadow-lg p-4 mb-5 mt-3 bg-white rounded">
+            <Col className='text-center'> Our Team </Col>
+              {profilePictures.map((x, index) => (
+                          <div class="mt-5 " key={index}>
+                              <div className='mb-2 ml-5'>{x.name.first + ' ' + x.name.last}</div>
+                              <img className="m-5 shadow rounded" src={x.picture.large}/>
+                              <div className='d-inline'>{descriptionList[index]}</div>
+                          </div>
+              ))} 
+          </div>
         </Row>
       </Container>
     </Stack>
