@@ -15,6 +15,7 @@
     "@coreui/icons-react": "^2.3.0",
     "@coreui/react": "^5.9.1",
     "axios": "^1.13.2",
+    "backend": "file:..",
     "md5": "^2.3.0",
     "moderndash": "^4.0.0",
     "react": "^19.2.0",
