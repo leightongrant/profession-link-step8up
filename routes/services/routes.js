@@ -6,6 +6,7 @@ import {
   deleteService,
   updateService,
 } from './controllers.js'
+import { authorize } from '../../middleware/authorization.js'
 
 export const router = Router()
 
@@ -16,10 +17,10 @@ router.get('/services', getAllServices)
 router.get('/services/:id', getOneService)
 
 // Create Service
-router.post('/services', createService)
+router.post('/services', authorize, createService)
 
 // Update Service
-router.put('/services/:id', updateService)
+router.put('/services/:id', authorize, updateService)
 
 // Delete Service
-router.delete('/services/:id', deleteService)
+router.delete('/services/:id', authorize, deleteService)

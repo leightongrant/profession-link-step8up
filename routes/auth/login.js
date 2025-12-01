@@ -27,6 +27,7 @@ router.post('/login', async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      pending_role: user.pending_role,
       created_at: user.created_at,
     }
     const token = jwt.sign(payload, process.env.JWT_SECRET, {

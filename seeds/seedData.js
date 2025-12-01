@@ -1,10 +1,11 @@
+import bcrypt from 'bcryptjs'
 export const seedData = {
   Users: [
     {
       user_id: 1,
       name: 'Liam Brown',
       email: 'liam.brown@example.com',
-      password_hash: 'hashed_pw_1',
+      password_hash: bcrypt.hashSync('SecurePassword123#', 10),
       role: 'lawyer',
       created_at: '2025-11-01T10:00:00Z',
     },
@@ -479,6 +480,30 @@ export const seedData = {
       email: 'hannah.wright@example.com',
       password_hash: 'hashed_pw_60',
       role: 'accountant',
+      created_at: '2025-12-25T11:00:00Z',
+    },
+    {
+      user_id: 61,
+      name: 'John Brown',
+      email: 'jbrown@example.com',
+      password_hash: bcrypt.hashSync('SecurePassword123#', 10),
+      role: 'admin',
+      created_at: '2025-12-25T11:00:00Z',
+    },
+    {
+      user_id: 62,
+      name: 'Susan Johnson',
+      email: 'susan@susanjohnson.com',
+      password_hash: bcrypt.hashSync('SecurePassword123#', 10),
+      role: 'client',
+      created_at: '2025-12-25T11:00:00Z',
+    },
+    {
+      user_id: 63,
+      name: 'David James',
+      email: 'djames@davidjames.co.uk',
+      password_hash: bcrypt.hashSync('SecurePassword123#', 10),
+      role: 'lawyer',
       created_at: '2025-12-25T11:00:00Z',
     },
   ],

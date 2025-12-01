@@ -6,6 +6,7 @@ import {
   deleteBooking,
   updateBooking,
 } from './controllers.js'
+import { authorize } from '../../middleware/authorization.js'
 
 export const router = Router()
 
@@ -16,10 +17,10 @@ router.get('/bookings', getAllBookings)
 router.get('/bookings/:id', getOneBooking)
 
 // Create Booking
-router.post('/bookings', createBooking)
+router.post('/bookings', authorize, createBooking)
 
 // Update Booking
-router.put('/bookings/:id', updateBooking)
+router.put('/bookings/:id', authorize, updateBooking)
 
 // Delete Booking
-router.delete('/bookings/:id', deleteBooking)
+router.delete('/bookings/:id', authorize, deleteBooking)

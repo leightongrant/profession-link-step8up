@@ -6,6 +6,7 @@ import {
   deleteProfile,
   updateProfile,
 } from './controllers.js'
+import { authorize } from '../../middleware/authorization.js'
 
 export const router = Router()
 
@@ -16,10 +17,10 @@ router.get('/profiles', getAllProfiles)
 router.get('/profiles/:id', getOneProfile)
 
 // Create user
-router.post('/profiles', createProfile)
+router.post('/profiles', authorize, createProfile)
 
 // Delete user
-router.delete('/profiles/:id', deleteProfile)
+router.delete('/profiles/:id', authorize, deleteProfile)
 
 // Update user
-router.put('/profiles/:id', updateProfile)
+router.put('/profiles/:id', authorize, updateProfile)

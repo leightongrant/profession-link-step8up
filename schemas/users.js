@@ -38,6 +38,14 @@ export const updateUserSchema = createUserSchema
         'string.base': 'Role must be text.',
         'any.only': 'Role must be one of: client, lawyer, accountant, admin.',
       }),
+    pending_role: Joi.string()
+      .allow(null)
+      .valid('lawyer', 'accountant')
+      .optional()
+      .messages({
+        'string.base': 'Pending role must be text.',
+        'any.only': 'Pending role must be one of: lawyer, accountant, null',
+      }),
   })
 
 export const loginSchema = Joi.object({

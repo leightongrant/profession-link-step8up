@@ -5,7 +5,9 @@ import {
   getOneUser,
   deleteUser,
   updateUser,
+  requestRole,
 } from './controllers.js'
+import { authorize } from '../../middleware/authorization.js'
 
 export const router = Router()
 
@@ -19,7 +21,10 @@ router.get('/users/:id', getOneUser)
 router.post('/users', createUser)
 
 // Delete user
-router.delete('/users/:id', deleteUser)
+router.delete('/users/:id', authorize, deleteUser)
 
 // Update user
-router.put('/users/:id', updateUser)
+router.put('/users/:id', authorize, updateUser)
+
+// Request Role change
+router.put('/users/:id/request-role', requestRole)
