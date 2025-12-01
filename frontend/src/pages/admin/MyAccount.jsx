@@ -3,8 +3,11 @@ import { useAuthStore } from '../../store/useAuthStore'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import Button from 'react-bootstrap/esm/Button'
 import { api as axios } from '../../api'
+import { ProfileForm } from '../../components/forms/ProfileForm'
+import { useState } from 'react'
 
 export const MyAccount = () => {
+  const [show, setShow] = useState(false)
   const user = useAuthStore((state) => state.user)
   const setAuth = useAuthStore((state) => state.setAuth)
   const { loading, data, error } = useFetchUsers(user.user_id)
@@ -48,12 +51,22 @@ export const MyAccount = () => {
             </p>
           </>
         )}
-        {data.role === 'lawyer' && !data.Profile && (
-          <Button>Create Profile</Button>
-        )}
-        {data.role === 'accountant' && !data.Profile && (
-          <Button>Create Profile</Button>
-        )}
+        {show && <ProfileForm setShow={setShow} />}
+        {data.role === 'lawyer' &&
+          !data.Profile &&
+          (show ? (
+            ''
+          ) : (
+            <Button onClick={() => setShow(true)}>Create Profile</Button>
+          ))}
+
+        {data.role === 'accountant' &&
+          !data.Profile &&
+          (show ? (
+            ''
+          ) : (
+            <Button onClick={() => setShow(true)}>Create Profile</Button>
+          ))}
 
         {user.pending_role && (
           <p className="text-info">Request is pending...</p>
