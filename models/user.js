@@ -23,13 +23,25 @@ export const User = sequelize.define(
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM('lawyer', 'accountant', 'client', 'admin'),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'client',
+      validate: {
+        isIn: {
+          args: [['lawyer', 'accountant', 'client', 'admin']],
+          msg: 'Invalid role specified.',
+        },
+      },
     },
     pending_role: {
-      type: DataTypes.ENUM('lawyer', 'accountant'),
+      type: DataTypes.STRING,
       allowNull: true,
+      validate: {
+        isIn: {
+          args: [['lawyer', 'accountant']],
+          msg: 'Invalid pending role specified.',
+        },
+      },
     },
     created_at: {
       type: DataTypes.DATE,

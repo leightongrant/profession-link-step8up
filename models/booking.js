@@ -30,9 +30,15 @@ export const Booking = sequelize.define(
       onDelete: 'CASCADE',
     },
     status: {
-      type: DataTypes.ENUM('pending', 'confirmed', 'completed'),
+      type: DataTypes.STRING,
       defaultValue: 'pending',
       allowNull: false,
+      validate: {
+        isIn: {
+          args: [['pending', 'confirmed', 'completed']],
+          msg: 'Invalid status specified.',
+        },
+      },
     },
     message: {
       type: DataTypes.TEXT,
