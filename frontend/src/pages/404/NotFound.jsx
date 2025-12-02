@@ -22,7 +22,7 @@ export const NotFound = () => {
         </Row>
         <Row>
           <Col className='d-flex justify-content-center'>
-            <TbError404 size="400px"/>
+            <TbError404 size="400px" aria-hidden="true" />
           </Col>
         </Row>
         <Row>
