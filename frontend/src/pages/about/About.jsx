@@ -42,7 +42,7 @@ export const About = () => {
             </Col>
           <Col>
             <div className="mt-3 text-center">
-              <Link to='/signup'><button class="btn btn-primary">Create an account with us today!</button></Link>
+              <Link to='/signup'><button className="btn btn-primary">Create an account with us today!</button></Link>
             </div>
           </Col>
           </div>
@@ -51,7 +51,7 @@ export const About = () => {
           <div className="shadow-lg p-4 mb-5 mt-3 bg-white rounded">
             <Col className='text-center'> Our Team </Col>
               {profilePictures.map((x, index) => (
-                          <div class="mt-5 " key={index}>
+                          <div className="mt-5 " key={index}>
                               <div className='mb-2 ml-5'>{x.name.first + ' ' + x.name.last}</div>
                               <img className="m-5 shadow rounded" src={x.picture.large}/>
                               <div className='d-inline'>{descriptionList[index]}</div>
