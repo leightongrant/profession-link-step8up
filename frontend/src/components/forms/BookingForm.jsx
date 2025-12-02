@@ -69,6 +69,14 @@ export const BookingForm = ({ setShow, service_id, refetch }) => {
         <Button variant="primary" type="submit">
           Submit
         </Button>
+        <Button
+          variant="secondary"
+          type="button"
+          onClick={() => setShow(false)}
+          className="ms-2"
+        >
+          Close
+        </Button>
       </Form>
     </Stack>
   )

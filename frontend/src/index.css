@@ -9,6 +9,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--bs-indigo) !important;
+}
+a.nav-link.active {
+  color: var(--bs-indigo) !important;
+}
+
 .form-control:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);

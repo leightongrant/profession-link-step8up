@@ -1,16 +1,14 @@
 import './HomePage.css'
 import Stack from 'react-bootstrap/esm/Stack'
 import { Hero } from './Hero'
-import { RecentProfiles } from './RecentProfiles'
 import { Profiles } from '../profiles/Profiles'
-// import Container from 'react-bootstrap/esm/Container'
-//import { Link } from 'react-router-dom'
-
+import { CallToAction } from './CallToAction'
 export const Homepage = () => {
   return (
     <Stack as="main">
       <Hero />
       <Profiles title="Featured Profiles" limit={4} />
+      <CallToAction />
     </Stack>
   )
 }

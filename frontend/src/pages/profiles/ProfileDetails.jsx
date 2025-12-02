@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/esm/Col'
 import Image from 'react-bootstrap/esm/Image'
 import { MdStarRate } from 'react-icons/md'
 import Card from 'react-bootstrap/esm/Card'
+import Badge from 'react-bootstrap/esm/Badge'
 import { FaQuoteLeft } from 'react-icons/fa'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { NotFound } from '../404/NotFound'
@@ -13,11 +14,10 @@ import { ErrorPage } from '../error/ErrorPage'
 import { LoadingPage } from '../loading/LoadingPage'
 import { BookingForm } from '../../components/forms/BookingForm'
 import { useState } from 'react'
-import { useAuthStore } from '../../store/useAuthStore'
 
 const ServiceCard = ({ service, refetch }) => {
   const [show, setShow] = useState(false)
-  const user = useAuthStore((state) => state.user)
+
   return (
     <Card className="bg-dark-subtle">
       <Card.Body>
@@ -43,8 +43,9 @@ const ServiceCard = ({ service, refetch }) => {
 }
 const ReviewCard = ({ review }) => {
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className="h-100">
       <Card.Body>
+        <Card.Title className="mb-4">{review.title}</Card.Title>
         <FaQuoteLeft className="fs-2 text-secondary" />
         <Card.Text>{review.comment}</Card.Text>
         <Card.Text>
@@ -60,9 +61,8 @@ export const ProfileDetails = () => {
   const { user_id } = useParams()
 
   const id = user_id.match(/\d+$/)
-  if (!id) {
-    return <NotFound />
-  }
+  if (!id) return <NotFound />
+
   const { loading, data, error, refetch } = useFetchUsers(id[0])
 
   if (loading) return <LoadingPage />
@@ -73,68 +73,76 @@ export const ProfileDetails = () => {
   const reviews = []
   services.forEach((service) => {
     service.Reviews.forEach((review) => {
-      reviews.push(review)
+      reviews.push({ ...review, title: service.title })
     })
   })
 
   return (
-    <Stack as="main">
-      <Container className="py-5 border-bottom">
+    <Stack as="main" className="bg-light-subtle">
+      <Container className="py-5">
         <Row>
-          <Col md={2}>
-            <Image
-              src={`https://i.pravatar.cc/150?u=${user.email}`}
-              className="img-fluid w-100"
-            />
-          </Col>
-          <Col md={6}>
-            <Stack>
-              <Stack>
-                <h3>{user.name}</h3>
-                <p className="text-capitalize">{user.role}</p>
-                <p>Email: {user.email} </p>
-                <p>{profile.location}</p>
-              </Stack>
-              <Stack>
-                <h4>About</h4>
-                <p>Specialization: {profile.specialization}</p>
-                <p>Experience: {profile.experience_years} years</p>
-              </Stack>
-              <Stack>
-                <h4>Bio</h4>
-                <p>{profile.bio}</p>
-              </Stack>
-              <Stack>
-                <h4>Average Rating</h4>
-                <p>
-                  {profile.rating_avg} <MdStarRate />
-                </p>
-              </Stack>
-            </Stack>
-          </Col>
           <Col md={4}>
-            <Stack className="gap-3">
-              <h3>Services</h3>
-              {services.map((service) => {
-                return (
-                  <ServiceCard
-                    service={service}
-                    key={service.service_id}
-                    refetch={refetch}
-                  />
-                )
-              })}
-            </Stack>
+            <Card className="text-center shadow-sm">
+              <Card.Body>
+                <Image
+                  src={`https://i.pravatar.cc/150?u=${user.email}`}
+                  roundedCircle
+                  className="mb-3"
+                  style={{ width: '150px', height: '150px' }}
+                />
+                <h3>{user.name}</h3>
+                <p className="text-muted text-capitalize">{user.role}</p>
+                <hr />
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
+                <p>
+                  <strong>Location:</strong> {profile.location}
+                </p>
+                <p>
+                  <strong>Avg. Rating:</strong> {profile.rating_avg}{' '}
+                  <MdStarRate />
+                </p>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={8}>
+            <Card className="mb-4 shadow-sm">
+              <Card.Body>
+                <Card.Title as="h4">About</Card.Title>
+                <p>
+                  <strong>Specialization:</strong> {profile.specialization}
+                </p>
+                <p>
+                  <strong>Experience:</strong> {profile.experience_years} years
+                </p>
+                <hr />
+                <Card.Title as="h4">Bio</Card.Title>
+                <p>{profile.bio}</p>
+              </Card.Body>
+            </Card>
+            <Card className="shadow-sm">
+              <Card.Body>
+                <Card.Title as="h4">Services</Card.Title>
+                <Stack className="gap-3 mt-3">
+                  {services.map((service) => (
+                    <ServiceCard
+                      service={service}
+                      key={service.service_id}
+                      refetch={refetch}
+                    />
+                  ))}
+                </Stack>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
-      </Container>
-      <Container className="py-5">
-        <h3 className="mb-5">Reviews</h3>
-        <Row>
+        <h3 className="my-5 text-center">What Clients Are Saying</h3>
+        <Row className="g-4">
           {reviews &&
             reviews.map((review) => {
               return (
-                <Col key={review.review_id}>
+                <Col md={6} lg={4} key={review.review_id}>
                   <ReviewCard review={review} />
                 </Col>
               )
