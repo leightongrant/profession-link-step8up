@@ -11,7 +11,7 @@ import { FaFacebook } from "react-icons/fa"
 import { FaInstagram } from "react-icons/fa"
 import { FaLinkedin } from "react-icons/fa"
 import heroImageCropped from '../../assets/images/hero-img-cropped4.png'
-import './contact.css'
+import './Contact.css'
 
 export const Contact = () => {
   return (
@@ -21,7 +21,7 @@ export const Contact = () => {
           <h2 className="text-center mb-5">Contact</h2>
           <Row>
             <Col>
-              <img src={heroImageCropped} class="contact-image" alt="hero image" roundedCircle />
+              <Image src={heroImageCropped} className="contact-image" alt="hero image"/>
             </Col>
             <Col>
               <Form>
