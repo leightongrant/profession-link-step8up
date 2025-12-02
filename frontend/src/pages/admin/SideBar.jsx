@@ -15,7 +15,7 @@ import { cilSpeedometer, cilUser, cilHome } from '@coreui/icons'
 export const Sidebar = () => {
   const user = useAuthStore((state) => state.user)
   return (
-    <CSidebar className="border-end">
+    <CSidebar className="border-end bg-dark-subtle">
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand>ProLINK</CSidebarBrand>
       </CSidebarHeader>
@@ -31,17 +31,17 @@ export const Sidebar = () => {
             <CIcon customClassName="nav-icon" icon={cilUser} /> My Account
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to="/admin/bookings" className="nav-link">
+            <CIcon customClassName="nav-icon" icon={cilSpeedometer} />
+            Bookings
+          </Link>
+        </li>
         {user.role === 'admin' && (
           <>
             <li className="nav-item">
               <Link to="/admin/users" className="nav-link">
                 <CIcon customClassName="nav-icon" icon={cilUser} /> Users
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/admin/requests" className="nav-link">
-                <CIcon customClassName="nav-icon" icon={cilSpeedometer} />{' '}
-                Requests
               </Link>
             </li>
           </>

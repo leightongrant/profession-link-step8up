@@ -35,12 +35,16 @@ export const MyAccount = () => {
         <p>
           <strong>Name:</strong> {data.name}
         </p>
-        <p>
-          <strong>Specialization:</strong> {data.Profile.specialization}
-        </p>
-        <p>
-          <strong>Location:</strong> {data.Profile.location}
-        </p>
+        {data.Profile && (
+          <p>
+            <strong>Specialization:</strong> {data.Profile.specialization}
+          </p>
+        )}
+        {data.Profile && (
+          <p>
+            <strong>Location:</strong> {data.Profile.location}
+          </p>
+        )}
         <p>
           <strong>Email:</strong> {data.email}
         </p>

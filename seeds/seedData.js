@@ -865,13 +865,22 @@ export const seedData = {
       created_at: '2026-01-02T09:00:00Z',
     },
     {
-      booking_id: 12,
-      service_id: 10,
-      client_id: 27,
-      status: 'completed',
+      booking_id: 13,
+      service_id: 1, // Mergers & Acquisitions for Liam Brown
+      client_id: 6, // Ava Williams
+      status: 'pending',
       message:
-        'I am about to sign a lease for a new retail space and need a lawyer to review the commercial lease agreement to ensure my interests are protected.',
-      created_at: '2025-12-28T14:00:00Z',
+        'Our startup is looking to acquire a smaller competitor. We need initial legal advice on the M&A process and due diligence requirements.',
+      created_at: '2026-01-22T10:00:00Z',
+    },
+    {
+      booking_id: 14,
+      service_id: 9, // Corporate Governance Review for Liam Brown
+      client_id: 9, // Benjamin Davis
+      status: 'confirmed',
+      message:
+        'We need a comprehensive review of our corporate governance policies to ensure we are aligned with the latest industry best practices and legal standards.',
+      created_at: '2026-01-23T11:30:00Z',
     },
   ],
 

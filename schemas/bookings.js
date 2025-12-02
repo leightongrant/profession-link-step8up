@@ -12,14 +12,6 @@ export const createBookingSchema = Joi.object({
     'number.integer': 'Client ID must be an integer.',
     'any.required': 'Client ID is required.',
   }),
-
-  status: Joi.string()
-    .valid('pending', 'confirmed', 'completed')
-    .default('pending')
-    .messages({
-      'any.only': 'Status must be one of: pending, confirmed, completed.',
-    }),
-
   message: Joi.string().allow(null, '').max(1000).messages({
     'string.base': 'Message must be text.',
     'string.max': 'Message cannot exceed 1000 characters.',
@@ -27,6 +19,6 @@ export const createBookingSchema = Joi.object({
 })
 
 export const updateBookingSchema = createBookingSchema.fork(
-  ['service_id', 'client_id', 'status', 'message'],
+  ['service_id', 'client_id', 'message'],
   (field) => field.optional()
 )

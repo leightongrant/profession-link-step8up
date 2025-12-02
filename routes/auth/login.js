@@ -2,12 +2,16 @@ import { Router } from 'express'
 import { loginSchema } from '../../schemas/users.js'
 import bcrypt from 'bcryptjs'
 import { User } from '../../models/user.js'
+import { Profile } from '../../models/profile.js'
+import { Service } from '../../models/service.js'
+import { Booking } from '../../models/booking.js'
 import jwt from 'jsonwebtoken'
 
 export const router = Router()
 
 router.post('/login', async (req, res) => {
-  const body = req.body
+  const { body } = req
+
   const { error, value } = loginSchema.validate(body)
   if (error) {
     return res.status(400).json({ message: 'Email or password invalid!' })
@@ -16,6 +20,27 @@ router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email: value.email },
+      include: [
+        {
+          model: Profile,
+          include: [
+            {
+              model: Service,
+              include: [
+                {
+                  model: Booking,
+                  include: [
+                    {
+                      model: User,
+                      attributes: ['name', 'email', 'created_at'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     })
     if (!user) throw new Error('Email or password invalid!')
 
@@ -29,6 +54,8 @@ router.post('/login', async (req, res) => {
       role: user.role,
       pending_role: user.pending_role,
       created_at: user.created_at,
+      profile: user.Profile,
+      service: user.Service,
     }
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '24h',

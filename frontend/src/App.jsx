@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/useAuthStore'
 import { api as axios } from './api'
 import { ManageUsers } from './pages/admin/ManageUser'
+import { ManageBookings } from './pages/admin/ManageBookings.jsx'
 import { MyAccount } from './pages/admin/MyAccount.jsx'
 import { Profiles } from './pages/profiles/Profiles.jsx'
 import { ProfileDetails } from './pages/profiles/ProfileDetails.jsx'
@@ -59,6 +60,7 @@ function App() {
       >
         <Route path="/admin/my-account" element={<MyAccount />} />
         <Route path="/admin/users" element={<ManageUsers />} />
+        <Route path="/admin/bookings" element={<ManageBookings />} />
       </Route>
     </Routes>
   )

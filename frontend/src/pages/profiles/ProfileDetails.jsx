@@ -11,18 +11,32 @@ import { NotFound } from '../404/NotFound'
 import { useParams } from 'react-router-dom'
 import { ErrorPage } from '../error/ErrorPage'
 import { LoadingPage } from '../loading/LoadingPage'
+import { BookingForm } from '../../components/forms/BookingForm'
+import { useState } from 'react'
+import { useAuthStore } from '../../store/useAuthStore'
 
-const ServiceCard = ({ service }) => {
+const ServiceCard = ({ service, refetch }) => {
+  const [show, setShow] = useState(false)
+  const user = useAuthStore((state) => state.user)
   return (
-    <Card>
+    <Card className="bg-dark-subtle">
       <Card.Body>
         <Card.Title>{service.title}</Card.Title>
         <Card.Text>{service.description}</Card.Text>
         <Card.Text>{service.price_range}</Card.Text>
-        <Card.Text>{service.availability}</Card.Text>
-        <Card.Link href="#" className="btn btn-primary">
-          Book This Service
-        </Card.Link>
+        <Card.Text className="fw-semibold">{service.availability}</Card.Text>
+        {!show && (
+          <Card.Link className="btn btn-primary" onClick={() => setShow(true)}>
+            Book This Service
+          </Card.Link>
+        )}
+        {show && (
+          <BookingForm
+            setShow={setShow}
+            service_id={service.service_id}
+            refetch={refetch}
+          />
+        )}
       </Card.Body>
     </Card>
   )
@@ -49,7 +63,7 @@ export const ProfileDetails = () => {
   if (!id) {
     return <NotFound />
   }
-  const { loading, data, error } = useFetchUsers(id[0])
+  const { loading, data, error, refetch } = useFetchUsers(id[0])
 
   if (loading) return <LoadingPage />
   if (error) return <ErrorPage />
@@ -103,7 +117,11 @@ export const ProfileDetails = () => {
               <h3>Services</h3>
               {services.map((service) => {
                 return (
-                  <ServiceCard service={service} key={service.service_id} />
+                  <ServiceCard
+                    service={service}
+                    key={service.service_id}
+                    refetch={refetch}
+                  />
                 )
               })}
             </Stack>
