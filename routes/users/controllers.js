@@ -89,7 +89,7 @@ export const getOneUser = async (req, res) => {
 // Create User
 export const createUser = async (req, res) => {
   try {
-    const body = req.body
+    const { body } = req
     const validatedUser = await createUserSchema.validateAsync(body, {
       abortEarly: false,
     })

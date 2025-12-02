@@ -3,6 +3,7 @@ import {
   createBookingSchema,
   updateBookingSchema,
 } from '../../schemas/bookings.js'
+import { User } from '../../models/user.js'
 
 // Get all Bookings
 export const getAllBookings = async (_, res) => {
@@ -26,7 +27,7 @@ export const getOneBooking = async (req, res) => {
       return res.status(400).json({ message: 'Invalid booking id' })
     }
 
-    const result = await Booking.findByPk(id)
+    const result = await Booking.findByPk(id, { include: User })
     if (!result) {
       return res.status(404).json({ message: 'Booking not found' })
     }
@@ -43,7 +44,7 @@ export const getOneBooking = async (req, res) => {
 // Create Booking
 export const createBooking = async (req, res) => {
   try {
-    const body = req.body
+    const { body } = req
     const validatedBooking = await createBookingSchema.validateAsync(body, {
       abortEarly: false,
     })
@@ -70,7 +71,7 @@ export const updateBooking = async (req, res) => {
       return res.status(400).json({ message: 'Invalid booking id' })
     }
 
-    const body = req.body
+    const { body } = req
     const validatedBooking = await updateBookingSchema.validateAsync(body, {
       abortEarly: false,
     })
