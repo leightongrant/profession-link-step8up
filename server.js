@@ -36,8 +36,8 @@ const syncDb = async () => {
   }
 }
 
-connect()
-syncDb()
+await connect()
+await syncDb()
 
 const PORT = process.env.PORT || 3000
 
