@@ -21,7 +21,7 @@ export const Contact = () => {
           <h2 className="text-center mb-5">Contact</h2>
           <Row>
             <Col>
-              <Image src={heroImageCropped} className="contact-image" alt="hero image"/>
+              <Image src={heroImageCropped} className="contact-image" alt="hero image cropped"/>
             </Col>
             <Col>
               <Form>
