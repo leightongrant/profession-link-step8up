@@ -11,18 +11,24 @@ import { api as axios } from '../../api.js'
 export const About = () => {
 
   const [profilePictures, setProfilePictures] = useState([]);
+  const [error, setError] = useState(false);
   const descriptionList = [
     'Responsible for the development and day to day management of ProfessionalLink.',
-    'Founder of the website ProfessionalLink. Has worked on the backend and frontend of the application.',
-    'Has a degree in business studies and has worked within the legal sector for the last 8 years.'
+    'Has a degree in business studies and has worked within the legal sector for the last 8 years.',
+    'Founder of the website ProfessionalLink. Has worked on the backend and frontend of the application.'
     
-  ]
+  ];
   
   const getPictures = async () => {
+    try {
       const profileRes = await axios.get('https://randomuser.me/api/?results=3');
       const data = profileRes.data;
       setProfilePictures(data.results);
-      console.log(data.results);
+      setError(false);
+    } catch {
+      setError(true);
+    }
+
   }
   useEffect(() => {
   	getPictures();
@@ -50,13 +56,13 @@ export const About = () => {
         <Row>
           <div className="shadow-lg p-4 mb-5 mt-3 bg-white rounded">
             <Col className='text-center'> Our Team </Col>
-              {profilePictures.map((x, index) => (
-                          <div className="mt-5 " key={index}>
+              { !error ? profilePictures.map((x, index) => (
+                          <Col className="mt-5" key={index}>
                               <div className='mb-2 ml-5'>{x.name.first + ' ' + x.name.last}</div>
-                              <img className="m-5 shadow rounded" src={x.picture.large}/>
+                              <img className="m-3 shadow rounded" src={x.picture.large} alt="image of employee" loading="lazy"/>
                               <div className='d-inline'>{descriptionList[index]}</div>
-                          </div>
-              ))} 
+                          </Col>
+              )) : <Col className="text-danger text-center mt-3">Error showing employee images</Col> }
           </div>
         </Row>
       </Container>
