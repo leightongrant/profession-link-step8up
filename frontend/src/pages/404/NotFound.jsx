@@ -16,13 +16,17 @@ export const NotFound = () => {
           <Col className="text-center">Page Not Found</Col>
         </Row>
         <Row>
-          <div className="text-center">The page you are looking for doesn't seem to exist. </div>
+          <Col>
+            <div className="text-center">The page you are looking for doesn't seem to exist. </div>
+          </Col>
         </Row>
         <Row>
-          <TbError404 size="400px" />
+          <Col className='d-flex justify-content-center'>
+            <TbError404 size="400px"/>
+          </Col>
         </Row>
         <Row>
-          <Link to="/profiles"><button className="btn btn-primary mx-auto d-block mt-4">Go back to the profiles page</button></Link>
+          <Link to="/profiles"><Button className="btn btn-primary mx-auto d-block mt-4">Go back to the profiles page</Button></Link>
         </Row>
       </Container>
     </Stack>
