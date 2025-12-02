@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Stack } from 'react-bootstrap'
 import {
   FaFacebookF,
   FaTwitter,
@@ -92,18 +92,20 @@ export const Footer = () => {
                 height: '2px',
               }}
             />
-            <a href="#!" className="text-white me-4">
-              <FaFacebookF />
-            </a>
-            <a href="#!" className="text-white me-4">
-              <FaTwitter />
-            </a>
-            <a href="#!" className="text-white me-4">
-              <FaInstagram />
-            </a>
-            <a href="#!" className="text-white me-4">
-              <FaLinkedinIn />
-            </a>
+            <Stack direction="horizontal" className="gap-3">
+              <a href="#!" className="text-white">
+                <FaFacebookF />
+              </a>
+              <a href="#!" className="text-white">
+                <FaTwitter />
+              </a>
+              <a href="#!" className="text-white">
+                <FaInstagram />
+              </a>
+              <a href="#!" className="text-white">
+                <FaLinkedinIn />
+              </a>
+            </Stack>
           </Col>
         </Row>
       </Container>
