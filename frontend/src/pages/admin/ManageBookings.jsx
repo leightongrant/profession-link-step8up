@@ -27,32 +27,41 @@ export const ManageBookings = () => {
       setLoading(true)
       const response = await axios.get(`/bookings`)
       const data = await response.data
-      const services = user.profile.Services
 
-      const bookingsFound = []
-      const tracker = []
-      data.forEach((item) => {
-        const { service_id } = item
-        services.forEach((service) => {
-          const { Bookings } = service
-          Bookings.forEach((booking) => {
-            if (service_id === booking.service_id) {
-              if (tracker.includes(booking.booking_id)) {
-                return
-              }
-              bookingsFound.push({
-                id: booking.booking_id,
-                name: booking.User.name,
-                email: booking.User.email,
-                message: booking.message,
-                status: booking.status,
-                created_at: booking.created_at,
-              })
-              tracker.push(booking.booking_id)
+      // Get service IDs owned by the current user (lawyer/accountant)
+      const userServices = user?.profile?.Services || []
+      const userServiceIds = userServices.map((service) => service.service_id)
+
+      // Show bookings made by the user OR bookings for user's services
+      const bookingsFound = data
+        .filter(
+          (booking) =>
+            booking.user_id === user.user_id ||
+            userServiceIds.includes(booking.service_id)
+        )
+        .map((booking) => {
+          // If current user is the client, show provider info
+          if (booking.user_id === user.user_id) {
+            return {
+              id: booking.booking_id,
+              name: booking.Service?.User?.name || 'Provider',
+              email: booking.Service?.User?.email || 'Provider Email',
+              message: booking.message,
+              status: booking.status,
+              created_at: booking.created_at,
             }
-          })
+          }
+          // If current user is the provider, show client info
+          // console.log(booking)
+          return {
+            id: booking.booking_id,
+            name: booking.User?.name || 'Client',
+            email: booking.User?.email || 'Client Email',
+            message: booking.message,
+            status: booking.status,
+            created_at: booking.created_at,
+          }
         })
-      })
 
       setBookings(bookingsFound)
     } catch (error) {
@@ -69,8 +78,7 @@ export const ManageBookings = () => {
 
   if (error) return <p>Error</p>
   if (loading) return <CSpinner color="primary" />
-  if (bookings.length === 0) <p>No Bookings</p>
-  // return <p>Testing...</p>
+  if (bookings.length === 0) return <p>No Bookings</p>
   return (
     <CCard>
       <CCardHeader>Manage Bookings</CCardHeader>

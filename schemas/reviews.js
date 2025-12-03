@@ -1,4 +1,12 @@
 import Joi from 'joi'
+import sanitizeHtml from 'sanitize-html'
+
+const sanitize = (value) => {
+  return sanitizeHtml(value, {
+    allowedTags: [],
+    allowedAttributes: {},
+  })
+}
 
 export const createReviewSchema = Joi.object({
   service_id: Joi.number().integer().required().messages({
@@ -21,7 +29,7 @@ export const createReviewSchema = Joi.object({
     'any.required': 'Rating is required.',
   }),
 
-  comment: Joi.string().min(10).max(500).required().messages({
+  comment: Joi.string().min(10).max(500).required().custom(sanitize).messages({
     'string.base': 'Comment must be text.',
     'string.min': 'Comment should be at least 10 characters long.',
     'string.max': 'Comment cannot exceed 500 characters.',
@@ -38,7 +46,7 @@ export const updateReviewSchema = Joi.object({
     'any.required': 'Rating is required.',
   }),
 
-  comment: Joi.string().min(10).max(500).required().messages({
+  comment: Joi.string().min(10).max(500).required().custom(sanitize).messages({
     'string.base': 'Comment must be text.',
     'string.min': 'Comment should be at least 10 characters long.',
     'string.max': 'Comment cannot exceed 500 characters.',

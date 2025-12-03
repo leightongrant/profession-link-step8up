@@ -32,3 +32,8 @@ a.nav-link.active {
 .form-control::placeholder {
   color: lightgray;
 }
+
+.sun:hover,
+.moon:hover {
+  cursor: pointer;
+}

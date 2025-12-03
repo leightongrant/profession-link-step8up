@@ -1,4 +1,12 @@
 import Joi from 'joi'
+import sanitizeHtml from 'sanitize-html'
+
+const sanitize = (value) => {
+  return sanitizeHtml(value, {
+    allowedTags: [],
+    allowedAttributes: {},
+  })
+}
 
 export const profileSchema = Joi.object({
   user_id: Joi.number().integer().required().messages({
@@ -7,7 +15,7 @@ export const profileSchema = Joi.object({
     'any.required': 'User ID is required.',
   }),
 
-  specialization: Joi.string().max(100).required().messages({
+  specialization: Joi.string().max(100).required().custom(sanitize).messages({
     'string.base': 'Specialization must be text.',
     'string.empty': 'Please provide your specialization.',
     'string.max': 'Specialization cannot exceed 100 characters.',
@@ -21,7 +29,7 @@ export const profileSchema = Joi.object({
     'any.required': 'Experience years are required.',
   }),
 
-  bio: Joi.string().required().messages({
+  bio: Joi.string().required().custom(sanitize).messages({
     'string.base': 'Bio must be text.',
     'string.empty': 'Please provide a bio.',
     'any.required': 'Bio is required.',
@@ -30,14 +38,14 @@ export const profileSchema = Joi.object({
     'string.base': 'Profile photo URL must be text.',
     'string.uri': 'Profile photo URL must be a valid URI.',
   }),
-  location: Joi.string().max(100).allow(null, '').messages({
+  location: Joi.string().max(100).allow(null, '').custom(sanitize).messages({
     'string.base': 'Location must be text.',
     'string.max': 'Location cannot exceed 100 characters.',
   }),
 })
 
 export const updateProfileSchema = Joi.object({
-  specialization: Joi.string().max(100).messages({
+  specialization: Joi.string().max(100).custom(sanitize).messages({
     'string.base': 'Specialization must be text.',
     'string.max': 'Specialization cannot exceed 100 characters.',
   }),
@@ -48,7 +56,7 @@ export const updateProfileSchema = Joi.object({
     'number.min': 'Experience years cannot be negative.',
   }),
 
-  bio: Joi.string().messages({
+  bio: Joi.string().custom(sanitize).messages({
     'string.base': 'Bio must be text.',
   }),
 
@@ -63,7 +71,7 @@ export const updateProfileSchema = Joi.object({
     'string.uri': 'Profile photo URL must be a valid URI.',
   }),
 
-  location: Joi.string().max(100).allow(null, '').messages({
+  location: Joi.string().max(100).allow(null, '').custom(sanitize).messages({
     'string.base': 'Location must be text.',
     'string.max': 'Location cannot exceed 100 characters.',
   }),

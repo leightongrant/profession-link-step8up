@@ -114,9 +114,11 @@ export const Footer = () => {
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
       >
         © {new Date().getFullYear()} Copyright:
-        <a className="text-white" href="https://professionlink.com/">
-          {' '}
-          ProfessionLink.com
+        <a
+          className="ms-2 text-light-emphasis text-decoration-none"
+          href="https://prolink.com/"
+        >
+          ProLINK
         </a>
       </div>
     </footer>

@@ -26,7 +26,7 @@ const UserCard = ({ user }) => {
       <Card>
         <Card.Img
           variant="top"
-          src={`https://i.pravatar.cc/150?u=${user.email}`}
+          src={`https://i.pravatar.cc/300?u=${user.email}`}
           loading="lazy"
         />
         <Card.Body>

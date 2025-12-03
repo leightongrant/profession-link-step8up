@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react'
-import { NavLink } from 'react-router-dom'
-// import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useRef, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../../store/useAuthStore'
 import {
   CContainer,
   CDropdown,
@@ -16,23 +16,30 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
   cilContrast,
-  cilEnvelopeOpen,
-  cilList,
   cilMenu,
   cilMoon,
   cilSun,
+  cilAccountLogout,
+  cilHome,
+  cilCommentSquare,
+  cilAddressBook,
+  cilBookmark,
+  cilAppsSettings,
 } from '@coreui/icons'
 
-// import { AppBreadcrumb } from './index'
-// import { AppHeaderDropdown } from './header/index'
-
-export const AdminHeader = () => {
+export const AdminHeader = ({ sidebarShow, setbarShow }) => {
   const headerRef = useRef()
   const { colorMode, setColorMode } = useColorModes(
     'coreui-free-react-admin-template-theme'
   )
+  const navigate = useNavigate()
+
+  const clearAuth = useAuthStore((state) => state.clearAuth)
+  const handleLogout = () => {
+    clearAuth()
+    navigate('/login')
+  }
 
   // const dispatch = useDispatch()
   // const sidebarShow = useSelector((state) => state.sidebarShow)
@@ -50,46 +57,93 @@ export const AdminHeader = () => {
     return () => document.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Get current user from zustand
+  const user = useAuthStore((state) => state.user)
+
   return (
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
       <CContainer className="border-bottom px-4" fluid>
         <CHeaderToggler
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+          onClick={() => setbarShow(!sidebarShow)}
           style={{ marginInlineStart: '-14px' }}
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
-            <CNavLink to="/dashboard" as={NavLink}>
-              Dashboard
+            <CNavLink to="/admin/my-account" as={NavLink}>
+              <CIcon icon={cilHome} className="me-1" />
+              Home
             </CNavLink>
           </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
-          </CNavItem>
+          {user && user.role === 'admin' && (
+            <CNavItem>
+              <CNavLink to="/admin/users" as={NavLink}>
+                <CIcon icon={cilAddressBook} className="me-1" /> Users
+              </CNavLink>
+            </CNavItem>
+          )}
+          {user &&
+            (user.role === 'accountant' ||
+              user.role === 'lawyer' ||
+              user.role === 'client') && (
+              <CNavItem>
+                <CNavLink to="/admin/bookings" as={NavLink}>
+                  <CIcon icon={cilBookmark} className="me-1" /> Bookings
+                </CNavLink>
+              </CNavItem>
+            )}
+          {user && (user.role === 'accountant' || user.role === 'lawyer') && (
+            <>
+              <CNavItem>
+                <CNavLink to="/admin/services" as={NavLink}>
+                  <CIcon icon={cilAppsSettings} className="me-1" /> Services
+                </CNavLink>
+              </CNavItem>
+
+              <CNavItem>
+                <CNavLink to="/admin/reviews" as={NavLink}>
+                  <CIcon icon={cilCommentSquare} className="me-1" /> Reviews
+                </CNavLink>
+              </CNavItem>
+            </>
+          )}
         </CHeaderNav>
         <CHeaderNav className="ms-auto">
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilEnvelopeOpen} size="lg" />
-            </CNavLink>
-          </CNavItem>
+          {/* You can add notification or message icons here in the future if needed */}
         </CHeaderNav>
         <CHeaderNav>
+          {/* User dropdown with name and logout */}
+          {user && user.name && (
+            <CDropdown variant="nav-item" placement="bottom-end">
+              <CDropdownToggle
+                caret={false}
+                className="fw-semibold text-primary d-flex align-items-center"
+              >
+                {user.name}
+              </CDropdownToggle>
+              <CDropdownMenu>
+                <CDropdownItem
+                  onClick={() => navigate('/')}
+                  className="d-flex align-items-center"
+                  as="button"
+                  type="button"
+                >
+                  <CIcon icon={cilHome} className="me-2" />
+                  Home
+                </CDropdownItem>
+                <CDropdownItem
+                  onClick={handleLogout}
+                  className="d-flex align-items-center text-danger"
+                  as="button"
+                  type="button"
+                >
+                  <CIcon icon={cilAccountLogout} className="me-2" />
+                  Logout
+                </CDropdownItem>
+              </CDropdownMenu>
+            </CDropdown>
+          )}
           <li className="nav-item py-1">
             <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
           </li>
@@ -133,10 +187,6 @@ export const AdminHeader = () => {
               </CDropdownItem>
             </CDropdownMenu>
           </CDropdown>
-          <li className="nav-item py-1">
-            <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
-          </li>
-          {/* <AppHeaderDropdown /> */}
         </CHeaderNav>
       </CContainer>
       <CContainer className="px-4" fluid>
