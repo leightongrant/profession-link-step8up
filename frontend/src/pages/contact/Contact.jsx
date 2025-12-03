@@ -21,7 +21,7 @@ export const Contact = () => {
     <>
       <Stack className="contact-page py-5" as="main">
         <Container>
-          <h2 className="text-center mb-5">Contact Us</h2>
+          <h2 className="mb-5">Contact Us</h2>
           <Row className="contact-us-main p-3">
             <Col className="contact-us-left p-3">
               <Row className = "g-0">
@@ -32,17 +32,17 @@ export const Contact = () => {
                 <Card className="profile">
                   <Image src={jamesChanImage} className="profile-image" alt="James Chan customer representative" roundedCircle fluid></Image>
                   <Col className="profile-details">
-                    <Row className="text-center profile-detail">James Chan</Row>
-                    <Row className="text-center profile-detail">Customer Representative</Row>
-                    <Row className="text-center profile-detail">james.chan@prolink.com</Row>            
+                    <Row className="profile-detail">James Chan</Row>
+                    <Row className="profile-detail">Customer Representative</Row>
+                    <Row className="profile-detail">james.chan@prolink.com</Row>            
                   </Col>
                 </Card>
                 <Card className="profile">
                   <Image src={hollyWilloughbyImage} className="profile-image" alt="Holly Willoughby customer representative" roundedCircle fluid></Image>
                   <Col className="profile-details">
-                    <Row className="text-center profile-detail">Holly Willoughby</Row>
-                    <Row className="text-center profile-detail">Customer Representative</Row>
-                    <Row className="text-center profile-detail">holly.willoughby@prolink.com</Row>                 
+                    <Row className="profile-detail">Holly Willoughby</Row>
+                    <Row className="profile-detail">Customer Representative</Row>
+                    <Row className="profile-detail">holly.willoughby@prolink.com</Row>                 
                   </Col>
                 </Card>
               </Row>
