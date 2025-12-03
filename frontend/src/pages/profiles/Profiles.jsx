@@ -10,6 +10,7 @@ import Pagination from 'react-bootstrap/Pagination'
 import { useNavigate } from 'react-router-dom'
 import { useFetchUsers } from '../../hooks/useFetchUsers.js'
 import { LoadingPage } from '../loading/LoadingPage.jsx'
+import { ErrorPage } from '../error/ErrorPage.jsx'
 import { shuffle } from 'moderndash'
 import { useLocation } from 'react-router-dom'
 

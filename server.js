@@ -24,6 +24,7 @@ const connect = async () => {
     console.log('Connection has been established successfully.')
   } catch (error) {
     console.error('Unable to connect to the database:', error)
+    process.exit(1)
   }
 }
 
@@ -52,6 +53,10 @@ app.use('/api', services)
 app.use('/api', bookings)
 app.use('/api', login)
 app.use('/api', verify)
+
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`)

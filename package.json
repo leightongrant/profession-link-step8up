@@ -9,13 +9,15 @@
     "build": "npm run build --prefix frontend",
     "start": "node server.js",
     "preview": "node --env-file=.env server.js",
-    "seed": "node --env-file=.env seeds/seed.js"
+    "seed": "node --env-file=.env seeds/seed.js",
+    "deploy": "npm run build --prefix frontend && vercel"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@niledatabase/server": "^5.1.0",
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
