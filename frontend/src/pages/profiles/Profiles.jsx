@@ -26,7 +26,21 @@ const UserCard = ({ user }) => {
       <Card>
         <Card.Img
           variant="top"
-          src={`https://i.pravatar.cc/150?u=${user.email}`}
+          src={`https://randomuser.me/api/portraits/${
+            Array.from(user.email).reduce(
+              (acc, c) => acc + c.charCodeAt(0),
+              0
+            ) %
+              2 ===
+            0
+              ? 'men'
+              : 'women'
+          }/${
+            Array.from(user.email).reduce(
+              (acc, c) => acc + c.charCodeAt(0),
+              0
+            ) % 100
+          }.jpg`}
           loading="lazy"
         />
         <Card.Body>

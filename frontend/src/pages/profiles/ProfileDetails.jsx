@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/esm/Col'
 import Image from 'react-bootstrap/esm/Image'
 import { MdStarRate } from 'react-icons/md'
 import Card from 'react-bootstrap/esm/Card'
-import Badge from 'react-bootstrap/esm/Badge'
 import { FaQuoteLeft } from 'react-icons/fa'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { NotFound } from '../404/NotFound'
@@ -13,10 +12,12 @@ import { useParams } from 'react-router-dom'
 import { ErrorPage } from '../error/ErrorPage'
 import { LoadingPage } from '../loading/LoadingPage'
 import { BookingForm } from '../../components/forms/BookingForm'
+import { ReviewForm } from '../../components/forms/ReviewForm'
 import { useState } from 'react'
 
 const ServiceCard = ({ service, refetch }) => {
   const [show, setShow] = useState(false)
+  const [showReview, setShowReview] = useState(false)
 
   return (
     <Card className="bg-dark-subtle">
@@ -37,6 +38,16 @@ const ServiceCard = ({ service, refetch }) => {
             refetch={refetch}
           />
         )}
+
+        {!showReview && (
+          <Card.Link
+            className="btn btn-secondary"
+            onClick={() => setShowReview(true)}
+          >
+            Review This Service
+          </Card.Link>
+        )}
+        {showReview && <ReviewForm setShow={setShowReview} />}
       </Card.Body>
     </Card>
   )
