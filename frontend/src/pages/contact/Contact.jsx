@@ -22,36 +22,49 @@ export const Contact = () => {
       <Stack className="contact-page py-5" as="main">
         <Container>
           <h2 className="text-center mb-5">Contact Us</h2>
-          <Row>
-            <Col>
-              <Row className = "h-50 p-3">
-                <h5>We'd love to chat!</h5>
-                <h5>Send us a message or contact one of our team</h5>
+          <Row className="contact-us-main p-3">
+            <Col className="contact-us-left p-3">
+              <Row className = "g-0">
+                <h5 className="pt-3 pb-3">We'd love to chat!</h5>
+                <h5 className="pt-3 pb-3">Send us a message, or contact one of our team...</h5>
               </Row>
-              <Row>
-                <Row className = "h-50 p-3">
-                  <Col>
-                    <Image src={jamesChanImage} className="profile-image" alt="James Chan customer representative" roundedCircle fluid></Image>
+              <Row className="profile-container">
+                <Card className="profile">
+                  <Image src={jamesChanImage} className="profile-image" alt="James Chan customer representative" roundedCircle fluid></Image>
+                  <Col className="profile-details">
+                    <Row className="text-center profile-detail">James Chan</Row>
+                    <Row className="text-center profile-detail">Customer Representative</Row>
+                    <Row className="text-center profile-detail">james.chan@prolink.com</Row>            
                   </Col>
-                  <Col>
-                    <Row>James Chan</Row>
-                    <Row>Customer Representative</Row>
-                    <Row>james.chan@prolink.com</Row>            
+                </Card>
+                <Card className="profile">
+                  <Image src={hollyWilloughbyImage} className="profile-image" alt="Holly Willoughby customer representative" roundedCircle fluid></Image>
+                  <Col className="profile-details">
+                    <Row className="text-center profile-detail">Holly Willoughby</Row>
+                    <Row className="text-center profile-detail">Customer Representative</Row>
+                    <Row className="text-center profile-detail">holly.willoughby@prolink.com</Row>                 
                   </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Image src={hollyWilloughbyImage} className="profile-image" alt="Holly Willoughby customer representative" roundedCircle fluid></Image>
+                </Card>
+              </Row>
+              <Row className = "g-0">
+                <h5 className="pt-3 pb-3">...and follow us on social media:</h5>
+              </Row>
+              <Row className = "socials">
+                  <Col className = "social-icon">
+                    <FaFacebook />
                   </Col>
-                  <Col>
-                    <Row>Holly Willoughby</Row>
-                    <Row>Customer Representative</Row>
-                    <Row>holly.willoughby@prolink.com</Row>                 
+                  <Col className = "social-icon">
+                    <FaInstagram />
                   </Col>
-                </Row>
+                  <Col className = "social-icon">
+                    <FaLinkedin />
+                  </Col>
+                  <Col className = "social-icon">
+                    <FaSquareXTwitter />
+                  </Col>
               </Row>
             </Col>
-            <Col>
+            <Col className="contact-us-right p-3">
               <Form>
                 <Form.Group className="mb-3" controlId="contactUs.FirstName">
                   <Form.Label>First Name</Form.Label>
@@ -74,18 +87,6 @@ export const Contact = () => {
                     <Button variant="primary" type="submit">
                       Let's chat!
                     </Button>
-                  </Col>
-                  <Col>
-                    <FaFacebook />
-                  </Col>
-                  <Col>
-                    <FaInstagram />
-                  </Col>
-                  <Col>
-                    <FaLinkedin />
-                  </Col>
-                  <Col>
-                    <FaSquareXTwitter />
                   </Col>
                 </Row>
               </Form>
