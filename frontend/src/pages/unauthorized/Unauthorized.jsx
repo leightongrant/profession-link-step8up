@@ -16,7 +16,7 @@ export const UnauthorizedPage = () => {
           <Col className="text-center">Sorry, you are not authorised to view this page.</Col>
         </Row>
         <Row>
-          <Col className='d-flex justify-content-center'>
+          <Col className='d-flex justify-content-center mt-4 mb-3'>
             <FaLock size="400px" aria-hidden="true" />
           </Col>
         </Row>
