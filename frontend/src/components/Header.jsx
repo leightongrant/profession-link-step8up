@@ -8,6 +8,8 @@ import { useAuthStore } from '../store/useAuthStore'
 import { PiSignOut } from 'react-icons/pi'
 import { MdAccountBox } from 'react-icons/md'
 import { LinkContainer } from 'react-router-bootstrap'
+import { GoSun, GoMoon } from 'react-icons/go'
+import { useColorModes } from '@coreui/react'
 
 const DropDown = () => {
   const user = useAuthStore((state) => state.user)
@@ -38,6 +40,9 @@ const DropDown = () => {
 
 export const Header = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const { colorMode, setColorMode } = useColorModes(
+    'coreui-free-react-admin-template-theme'
+  )
   return (
     <Stack as="header" className="sticky-top shadow-lg">
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -66,7 +71,7 @@ export const Header = () => {
                 <Nav.Link>Contact</Nav.Link>
               </LinkContainer>
             </Nav>
-            <Nav>
+            <Nav className="align-items-center">
               {isAuthenticated ? (
                 <DropDown />
               ) : (
@@ -79,6 +84,18 @@ export const Header = () => {
                 >
                   Login
                 </Link>
+              )}
+              {colorMode === 'dark' && (
+                <GoSun
+                  className="ms-2 sun"
+                  onClick={() => setColorMode('light')}
+                />
+              )}
+              {colorMode === 'light' && (
+                <GoMoon
+                  className="ms-2 moon"
+                  onClick={() => setColorMode('dark')}
+                />
               )}
             </Nav>
           </Navbar.Collapse>
