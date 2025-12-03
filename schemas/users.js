@@ -1,7 +1,15 @@
 import Joi from 'joi'
+import sanitizeHtml from 'sanitize-html'
+
+const sanitize = (value) => {
+  return sanitizeHtml(value, {
+    allowedTags: [],
+    allowedAttributes: {},
+  })
+}
 
 export const createUserSchema = Joi.object({
-  name: Joi.string().max(100).required().messages({
+  name: Joi.string().max(100).required().custom(sanitize).messages({
     'string.base': 'Name must be text.',
     'string.empty': 'Please provide your name.',
     'string.max': 'Name cannot exceed 100 characters.',

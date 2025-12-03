@@ -20,13 +20,13 @@ export const ReviewForm = ({ setShow, service_id, refetch }) => {
 
   const onSubmit = async (reviewData) => {
     try {
-        console.log(reviewData);
-    //   const token = localStorage.getItem('authToken')
-    //   await axios.post(
-    //     '/reviews',
-    //     { ...reviewData, client_id: user.user_id, service_id: service_id },
-    //     { headers: { Authorization: 'Bearer ' + token } }
-    //   )
+      console.log(reviewData)
+      //   const token = localStorage.getItem('authToken')
+      //   await axios.post(
+      //     '/reviews',
+      //     { ...reviewData, client_id: user.user_id, service_id: service_id },
+      //     { headers: { Authorization: 'Bearer ' + token } }
+      //   )
       setShow(false)
       refetch()
     } catch (error) {
@@ -39,6 +39,7 @@ export const ReviewForm = ({ setShow, service_id, refetch }) => {
       setTimeout(() => {
         setError(null)
       }, 5000)
+      setShow(false)
     }
   }
 
@@ -67,21 +68,23 @@ export const ReviewForm = ({ setShow, service_id, refetch }) => {
         </Form.Group>
 
         <Form.Group>
-            {errors.rating?.type === 'required' && (
+          {errors.rating?.type === 'required' && (
             <small role="alert" className="text-danger d-block mt-2">
               Rating is required
             </small>
-            )}
+          )}
           <Form.Label> Rating </Form.Label>
-            <Form.Select
-                {...register('rating', { required: true })}
-                className="d-block mb-4" size="lg">
-                <option value="1">Rating of 1 </option>
-                <option value="2">Rating of 2 </option>
-                <option value="3">Rating of 3</option>
-                <option value="4">Rating of 4</option>
-                <option value="5">Rating of 5</option>
-            </Form.Select>
+          <Form.Select
+            {...register('rating', { required: true })}
+            className="d-block mb-4"
+            size="sm"
+          >
+            <option value="1">Rating of 1</option>
+            <option value="2">Rating of 2</option>
+            <option value="3">Rating of 3</option>
+            <option value="4">Rating of 4</option>
+            <option value="5">Rating of 5</option>
+          </Form.Select>
         </Form.Group>
 
         <Button variant="primary" type="submit">
