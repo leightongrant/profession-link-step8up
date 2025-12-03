@@ -25,8 +25,8 @@ export const Contact = () => {
           <Row className="contact-us-main p-3">
             <Col className="contact-us-left p-3">
               <Row className = "g-0">
-                <h5 className="pt-3 pb-3">We'd love to chat!</h5>
-                <h5 className="pt-3 pb-3">Send us a message, or contact one of our team...</h5>
+                <Col><h5 className="pt-3 pb-3">We'd love to chat!</h5></Col>
+                <Col><h5 className="pt-3 pb-3">Send us a message, or contact one of our team...</h5></Col>
               </Row>
               <Row className="profile-container">
                 <Card className="profile">
@@ -47,7 +47,7 @@ export const Contact = () => {
                 </Card>
               </Row>
               <Row className = "g-0">
-                <h5 className="pt-3 pb-3">...and follow us on social media:</h5>
+                <Col><h5 className="pt-3 pb-3">...and follow us on social media:</h5></Col>
               </Row>
               <Row className = "socials">
                   <Col className = "social-icon">
