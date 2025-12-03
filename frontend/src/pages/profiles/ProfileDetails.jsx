@@ -89,77 +89,84 @@ export const ProfileDetails = () => {
   })
 
   return (
-    <Stack as="main" className="bg-light-subtle">
-      <Container className="py-5">
-        <Row>
-          <Col md={4}>
-            <Card className="text-center shadow-sm">
-              <Card.Body>
-                <Image
-                  src={`https://i.pravatar.cc/150?u=${user.email}`}
-                  roundedCircle
-                  className="mb-3"
-                  style={{ width: '150px', height: '150px' }}
-                />
-                <h3>{user.name}</h3>
-                <p className="text-muted text-capitalize">{user.role}</p>
-                <hr />
-                <p>
-                  <strong>Email:</strong> {user.email}
-                </p>
-                <p>
-                  <strong>Location:</strong> {profile.location}
-                </p>
-                <p>
-                  <strong>Avg. Rating:</strong> {profile.rating_avg}{' '}
-                  <MdStarRate />
-                </p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={8}>
-            <Card className="mb-4 shadow-sm">
-              <Card.Body>
-                <Card.Title as="h4">About</Card.Title>
-                <p>
-                  <strong>Specialization:</strong> {profile.specialization}
-                </p>
-                <p>
-                  <strong>Experience:</strong> {profile.experience_years} years
-                </p>
-                <hr />
-                <Card.Title as="h4">Bio</Card.Title>
-                <p>{profile.bio}</p>
-              </Card.Body>
-            </Card>
-            <Card className="shadow-sm">
-              <Card.Body>
-                <Card.Title as="h4">Services</Card.Title>
-                <Stack className="gap-3 mt-3">
-                  {services.map((service) => (
-                    <ServiceCard
-                      service={service}
-                      key={service.service_id}
-                      refetch={refetch}
-                    />
-                  ))}
-                </Stack>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <h3 className="my-5 text-center">What Clients Are Saying</h3>
-        <Row className="g-4">
-          {reviews &&
-            reviews.map((review) => {
-              return (
-                <Col md={6} lg={4} key={review.review_id}>
-                  <ReviewCard review={review} />
-                </Col>
-              )
-            })}
-        </Row>
-      </Container>
-    </Stack>
+    <>
+      <Stack as="main">
+        <Container className="py-5">
+          <Row>
+            <Col md={4}>
+              <Card className="text-center shadow-sm">
+                <Card.Body>
+                  <Image
+                    src={`https://i.pravatar.cc/150?u=${user.email}`}
+                    roundedCircle
+                    className="mb-3"
+                    style={{ width: '150px', height: '150px' }}
+                  />
+                  <h3>{user.name}</h3>
+                  <p className="text-muted text-capitalize">{user.role}</p>
+                  <hr />
+                  <p>
+                    <strong>Email:</strong> {user.email}
+                  </p>
+                  <p>
+                    <strong>Location:</strong> {profile.location}
+                  </p>
+                  <p>
+                    <strong>Avg. Rating:</strong> {profile.rating_avg}{' '}
+                    <MdStarRate />
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={8}>
+              <Card className="mb-4 shadow-sm">
+                <Card.Body>
+                  <Card.Title as="h4">About</Card.Title>
+                  <p>
+                    <strong>Specialization:</strong> {profile.specialization}
+                  </p>
+                  <p>
+                    <strong>Experience:</strong> {profile.experience_years}{' '}
+                    years
+                  </p>
+                  <hr />
+                  <Card.Title as="h4">Bio</Card.Title>
+                  <p>{profile.bio}</p>
+                </Card.Body>
+              </Card>
+              <Card className="shadow-sm">
+                <Card.Body>
+                  <Card.Title as="h4">Services</Card.Title>
+                  <Stack className="gap-3 mt-3">
+                    {services.map((service) => (
+                      <ServiceCard
+                        service={service}
+                        key={service.service_id}
+                        refetch={refetch}
+                      />
+                    ))}
+                  </Stack>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+        <Stack className="py-5 bg-light-subtle">
+          <Container className="py-5">
+            <h3 className="my-5 text-center">What Clients Are Saying</h3>
+            <Row className="g-4">
+              {reviews &&
+                reviews.map((review) => {
+                  return (
+                    <Col md={6} lg={4} key={review.review_id}>
+                      <ReviewCard review={review} />
+                    </Col>
+                  )
+                })}
+            </Row>
+          </Container>
+        </Stack>
+      </Stack>
+    </>
   )
 }

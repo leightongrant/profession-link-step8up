@@ -7,6 +7,8 @@ import Alert from 'react-bootstrap/Alert'
 import { api as axios } from '../../api'
 import { isAxiosError } from 'axios'
 import { useState } from 'react'
+import { FaStar } from 'react-icons/fa'
+import Modal from 'react-bootstrap/Modal'
 
 export const ReviewForm = ({ setShow, service_id, refetch }) => {
   const [feedback, setFeedback] = useState('')
@@ -15,32 +17,65 @@ export const ReviewForm = ({ setShow, service_id, refetch }) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm()
+  } = useForm({
+    defaultValues: {
+      rating: 1,
+    },
+  })
 
-  const onSubmit = async (reviewData) => {
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [pendingReviewData, setPendingReviewData] = useState(null)
+
+  const onSubmit = (reviewData) => {
+    setPendingReviewData(reviewData)
+    setShowConfirmModal(true)
+  }
+
+  const user = useAuthStore((state) => state.user)
+  const handleConfirmSubmit = async () => {
     try {
-      console.log(reviewData)
-      //   const token = localStorage.getItem('authToken')
-      //   await axios.post(
-      //     '/reviews',
-      //     { ...reviewData, client_id: user.user_id, service_id: service_id },
-      //     { headers: { Authorization: 'Bearer ' + token } }
-      //   )
+      const token = localStorage.getItem('authToken')
+      await axios.post(
+        '/reviews',
+        {
+          ...pendingReviewData,
+          client_id: user.user_id,
+          service_id: service_id,
+        },
+        { headers: { Authorization: 'Bearer ' + token } }
+      )
+      setFeedback('Review submitted successfully!')
       setShow(false)
       refetch()
     } catch (error) {
       if (isAxiosError(error)) {
         setError(await error.response?.data?.message)
+        setFeedback(
+          'Failed to submit review: ' + (await error.response?.data?.message)
+        )
       } else {
         setError(error.message || 'Error creating review')
+        setFeedback(
+          'Failed to submit review: ' +
+            (error.message || 'Error creating review')
+        )
       }
     } finally {
       setTimeout(() => {
         setError(null)
+        setFeedback('')
       }, 5000)
       setShow(false)
+      setShowConfirmModal(false)
+      setPendingReviewData(null)
     }
+  }
+
+  const handleCancelConfirm = () => {
+    setShowConfirmModal(false)
+    setPendingReviewData(null)
   }
 
   return (
@@ -52,6 +87,13 @@ export const ReviewForm = ({ setShow, service_id, refetch }) => {
       >
         <h5>Add Review</h5>
         {formError && <Alert variant="info">{formError}</Alert>}
+        {feedback && (
+          <Alert
+            variant={feedback.includes('successfully') ? 'success' : 'danger'}
+          >
+            {feedback}
+          </Alert>
+        )}
         <Form.Group className="mb-3" controlId="message">
           <Form.Label>Review Message</Form.Label>
           {errors.message?.type === 'required' && (
@@ -74,17 +116,27 @@ export const ReviewForm = ({ setShow, service_id, refetch }) => {
             </small>
           )}
           <Form.Label> Rating </Form.Label>
-          <Form.Select
-            {...register('rating', { required: true })}
-            className="d-block mb-4"
-            size="sm"
-          >
-            <option value="1">Rating of 1</option>
-            <option value="2">Rating of 2</option>
-            <option value="3">Rating of 3</option>
-            <option value="4">Rating of 4</option>
-            <option value="5">Rating of 5</option>
-          </Form.Select>
+          <div className="mb-4">
+            {(() => {
+              const selectedRating = Number(watch('rating') || 1)
+              return [1, 2, 3, 4, 5].map((star) => (
+                <label key={star} style={{ cursor: 'pointer', marginRight: 8 }}>
+                  <input
+                    type="radio"
+                    value={star}
+                    {...register('rating', { required: true })}
+                    style={{ display: 'none' }}
+                  />
+                  <FaStar
+                    color={selectedRating >= star ? '#ffc107' : '#e4e5e9'}
+                    size={24}
+                    data-testid={`star-${star}`}
+                  />
+                  <span className="visually-hidden">{star} Star</span>
+                </label>
+              ))
+            })()}
+          </div>
         </Form.Group>
 
         <Button variant="primary" type="submit">
@@ -99,6 +151,21 @@ export const ReviewForm = ({ setShow, service_id, refetch }) => {
           Close
         </Button>
       </Form>
+      {/* Confirm modal for form submission */}
+      <Modal show={showConfirmModal} onHide={handleCancelConfirm} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Review Submission</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to submit this review?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancelConfirm}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleConfirmSubmit}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Stack>
   )
 }
