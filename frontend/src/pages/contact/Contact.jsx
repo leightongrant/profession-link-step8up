@@ -6,11 +6,11 @@ import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Col'
 import Form from 'react-bootstrap/Form'
 import Image from 'react-bootstrap/Image'
-import { FaSquareXTwitter } from "react-icons/fa6"
-import { FaFacebook } from "react-icons/fa"
-import { FaInstagram } from "react-icons/fa"
-import { FaLinkedin } from "react-icons/fa"
-import heroImageCropped from '../../assets/images/hero-img-cropped4.png'
+import { FaSquareXTwitter } from 'react-icons/fa6'
+import { FaFacebook } from 'react-icons/fa'
+import { FaInstagram } from 'react-icons/fa'
+import { FaLinkedin } from 'react-icons/fa'
+
 import './Contact.css'
 import jamesChanImage from '../../assets/images/james.chan.png'
 import hollyWilloughbyImage from '../../assets/images/holly.willoughby.png'
@@ -68,11 +68,14 @@ export const Contact = () => {
               <Form>
                 <Form.Group className="mb-3" controlId="contactUs.FirstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control type="input" placeholder="Your first name here" />
+                  <Form.Control
+                    type="input"
+                    placeholder="Your first name here"
+                  />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="contactUs.LastName">
                   <Form.Label>Last Name</Form.Label>
-                <Form.Control type="input" placeholder="Your surname here" />
+                  <Form.Control type="input" placeholder="Your surname here" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="contactUs.EmailAddress">
                   <Form.Label>Email address</Form.Label>
@@ -80,7 +83,11 @@ export const Contact = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="contactUs.Message">
                   <Form.Label>Message</Form.Label>
-                  <Form.Control as="textarea" rows={3} placeholder="Your message here" />
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Your message here"
+                  />
                 </Form.Group>
                 <Row>
                   <Col>
@@ -97,4 +104,3 @@ export const Contact = () => {
     </>
   )
 }
-

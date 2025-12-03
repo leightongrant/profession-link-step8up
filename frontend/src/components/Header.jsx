@@ -52,7 +52,7 @@ export const Header = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="flex-grow-1 justify-content-center text-uppercase fw-semibold fs-6">
               <LinkContainer to="/">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
@@ -73,7 +73,7 @@ export const Header = () => {
                 <Link
                   to="/login"
                   role="button"
-                  className="btn btn-dark"
+                  className="btn btn-primary"
                   aria-disabled="true"
                   tabIndex="0"
                 >
