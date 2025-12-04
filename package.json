@@ -10,7 +10,7 @@
     "start": "node server.js",
     "preview": "node --env-file=.env server.js",
     "seed": "node --env-file=.env seeds/seed.js",
-    "deploy": "npm run build --prefix frontend && vercel"
+    "deploy": "npm run build --prefix frontend && vercel --prod"
   },
   "keywords": [],
   "author": "",
