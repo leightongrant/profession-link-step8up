@@ -12,14 +12,16 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
+  CBadge,
 } from '@coreui/react'
-import { MdDeleteOutline } from 'react-icons/md'
 import { useAuthStore } from '../../store/useAuthStore'
 
 export const ManageBookings = () => {
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  // Get user
   const user = useAuthStore((state) => state.user)
 
   const getBookings = async () => {
@@ -32,6 +34,14 @@ export const ManageBookings = () => {
       const userServices = user?.profile?.Services || []
       const userServiceIds = userServices.map((service) => service.service_id)
 
+      const bookingsForUser = []
+      data.forEach((booking) => {
+        if (userServiceIds.includes(booking.service_id)) {
+          bookingsForUser.push(booking)
+        }
+      })
+
+      /*
       // Show bookings made by the user OR bookings for user's services
       const bookingsFound = data
         .filter(
@@ -62,8 +72,8 @@ export const ManageBookings = () => {
             created_at: booking.created_at,
           }
         })
-
-      setBookings(bookingsFound)
+      */
+      setBookings(bookingsForUser)
     } catch (error) {
       console.log(error)
       setError(error)
@@ -87,29 +97,39 @@ export const ManageBookings = () => {
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Email</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Message</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Client</CTableHeaderCell>
               <CTableHeaderCell scope="col">Status</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Date</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Action</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {bookings.map((bkings) => (
-              <CTableRow key={bkings.id}>
-                <CTableDataCell>{bkings.id}</CTableDataCell>
-                <CTableDataCell>{bkings.name}</CTableDataCell>
-                <CTableDataCell className="text-break">
-                  {bkings.email}
-                </CTableDataCell>
-                <CTableDataCell style={{ maxWidth: 350 }}>
-                  {bkings.message}
-                </CTableDataCell>
-                <CTableDataCell>{bkings.status}</CTableDataCell>
+            {bookings.map((booking) => (
+              <CTableRow key={booking.booking_id}>
+                <CTableDataCell>{booking.booking_id}</CTableDataCell>
+                <CTableDataCell>{booking.User.name}</CTableDataCell>
                 <CTableDataCell>
-                  {new Date(bkings.created_at).toDateString()}
+                  <CBadge
+                    color={
+                      booking.status === 'confirmed'
+                        ? 'success'
+                        : booking.status === 'completed'
+                          ? 'secondary'
+                          : 'info'
+                    }
+                    className="text-capitalize"
+                  >
+                    {booking.status}
+                  </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
+                  <CButton
+                    color="success"
+                    size="sm"
+                    className="me-2"
+                    onClick={() => handleViewBooking()}
+                  >
+                    View Request
+                  </CButton>
                   {/* {user.pending_role ? (
                     <>
                       {user.pending_role === 'lawyer' ? (

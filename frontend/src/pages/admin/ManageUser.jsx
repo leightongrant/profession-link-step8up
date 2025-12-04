@@ -112,8 +112,15 @@ export const ManageUsers = () => {
   if (error) return <p>Error</p>
   if (loading) return <CSpinner color="primary" />
 
-  // Slice users for current page
-  const paginatedUsers = users.slice(currentOffset, currentOffset + pageSize)
+  // Sort users so pending_role users are at the top, then slice for current page
+  const paginatedUsers = users
+    .slice() // create a copy
+    .sort((a, b) => {
+      if (a.pending_role && !b.pending_role) return -1
+      if (!a.pending_role && b.pending_role) return 1
+      return 0
+    })
+    .slice(currentOffset, currentOffset + pageSize)
 
   return (
     <CCard>
@@ -181,8 +188,13 @@ export const ManageUsers = () => {
         </CTable>
         <CCardFooter className="d-flex justify-content-center">
           <AdminPagination
-            data={users}
-            offset={pageSize}
+            data={users.slice().sort((a, b) => {
+              if (a.pending_role && !b.pending_role) return -1
+              if (!a.pending_role && b.pending_role) return 1
+              return 0
+            })}
+            offset={currentOffset}
+            pageSize={pageSize}
             setOffset={setCurrentOffset}
           />
         </CCardFooter>

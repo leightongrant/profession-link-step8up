@@ -1,7 +1,6 @@
 import { CPagination, CPaginationItem } from '@coreui/react'
 
-export const AdminPagination = ({ data, offset, setOffset }) => {
-  const pageSize = offset > 0 ? offset : 1
+export const AdminPagination = ({ data, offset, pageSize, setOffset }) => {
   const totalPages = Math.max(1, Math.ceil((data?.length || 0) / pageSize))
   const currentPage = Math.floor((offset || 0) / pageSize) + 1
 

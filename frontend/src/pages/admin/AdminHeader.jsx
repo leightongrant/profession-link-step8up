@@ -41,9 +41,6 @@ export const AdminHeader = ({ sidebarShow, setbarShow }) => {
     navigate('/login')
   }
 
-  // const dispatch = useDispatch()
-  // const sidebarShow = useSelector((state) => state.sidebarShow)
-
   useEffect(() => {
     const handleScroll = () => {
       headerRef.current &&
@@ -73,7 +70,7 @@ export const AdminHeader = ({ sidebarShow, setbarShow }) => {
           <CNavItem>
             <CNavLink to="/admin/my-account" as={NavLink}>
               <CIcon icon={cilHome} className="me-1" />
-              Home
+              My Account
             </CNavLink>
           </CNavItem>
           {user && user.role === 'admin' && (
