@@ -13,7 +13,7 @@ export const Hero = () => {
         <Stack className="gap-3 text-light">
           <span className="display-3 fw-bold">
             Welcome to
-            <br /> Profession Link
+            <br /> ProLink
           </span>
           <span className="display-6 fs-4">
             Where you find the best lawyers and accountants

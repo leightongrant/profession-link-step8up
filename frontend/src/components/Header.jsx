@@ -10,6 +10,8 @@ import { MdAccountBox } from 'react-icons/md'
 import { LinkContainer } from 'react-router-bootstrap'
 import { GoSun, GoMoon } from 'react-icons/go'
 import { useColorModes } from '@coreui/react'
+import logo from '../assets/images/logo.png'
+import Image from 'react-bootstrap/Image'
 
 const DropDown = () => {
   const user = useAuthStore((state) => state.user)
@@ -48,11 +50,8 @@ export const Header = () => {
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand>
-            <Link
-              to="/"
-              className="fw-bold fs-3 text-decoration-none text-light bg-dark rounded px-1"
-            >
-              ProLINK
+            <Link to="/">
+              <Image src={logo} alt="pro link logo" width={150} />
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

@@ -1,7 +1,6 @@
-import { CCard, CCardHeader, CCardBody, CSpinner } from '@coreui/react'
+import { CCard, CCardHeader, CCardBody, CSpinner, CButton } from '@coreui/react'
 import { useAuthStore } from '../../store/useAuthStore'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
-import Button from 'react-bootstrap/esm/Button'
 import { api as axios } from '../../api'
 import { ProfileForm } from '../../components/forms/ProfileForm'
 import { useState } from 'react'
@@ -56,7 +55,7 @@ export const MyAccount = () => {
             <p>
               <strong>Specialization:</strong> {data.Profile.specialization}
             </p>
-            <p>
+            <p style={{ maxWidth: 800 }}>
               <strong>Bio:</strong> {data.Profile.bio}
             </p>
           </>
@@ -67,7 +66,13 @@ export const MyAccount = () => {
           (show ? (
             ''
           ) : (
-            <Button onClick={() => setShow(true)}>Create Profile</Button>
+            <CButton
+              className="btn btn-primary me-4"
+              name="create"
+              onClick={() => setShow(true)}
+            >
+              Create Profile
+            </CButton>
           ))}
 
         {data.role === 'accountant' &&
@@ -75,7 +80,7 @@ export const MyAccount = () => {
           (show ? (
             ''
           ) : (
-            <Button onClick={() => setShow(true)}>Create Profile</Button>
+            <CButton onClick={() => setShow(true)}>Create Profile</CButton>
           ))}
 
         {user.pending_role && (
@@ -84,22 +89,29 @@ export const MyAccount = () => {
 
         {data.role === 'client' && !user.pending_role && (
           <div className="d-flex gap-4">
-            <Button
+            <CButton
               className="btn btn-primary"
               name="lawyer"
               onClick={handleRequests}
             >
               Request a lawyer account
-            </Button>
-            <Button
+            </CButton>
+            <CButton
               className="btn btn-secondary"
               name="accountant"
               onClick={handleRequests}
             >
               Request an accountant account
-            </Button>
+            </CButton>
           </div>
         )}
+        {/* <CButton
+          className="btn btn-secondary"
+          name="edit"
+          onClick={() => console.log('edit')}
+        >
+          Edit Profile
+        </CButton> */}
       </CCardBody>
     </CCard>
   )

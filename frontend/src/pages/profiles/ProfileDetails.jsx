@@ -26,7 +26,7 @@ const ServiceCard = ({ service, refetch }) => {
         <Card.Text>{service.description}</Card.Text>
         <Card.Text>{service.price_range}</Card.Text>
         <Card.Text className="fw-semibold">{service.availability}</Card.Text>
-        {!show && (
+        {!show && !showReview && (
           <Card.Link className="btn btn-primary" onClick={() => setShow(true)}>
             Book This Service
           </Card.Link>
@@ -39,7 +39,7 @@ const ServiceCard = ({ service, refetch }) => {
           />
         )}
 
-        {!showReview && (
+        {!showReview && !show && (
           <Card.Link
             className="btn btn-secondary"
             onClick={() => setShowReview(true)}

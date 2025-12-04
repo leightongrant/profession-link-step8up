@@ -6,6 +6,7 @@ import { useAuthStore } from '../../store/useAuthStore'
 import Alert from 'react-bootstrap/Alert'
 import { api as axios } from '../../api'
 import { isAxiosError } from 'axios'
+import { LuBrain } from 'react-icons/lu'
 
 export const ProfileForm = ({ setShow, refetch }) => {
   const formError = useAuthStore((state) => state.formError)
@@ -112,11 +113,24 @@ export const ProfileForm = ({ setShow, refetch }) => {
               Bio is required
             </small>
           )}
-          <Form.Control
-            placeholder="About me"
-            as="textarea"
-            {...register('bio', { required: true })}
-          />
+          <div
+            style={{
+              position: 'relative',
+            }}
+          >
+            <Form.Control
+              placeholder="My Bio"
+              as="textarea"
+              style={{ height: 150 }}
+              {...register('bio', { required: true })}
+            />
+            <Button
+              style={{ position: 'absolute', right: 10, bottom: 10 }}
+              className="btn btn-dark"
+            >
+              Use AI <LuBrain />
+            </Button>
+          </div>
         </Form.Group>
 
         <Button variant="primary" type="submit">

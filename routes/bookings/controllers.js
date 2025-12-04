@@ -8,7 +8,10 @@ import { User } from '../../models/user.js'
 // Get all Bookings
 export const getAllBookings = async (_, res) => {
   try {
-    const bookings = await Booking.findAll()
+    const bookings = await Booking.findAll({
+      include: [{ model: User, attributes: ['user_id', 'name', 'email'] }],
+    })
+
     return res.status(200).json(bookings)
   } catch (error) {
     if (error instanceof Error) {
@@ -27,7 +30,9 @@ export const getOneBooking = async (req, res) => {
       return res.status(400).json({ message: 'Invalid booking id' })
     }
 
-    const result = await Booking.findByPk(id, { include: User })
+    const result = await Booking.findByPk(id, {
+      include: [{ model: User, attributes: ['user_id', 'name', 'email'] }],
+    })
     if (!result) {
       return res.status(404).json({ message: 'Booking not found' })
     }
