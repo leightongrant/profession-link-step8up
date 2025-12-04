@@ -17,6 +17,8 @@ import { ProfileDetails } from './pages/profiles/ProfileDetails.jsx'
 import { UnauthorizedPage } from './pages/unauthorized/Unauthorized.jsx'
 import { SignupRequest } from './pages/signup/SignupRequest.jsx'
 import { useEffect } from 'react'
+import { ManageServices } from './pages/admin/ManageServices.jsx'
+import { ManageReviews } from './pages/admin/ManageReviews.jsx'
 
 function App() {
   const setAuth = useAuthStore((state) => state.setAuth)
@@ -61,6 +63,8 @@ function App() {
         <Route path="/admin/my-account" element={<MyAccount />} />
         <Route path="/admin/users" element={<ManageUsers />} />
         <Route path="/admin/bookings" element={<ManageBookings />} />
+        <Route path="/admin/services" element={<ManageServices />} />
+        <Route path="/admin/reviews" element={<ManageReviews />} />
       </Route>
     </Routes>
   )
