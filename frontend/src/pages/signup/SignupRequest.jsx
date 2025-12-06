@@ -1,10 +1,8 @@
 import Stack from 'react-bootstrap/esm/Stack'
 import Container from 'react-bootstrap/esm/Container'
-import Row from 'react-bootstrap/esm/Row'
-import Col from 'react-bootstrap/esm/Col'
 import { Link } from 'react-router-dom'
 
-export const SignupRequest = () => {
+const SignupRequest = () => {
   return (
     <Stack className="about-page py-5" as="main">
       <Container className="h-100">
@@ -29,3 +27,5 @@ export const SignupRequest = () => {
     </Stack>
   )
 }
+
+export default SignupRequest

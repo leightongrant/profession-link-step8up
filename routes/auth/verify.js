@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 export const router = Router()
 
 router.post('/verify', (req, res) => {
-  const body = req.body
+  const { body } = req
 
   jwt.verify(body.token, process.env.JWT_SECRET, (error, decoded) => {
     if (error) {

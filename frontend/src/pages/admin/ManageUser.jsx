@@ -20,7 +20,7 @@ import { AdminPagination } from './AdminPagination'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
-export const ManageUsers = () => {
+const ManageUsers = () => {
   const { loading, data: initialData, error } = useFetchUsers()
   const [users, setUsers] = useState([])
 
@@ -238,3 +238,4 @@ export const ManageUsers = () => {
     </CCard>
   )
 }
+export default ManageUsers

@@ -17,7 +17,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { useAuthStore } from '../../store/useAuthStore'
 
-export const ManageServices = () => {
+const ManageServices = () => {
   const [services, setServices] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -150,3 +150,5 @@ export const ManageServices = () => {
     </CCard>
   )
 }
+
+export default ManageServices
