@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Stack from 'react-bootstrap/esm/Stack'
 import Container from 'react-bootstrap/esm/Container'
 import Button from 'react-bootstrap/esm/Button'
@@ -37,6 +37,7 @@ const UserCard = ({ user }) => {
           variant="top"
           src={`https://i.pravatar.cc/300?u=${user.email}`}
           loading="lazy"
+          alt={`Profile photo of ${user.name}`}
         />
         <Card.Body>
           <Card.Title>
@@ -61,31 +62,36 @@ const UserCard = ({ user }) => {
   )
 }
 
-export const Profiles = ({ title = 'Profiles', limit }) => {
+const Profiles = ({ title = 'Profiles', limit }) => {
   const { data, error, loading } = useFetchUsers()
   const [currentPage, setCurrentPage] = useState(1)
   const [search, setSearch] = useState('')
   const profilesPerPage = 8
   const { pathname } = useLocation()
 
-  let profiles = data
-    ? data.filter(
-        (user) =>
-          user.Profile &&
-          (user.name.toLowerCase().includes(search.toLowerCase()) ||
-            user.role.toLowerCase().includes(search.toLowerCase()) ||
-            user.Profile.bio.toLowerCase().includes(search.toLowerCase()))
-      )
-    : []
+  const filteredProfiles = useMemo(() => {
+    if (!data) return []
+    return data.filter(
+      (user) =>
+        user.Profile &&
+        (user.name.toLowerCase().includes(search.toLowerCase()) ||
+          user.role.toLowerCase().includes(search.toLowerCase()) ||
+          user.Profile.bio.toLowerCase().includes(search.toLowerCase()))
+    )
+  }, [data, search])
 
-  // If on homepage, sort by rating_avg ascending
-  if (pathname === '/') {
-    profiles = profiles.slice().sort((a, b) => {
-      const aRating = a.Profile.rating_avg ?? 0
-      const bRating = b.Profile.rating_avg ?? 0
-      return aRating - bRating
-    })
-  }
+  const sortedProfiles = useMemo(() => {
+    if (pathname === '/') {
+      return filteredProfiles.slice().sort((a, b) => {
+        const aRating = a.Profile.rating_avg ?? 0
+        const bRating = b.Profile.rating_avg ?? 0
+        return aRating - bRating
+      })
+    }
+    return filteredProfiles
+  }, [filteredProfiles, pathname])
+
+  let profiles = sortedProfiles
 
   const totalProfiles = profiles.length
   const totalPages = Math.ceil(totalProfiles / profilesPerPage)
@@ -120,20 +126,20 @@ export const Profiles = ({ title = 'Profiles', limit }) => {
     paddingLeft: '35px',
     border: 'none',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    maxWidth: '800px',
     margin: 'auto',
+    width: '100%',
   }
 
-  // const searchIcon = {
-  //   position: 'absolute',
-  //   top: '50%',
-  //   left: '400px',
-  //   transform: 'translateY(-50%)',
-  //   color: '#888',
-  // }
-  // if (data) {
-  //   console.log(data)
-  // }
+  const searchIcon = {
+    position: 'absolute',
+    top: '50%',
+    left: '20px',
+    transform: 'translateY(-50%)',
+    color: '#888',
+    zIndex: 2,
+    pointerEvents: 'none',
+  }
+
   if (error) return <ErrorPage />
   if (loading) return <LoadingPage />
 
@@ -146,16 +152,22 @@ export const Profiles = ({ title = 'Profiles', limit }) => {
           {pathname === '/profiles' && (
             <Row className="justify-content-center d-flex my-5">
               <Col className="position-relative">
-                <FormGroup>
-                  <FormControl
-                    type="text"
-                    style={searchInput}
-                    placeholder="Search profiles by name, role, or bio..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  {/* <FaSearch style={searchIcon} /> */}
-                </FormGroup>
+                <div style={{ maxWidth: '800px', margin: 'auto' }}>
+                  <FormGroup className="position-relative">
+                    <FormControl
+                      type="text"
+                      style={{
+                        ...searchInput,
+                        paddingLeft: '45px',
+                        maxWidth: '100%',
+                      }}
+                      placeholder="Search profiles by name, role, or bio..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <FaSearch style={searchIcon} />
+                  </FormGroup>
+                </div>
               </Col>
             </Row>
           )}
@@ -178,3 +190,5 @@ export const Profiles = ({ title = 'Profiles', limit }) => {
     </>
   )
 }
+
+export default Profiles

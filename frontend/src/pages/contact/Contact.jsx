@@ -15,7 +15,7 @@ import './Contact.css'
 import jamesChanImage from '../../assets/images/james.chan.png'
 import hollyWilloughbyImage from '../../assets/images/holly.willoughby.png'
 
-export const Contact = () => {
+const Contact = () => {
   return (
     <>
       <Stack className="contact-page py-5" as="main">
@@ -23,29 +23,51 @@ export const Contact = () => {
           <h2 className="text-center mb-5">Contact Us</h2>
           <Row className="contact-us-main p-3">
             <Col className="contact-us-left p-3">
-              <Row className = "g-0">
+              <Row className="g-0">
                 <h5 className="pt-3 pb-3">We'd love to chat!</h5>
-                <h5 className="pt-3 pb-3">Send us a message, or contact one of our team...</h5>
+                <h5 className="pt-3 pb-3">
+                  Send us a message, or contact one of our team...
+                </h5>
               </Row>
               <Row className="profile-container">
                 <Card className="profile p-3">
-                  <Image src={jamesChanImage} className="profile-image" alt="James Chan customer representative" rounded fluid></Image>
+                  <Image
+                    src={jamesChanImage}
+                    className="profile-image"
+                    alt="James Chan customer representative"
+                    rounded
+                    fluid
+                  ></Image>
                   <Col className="profile-details">
                     <Row className="profile-detail">James Chan</Row>
-                    <Row className="profile-detail">Customer Representative</Row>
-                    <Row className="profile-detail">james.chan@professionlink.com</Row>            
+                    <Row className="profile-detail">
+                      Customer Representative
+                    </Row>
+                    <Row className="profile-detail">
+                      james.chan@professionlink.com
+                    </Row>
                   </Col>
                 </Card>
                 <Card className="profile p-3">
-                  <Image src={hollyWilloughbyImage} className="profile-image" alt="Holly Willoughby customer representative" rounded fluid></Image>
+                  <Image
+                    src={hollyWilloughbyImage}
+                    className="profile-image"
+                    alt="Holly Willoughby customer representative"
+                    rounded
+                    fluid
+                  ></Image>
                   <Col className="profile-details">
                     <Row className="profile-detail">Holly Willoughby</Row>
-                    <Row className="profile-detail">Customer Representative</Row>
-                    <Row className="profile-detail">holly.willoughby@professionlink.com</Row>                 
+                    <Row className="profile-detail">
+                      Customer Representative
+                    </Row>
+                    <Row className="profile-detail">
+                      holly.willoughby@professionlink.com
+                    </Row>
                   </Col>
                 </Card>
               </Row>
-             </Col>
+            </Col>
             <Col className="contact-us-right p-3">
               <Form>
                 <Form.Group className="mb-3" controlId="contactUs.FirstName">
@@ -86,3 +108,5 @@ export const Contact = () => {
     </>
   )
 }
+
+export default Contact

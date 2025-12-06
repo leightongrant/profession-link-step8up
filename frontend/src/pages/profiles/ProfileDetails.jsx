@@ -7,13 +7,13 @@ import { MdStarRate } from 'react-icons/md'
 import Card from 'react-bootstrap/esm/Card'
 import { FaQuoteLeft } from 'react-icons/fa'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
-import { NotFound } from '../404/NotFound'
+import NotFound from '../404/NotFound'
 import { useParams } from 'react-router-dom'
 import { ErrorPage } from '../error/ErrorPage'
 import { LoadingPage } from '../loading/LoadingPage'
 import { BookingForm } from '../../components/forms/BookingForm'
 import { ReviewForm } from '../../components/forms/ReviewForm'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 const ServiceCard = ({ service, refetch }) => {
   const [show, setShow] = useState(false)
@@ -68,25 +68,31 @@ const ReviewCard = ({ review }) => {
   )
 }
 
-export const ProfileDetails = () => {
+const ProfileDetails = () => {
   const { user_id } = useParams()
-
   const id = user_id.match(/\d+$/)
+
+  const { loading, data, error, refetch } = useFetchUsers(id ? id[0] : null)
+
+  const user = { ...data } || {}
+  const profile = data.Profile
+  const services = data.Profile?.Services || []
+
+  const reviews = useMemo(
+    () =>
+      services.flatMap((service) =>
+        (service.Reviews || []).map((review) => ({
+          ...review,
+          title: service.title,
+        }))
+      ),
+    [services]
+  )
+
   if (!id) return <NotFound />
-
-  const { loading, data, error, refetch } = useFetchUsers(id[0])
-
   if (loading) return <LoadingPage />
   if (error) return <ErrorPage />
-  const user = { ...data }
-  const profile = data.Profile
-  const services = data.Profile.Services
-  const reviews = []
-  services.forEach((service) => {
-    service.Reviews.forEach((review) => {
-      reviews.push({ ...review, title: service.title })
-    })
-  })
+  if (!data || !data.Profile) return <NotFound />
 
   return (
     <>
@@ -170,3 +176,5 @@ export const ProfileDetails = () => {
     </>
   )
 }
+
+export default ProfileDetails
