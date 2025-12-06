@@ -16,7 +16,7 @@ import {
 } from '@coreui/react'
 import { useAuthStore } from '../../store/useAuthStore'
 
-export const ManageBookings = () => {
+const ManageBookings = () => {
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -175,3 +175,5 @@ export const ManageBookings = () => {
     </CCard>
   )
 }
+
+export default ManageBookings

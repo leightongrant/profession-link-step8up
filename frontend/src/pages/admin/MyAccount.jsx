@@ -5,7 +5,7 @@ import { api as axios } from '../../api'
 import { ProfileForm } from '../../components/forms/ProfileForm'
 import { useState } from 'react'
 
-export const MyAccount = () => {
+const MyAccount = () => {
   const [show, setShow] = useState(false)
   const user = useAuthStore((state) => state.user)
   const setAuth = useAuthStore((state) => state.setAuth)
