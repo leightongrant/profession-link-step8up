@@ -9,11 +9,13 @@ import { api as axios } from '../../api.js'
 import Alert from 'react-bootstrap/Alert'
 import { useNavigate } from 'react-router-dom'
 import { decodeToken } from 'react-jwt'
+import { useState } from 'react'
+import Image from 'react-bootstrap/esm/Image.js'
+import logo from '../../assets/images/logo.png'
 
 export const LoginForm = () => {
   const setAuth = useAuthStore((state) => state.setAuth)
-  const formError = useAuthStore((state) => state.formError)
-  const setError = useAuthStore((state) => state.setError)
+  const [errorFeedback, setErrorFeedback] = useState(null)
   const navigate = useNavigate()
 
   const {
@@ -29,13 +31,15 @@ export const LoginForm = () => {
       const payload = decodeToken(token)
       setAuth(payload)
       localStorage.setItem('authToken', token)
-      navigate('/')
+      navigate('/profiles')
     } catch (error) {
       console.log(error.response.data.message)
-      setError(error.response.data.message || 'Invalid email or password!')
+      setErrorFeedback(
+        error.response.data.message || 'Invalid email or password!'
+      )
     } finally {
       setTimeout(() => {
-        setError(null)
+        setErrorFeedback(null)
       }, 3000)
     }
   }
@@ -46,9 +50,14 @@ export const LoginForm = () => {
       style={{ minHeight: '100vh' }}
     >
       <Form className="mx-5 login-form" onSubmit={handleSubmit(onSubmit)}>
-        <h2>Login</h2>
+        <Stack className="justify-content-center align-items-center" gap={3}>
+          <Link to="/">
+            <Image src={logo} width={100} />
+          </Link>
+          <h5>Log to your account</h5>
+        </Stack>
 
-        {formError && <Alert variant="info">{formError}</Alert>}
+        {errorFeedback && <Alert variant="info">{errorFeedback}</Alert>}
 
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email address</Form.Label>

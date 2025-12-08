@@ -94,7 +94,7 @@ export const createUser = async (req, res) => {
       abortEarly: false,
     })
 
-    const result = await User.create({
+    const newUser = await User.create({
       name: validatedUser.name,
       email: validatedUser.email,
       password_hash: await bcrypt.hash(validatedUser.password, 10),
@@ -102,15 +102,22 @@ export const createUser = async (req, res) => {
 
     return res
       .status(201)
-      .json({ name: result.name, email: result.email, role: result.role })
+      .json({ name: newUser.name, email: newUser.email, role: newUser.role })
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
-        return res.status(422).json(error.details)
+        console.log(error.details)
+        let { message } = error.details[0]
+        if (error.details[0].context.message) {
+          message = error.details[0].context.message
+        }
+        return res.status(422).json(message || 'An error has occured')
       }
-      return res.status(400).json({ message: error.message })
+      console.log(error)
+      return res.status(409).json('User already exists')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    console.log(error)
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -123,7 +130,7 @@ export const updateUser = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user id' })
     }
 
-    const body = req.body
+    const { body } = req
     const validatedUser = await updateUserSchema.validateAsync(body, {
       abortEarly: false,
     })
@@ -187,17 +194,17 @@ export const deleteUser = async (req, res) => {
       ],
     })
     if (!user) {
-      return res.status(404).json({ message: 'User not found' })
+      return res.status(404).json('User not found')
     }
 
     await user.destroy()
 
-    return res.status(200).json({ message: 'User deleted', user })
+    return res.status(200).json('User deleted')
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message)
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -210,7 +217,7 @@ export const requestRole = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user id' })
     }
 
-    const body = req.body
+    const { body } = req
     // const validatedUser = await updateUserSchema.validateAsync(body, {
     //   abortEarly: false,
     // })
