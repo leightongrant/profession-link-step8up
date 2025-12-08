@@ -9,25 +9,21 @@ import { Review } from '../models/review.js'
 const seedDatabase = async () => {
   try {
     console.log('Starting database seeding...')
-    const dialect = sequelize.getDialect()
 
-    // Disable foreign key checks before dropping tables
-    if (dialect === 'mysql' || dialect === 'postgres') {
-      await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;')
-    }
+    // Manually drop tables in reverse order of dependency without CASCADE.
+    // This is a workaround for environments that do not support 'DROP CASCADE'.
+    console.log('Dropping tables in specific order...')
+    await Review.drop()
+    await Booking.drop()
+    await Service.drop()
+    await Profile.drop()
+    await User.drop()
+    console.log('All application tables dropped.')
 
-    console.log('Dropping all tables...')
-    await sequelize.drop({ cascade: true })
-    console.log('All tables dropped.')
-
-    // Re-enable foreign key checks
-    if (dialect === 'mysql' || dialect === 'postgres') {
-      await sequelize.query('SET FOREIGN_KEY_CHECKS = 1;')
-    }
-
+    // Recreate the tables from the models.
+    console.log('Syncing all models to recreate schema...')
     await sequelize.sync()
     console.log('All models synced.')
-
     // Seed the data
     console.log('Seeding Users...')
     await User.bulkCreate(seedData.Users)
