@@ -86,7 +86,6 @@ export const seedData = {
       created_at: '2025-11-12T21:00:00Z',
     },
     {
-      user_id: 13,
       name: 'Henry Hernandez',
       email: 'henry.hernandez@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -158,7 +157,6 @@ export const seedData = {
       created_at: '2025-11-22T17:00:00Z',
     },
     {
-      user_id: 23,
       name: 'Joseph Adams',
       email: 'joseph.adams@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -173,7 +171,6 @@ export const seedData = {
       created_at: '2025-11-24T19:00:00Z',
     },
     {
-      user_id: 25,
       name: 'David Nelson',
       email: 'david.nelson@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -181,7 +178,6 @@ export const seedData = {
       created_at: '2025-11-25T20:00:00Z',
     },
     {
-      user_id: 26,
       name: 'Grace Carter',
       email: 'grace.carter@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -196,7 +192,6 @@ export const seedData = {
       created_at: '2025-11-27T22:00:00Z',
     },
     {
-      user_id: 28,
       name: 'Victoria Perez',
       email: 'victoria.perez@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -204,7 +199,6 @@ export const seedData = {
       created_at: '2025-11-28T23:00:00Z',
     },
     {
-      user_id: 29,
       name: 'Christopher Roberts',
       email: 'christopher.roberts@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -219,7 +213,6 @@ export const seedData = {
       created_at: '2025-11-30T11:00:00Z',
     },
     {
-      user_id: 31,
       name: 'Andrew Phillips',
       email: 'andrew.phillips@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -227,7 +220,6 @@ export const seedData = {
       created_at: '2025-12-01T12:00:00Z',
     },
     {
-      user_id: 32,
       name: 'Madison Campbell',
       email: 'madison.campbell@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -242,7 +234,6 @@ export const seedData = {
       created_at: '2025-12-03T14:00:00Z',
     },
     {
-      user_id: 34,
       name: 'Lauren Evans',
       email: 'lauren.evans@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -250,7 +241,6 @@ export const seedData = {
       created_at: '2025-12-04T15:00:00Z',
     },
     {
-      user_id: 35,
       name: 'Ryan Edwards',
       email: 'ryan.edwards@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -258,7 +248,6 @@ export const seedData = {
       created_at: '2025-12-05T16:00:00Z',
     },
     {
-      user_id: 36,
       name: 'Megan Collins',
       email: 'megan.collins@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -266,7 +255,6 @@ export const seedData = {
       created_at: '2025-12-06T17:00:00Z',
     },
     {
-      user_id: 37,
       name: 'Brandon Stewart',
       email: 'brandon.stewart@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -274,7 +262,6 @@ export const seedData = {
       created_at: '2025-12-07T18:00:00Z',
     },
     {
-      user_id: 38,
       name: 'Kayla Sanchez',
       email: 'kayla.sanchez@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -282,7 +269,6 @@ export const seedData = {
       created_at: '2025-12-08T19:00:00Z',
     },
     {
-      user_id: 39,
       name: 'Justin Morris',
       email: 'justin.morris@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -290,7 +276,6 @@ export const seedData = {
       created_at: '2025-12-09T20:00:00Z',
     },
     {
-      user_id: 40,
       name: 'Hannah Rogers',
       email: 'hannah.rogers@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -298,7 +283,6 @@ export const seedData = {
       created_at: '2025-12-10T21:00:00Z',
     },
     {
-      user_id: 41,
       name: 'Kevin Reed',
       email: 'kevin.reed@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -306,7 +290,6 @@ export const seedData = {
       created_at: '2025-12-11T22:00:00Z',
     },
     {
-      user_id: 42,
       name: 'Ashley Cook',
       email: 'ashley.cook@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -314,7 +297,6 @@ export const seedData = {
       created_at: '2025-12-12T23:00:00Z',
     },
     {
-      user_id: 43,
       name: 'Jason Morgan',
       email: 'jason.morgan@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -322,7 +304,6 @@ export const seedData = {
       created_at: '2025-12-13T10:00:00Z',
     },
     {
-      user_id: 44,
       name: 'Brianna Bailey',
       email: 'brianna.bailey@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -330,7 +311,6 @@ export const seedData = {
       created_at: '2025-12-14T11:00:00Z',
     },
     {
-      user_id: 45,
       name: 'Robert Bell',
       email: 'robert.bell@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -338,7 +318,6 @@ export const seedData = {
       created_at: '2025-12-15T12:00:00Z',
     },
     {
-      user_id: 46,
       name: 'Samantha Cooper',
       email: 'samantha.cooper@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -346,7 +325,6 @@ export const seedData = {
       created_at: '2025-12-16T13:00:00Z',
     },
     {
-      user_id: 47,
       name: 'Tyler Richardson',
       email: 'tyler.richardson@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -354,7 +332,6 @@ export const seedData = {
       created_at: '2025-12-17T14:00:00Z',
     },
     {
-      user_id: 48,
       name: 'Taylor Cox',
       email: 'taylor.cox@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -362,7 +339,6 @@ export const seedData = {
       created_at: '2025-12-18T15:00:00Z',
     },
     {
-      user_id: 49,
       name: 'Stephanie Howard',
       email: 'stephanie.howard@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -370,7 +346,6 @@ export const seedData = {
       created_at: '2025-12-19T16:00:00Z',
     },
     {
-      user_id: 50,
       name: 'Zachary Ward',
       email: 'zachary.ward@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -378,7 +353,6 @@ export const seedData = {
       created_at: '2025-12-20T17:00:00Z',
     },
     {
-      user_id: 51,
       name: 'Ethan Hunt',
       email: 'ethan.hunt@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -386,7 +360,6 @@ export const seedData = {
       created_at: '2025-12-21T10:00:00Z',
     },
     {
-      user_id: 52,
       name: 'Chloe King',
       email: 'chloe.king@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -394,7 +367,6 @@ export const seedData = {
       created_at: '2025-12-21T11:00:00Z',
     },
     {
-      user_id: 53,
       name: 'Logan Hill',
       email: 'logan.hill@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -402,7 +374,6 @@ export const seedData = {
       created_at: '2025-12-22T10:00:00Z',
     },
     {
-      user_id: 54,
       name: 'Zoe Scott',
       email: 'zoe.scott@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -410,7 +381,6 @@ export const seedData = {
       created_at: '2025-12-22T11:00:00Z',
     },
     {
-      user_id: 55,
       name: 'Aaron Green',
       email: 'aaron.green@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -418,7 +388,6 @@ export const seedData = {
       created_at: '2025-12-23T10:00:00Z',
     },
     {
-      user_id: 56,
       name: 'Lily Adams',
       email: 'lily.adams@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -426,7 +395,6 @@ export const seedData = {
       created_at: '2025-12-23T11:00:00Z',
     },
     {
-      user_id: 57,
       name: 'Owen Nelson',
       email: 'owen.nelson@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -434,7 +402,6 @@ export const seedData = {
       created_at: '2025-12-24T10:00:00Z',
     },
     {
-      user_id: 58,
       name: 'Nora Baker',
       email: 'nora.baker@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -442,7 +409,6 @@ export const seedData = {
       created_at: '2025-12-24T11:00:00Z',
     },
     {
-      user_id: 59,
       name: 'Caleb Carter',
       email: 'caleb.carter@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -450,7 +416,6 @@ export const seedData = {
       created_at: '2025-12-25T10:00:00Z',
     },
     {
-      user_id: 60,
       name: 'Hannah Wright',
       email: 'hannah.wright@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -458,7 +423,6 @@ export const seedData = {
       created_at: '2025-12-25T11:00:00Z',
     },
     {
-      user_id: 61,
       name: 'John Brown',
       email: 'jbrown@example.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -466,7 +430,6 @@ export const seedData = {
       created_at: '2025-12-25T11:00:00Z',
     },
     {
-      user_id: 62,
       name: 'Susan Johnson',
       email: 'susan@susanjohnson.com',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -474,7 +437,6 @@ export const seedData = {
       created_at: '2025-12-25T11:00:00Z',
     },
     {
-      user_id: 63,
       name: 'David James',
       email: 'djames@davidjames.co.uk',
       password_hash: bcrypt.hashSync('SecurePassword123#', 10),
@@ -521,7 +483,6 @@ export const seedData = {
       location: 'Glasgow, UK',
     },
     {
-      profile_id: 5,
       user_id: 51,
       specialization: 'Family Law',
       experience_years: 8,
@@ -531,7 +492,6 @@ export const seedData = {
       location: 'Edinburgh, UK',
     },
     {
-      profile_id: 6,
       user_id: 52,
       specialization: 'Management Accounting',
       experience_years: 6,
@@ -541,7 +501,6 @@ export const seedData = {
       location: 'Cardiff, UK',
     },
     {
-      profile_id: 7,
       user_id: 53,
       specialization: 'Criminal Defense Law',
       experience_years: 12,
@@ -551,7 +510,6 @@ export const seedData = {
       location: 'Liverpool, UK',
     },
     {
-      profile_id: 8,
       user_id: 54,
       specialization: 'Audit and Assurance',
       experience_years: 9,
@@ -561,7 +519,6 @@ export const seedData = {
       location: 'Bristol, UK',
     },
     {
-      profile_id: 9,
       user_id: 55,
       specialization: 'Real Estate Law',
       experience_years: 7,
@@ -571,7 +528,6 @@ export const seedData = {
       location: 'Leeds, UK',
     },
     {
-      profile_id: 10,
       user_id: 56,
       specialization: 'Non-Profit Accounting',
       experience_years: 10,
@@ -581,7 +537,6 @@ export const seedData = {
       location: 'Sheffield, UK',
     },
     {
-      profile_id: 11,
       user_id: 57,
       specialization: 'Employment Law',
       experience_years: 6,
@@ -591,7 +546,6 @@ export const seedData = {
       location: 'Newcastle, UK',
     },
     {
-      profile_id: 12,
       user_id: 58,
       specialization: 'Personal Tax Services',
       experience_years: 15,
@@ -622,7 +576,6 @@ export const seedData = {
       created_at: '2025-11-06T09:00:00Z',
     },
     {
-      service_id: 3,
       profile_id: 3,
       title: 'Trademark Registration',
       description:
@@ -632,7 +585,6 @@ export const seedData = {
       created_at: '2025-11-07T09:00:00Z',
     },
     {
-      service_id: 4,
       profile_id: 4,
       title: 'Corporate Tax Planning',
       description:
@@ -642,7 +594,6 @@ export const seedData = {
       created_at: '2025-11-08T09:00:00Z',
     },
     {
-      service_id: 5,
       profile_id: 5,
       title: 'Divorce Petition Filing',
       description:
@@ -652,7 +603,6 @@ export const seedData = {
       created_at: '2025-12-22T09:00:00Z',
     },
     {
-      service_id: 6,
       profile_id: 6,
       title: 'Business Budgeting and Forecasting',
       description:
@@ -662,7 +612,6 @@ export const seedData = {
       created_at: '2025-12-22T10:00:00Z',
     },
     {
-      service_id: 7,
       profile_id: 7,
       title: 'Criminal Defense Consultation',
       description:
@@ -672,7 +621,6 @@ export const seedData = {
       created_at: '2025-12-23T09:00:00Z',
     },
     {
-      service_id: 8,
       profile_id: 8,
       title: 'Internal Audit Service',
       description:
@@ -682,7 +630,6 @@ export const seedData = {
       created_at: '2025-12-23T10:00:00Z',
     },
     {
-      service_id: 9,
       profile_id: 1,
       title: 'Corporate Governance Review',
       description:
@@ -692,7 +639,6 @@ export const seedData = {
       created_at: '2025-12-24T09:00:00Z',
     },
     {
-      service_id: 10,
       profile_id: 9,
       title: 'Commercial Lease Review',
       description:
@@ -702,7 +648,6 @@ export const seedData = {
       created_at: '2025-12-26T09:00:00Z',
     },
     {
-      service_id: 11,
       profile_id: 10,
       title: 'Non-Profit Grant Compliance',
       description:
@@ -712,7 +657,6 @@ export const seedData = {
       created_at: '2025-12-26T10:00:00Z',
     },
     {
-      service_id: 12,
       profile_id: 11,
       title: 'Employee Contract Drafting',
       description:
@@ -722,7 +666,6 @@ export const seedData = {
       created_at: '2025-12-27T09:00:00Z',
     },
     {
-      service_id: 13,
       profile_id: 12,
       title: 'Freelancer Tax Return Service',
       description:
@@ -743,7 +686,6 @@ export const seedData = {
       created_at: '2025-11-10T14:00:00Z',
     },
     {
-      booking_id: 2,
       service_id: 2,
       client_id: 6,
       status: 'pending',
@@ -760,7 +702,6 @@ export const seedData = {
       created_at: '2025-11-12T16:00:00Z',
     },
     {
-      booking_id: 4,
       service_id: 4,
       client_id: 12,
       status: 'confirmed',
@@ -777,7 +718,6 @@ export const seedData = {
       created_at: '2025-12-23T11:00:00Z',
     },
     {
-      booking_id: 6,
       service_id: 6,
       client_id: 24,
       status: 'completed',
@@ -794,7 +734,6 @@ export const seedData = {
       created_at: '2025-12-28T14:00:00Z',
     },
     {
-      booking_id: 8,
       service_id: 11,
       client_id: 30,
       status: 'completed',
@@ -811,7 +750,6 @@ export const seedData = {
       created_at: '2025-12-29T10:00:00Z',
     },
     {
-      booking_id: 10,
       service_id: 13,
       client_id: 42,
       status: 'completed',
@@ -828,7 +766,6 @@ export const seedData = {
       created_at: '2026-01-02T09:00:00Z',
     },
     {
-      booking_id: 13,
       service_id: 1, // Mergers & Acquisitions for Liam Brown
       client_id: 6, // Ava Williams
       status: 'pending',
@@ -848,7 +785,6 @@ export const seedData = {
 
   Reviews: [
     {
-      review_id: 1,
       service_id: 3,
       client_id: 9,
       rating: 5,
@@ -865,7 +801,6 @@ export const seedData = {
       created_at: '2025-11-22T17:00:00Z',
     },
     {
-      review_id: 3,
       service_id: 2,
       client_id: 6,
       rating: 5,
@@ -882,7 +817,6 @@ export const seedData = {
       created_at: '2025-11-28T11:00:00Z',
     },
     {
-      review_id: 5,
       service_id: 1,
       client_id: 15,
       rating: 4,
@@ -899,7 +833,6 @@ export const seedData = {
       created_at: '2025-12-05T18:00:00Z',
     },
     {
-      review_id: 7,
       service_id: 5,
       client_id: 21,
       rating: 5,
@@ -916,7 +849,6 @@ export const seedData = {
       created_at: '2025-12-29T16:00:00Z',
     },
     {
-      review_id: 9,
       service_id: 10,
       client_id: 27,
       rating: 5,
@@ -933,7 +865,6 @@ export const seedData = {
       created_at: '2026-01-06T14:00:00Z',
     },
     {
-      review_id: 11,
       service_id: 6,
       client_id: 24,
       rating: 2,
@@ -950,7 +881,6 @@ export const seedData = {
       created_at: '2026-01-09T15:00:00Z',
     },
     {
-      review_id: 13,
       service_id: 11,
       client_id: 30,
       rating: 5,
@@ -967,7 +897,6 @@ export const seedData = {
       created_at: '2026-01-12T16:00:00Z',
     },
     {
-      review_id: 15,
       service_id: 8,
       client_id: 45,
       rating: 3,
