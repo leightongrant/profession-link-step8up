@@ -9,12 +9,32 @@ const sanitize = (value) => {
 }
 
 export const createUserSchema = Joi.object({
-  name: Joi.string().max(100).required().custom(sanitize).messages({
-    'string.base': 'Name must be text.',
-    'string.empty': 'Please provide your name.',
-    'string.max': 'Name cannot exceed 100 characters.',
-    'any.required': 'Name is required.',
-  }),
+  name: Joi.string()
+    .trim()
+    .pattern(/^[A-Za-z]+ [A-Za-z]+$/)
+    .min(3)
+    .max(32)
+    .required()
+    .custom(sanitize)
+    .custom((value, helpers) => {
+      const [first, last] = value.split(' ')
+      if (first.length < 2 || first.length > 30) {
+        return helpers.error('any.invalid', {
+          message: 'First name must be 2-30 characters long',
+        })
+      }
+      if (last.length < 2 || last.length > 50) {
+        return helpers.error('any.invalid', {
+          message: 'Last name must be 2-50 characters long',
+        })
+      }
+      return value
+    })
+    .messages({
+      'string.pattern.base':
+        'Name must contain only letters with a single space between first and last name',
+      'string.empty': 'Name is required',
+    }),
 
   email: Joi.string().email().required().messages({
     'string.base': 'Email must be text.',
