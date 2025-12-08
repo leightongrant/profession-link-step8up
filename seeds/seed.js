@@ -41,6 +41,11 @@ const seedDatabase = async () => {
     console.error('Failed to seed database:', error)
     process.exit(1)
   } finally {
+    if (sequelize.getDialect() === 'postgres') {
+      await sequelize.query(
+        `SELECT setval('\"Users_user_id_seq\"', (SELECT MAX(user_id) FROM "Users"))`
+      )
+    }
     await sequelize.close()
   }
 }

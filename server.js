@@ -37,6 +37,7 @@ const syncDb = async () => {
   }
 }
 
+console.log('ENVIRONMENT: ', process.env.NODE)
 await connect()
 await syncDb()
 
