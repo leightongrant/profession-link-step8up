@@ -1,41 +1,33 @@
 import { Sequelize } from 'sequelize'
 import pg from 'pg'
+import mysql2 from 'mysql2'
 
-//MySql
+let dbUser = process.env.DB_USER
+let dbPassword = process.env.DB_PASSWORD
+let dbHost = process.env.DB_HOST
+let dbName = process.env.DB_NAME
+let dbPort = process.env.DB_PORT
+let dbDialect = process.env.DB_DIALECT
 
-// import mysql2 from 'mysql2'
+const options = {
+  host: dbHost,
+  dialect: dbDialect,
+  logging: false,
+  port: dbPort,
+  dialectModule: mysql2,
+}
 
-// const dbName = process.env.DB_NAME
-// const dbUser = process.env.DB_USER
-// const dbPassword = process.env.DB_PASSWORD
-// const dbHost = process.env.DB_HOST
-
-// export const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-//   host: dbHost,
-//   dialect: 'mysql',
-//   logging: false,
-//   port: 3306,
-//   dialectModule: mysql2,
-// })
-
-// Postgres
-// const dbName = process.env.DB_NAME
-// const dbUser = process.env.DB_USER
-// const dbPassword = process.env.DB_PASSWORD
-// const dbHost = process.env.DB_HOST
-
-// export const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-//   host: dbHost,
-//   dialect: 'postgres',
-//   port: 5432,
-//   logging: false,
-//   dialectModule: pg,
-// })
-
-// NileDB
-export const sequelize = new Sequelize(process.env.NILEDB_URL_STRING, {
+// Prod
+let sequelize = new Sequelize(process.env.NILEDB_URL_STRING, {
   dialect: 'postgres',
   dialectModule: pg,
   protocol: 'postgres',
   logging: false,
 })
+
+//Dev
+if (process.env.NODE === 'development') {
+  sequelize = new Sequelize(dbName, dbUser, dbPassword, options)
+}
+
+export { sequelize }

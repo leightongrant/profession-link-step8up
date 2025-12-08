@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "concurrently  \"node --env-file=.env --watch-path=./ --watch server.js\" \"npm run dev --prefix frontend\"",
+    "dev": "concurrently  \"NODE=development node --env-file=.env --watch-path=./ --watch server.js\" \"npm run dev --prefix frontend\"",
     "frontend": "npm install --prefix frontend",
     "install:all": "npm install && npm run frontend ",
     "build": "npm run build --prefix frontend",
