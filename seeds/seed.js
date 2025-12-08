@@ -9,14 +9,22 @@ import { Review } from '../models/review.js'
 const seedDatabase = async () => {
   try {
     console.log('Starting database seeding...')
+    const dialect = sequelize.getDialect()
 
-    // Drop all tables and then recreate them.
-    // This is a safer way to reset the database than using `force: true`.
+    // Disable foreign key checks before dropping tables
+    if (dialect === 'mysql' || dialect === 'postgres') {
+      await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;')
+    }
+
     console.log('Dropping all tables...')
-    await sequelize.drop()
+    await sequelize.drop({ cascade: true })
     console.log('All tables dropped.')
 
-    console.log('Syncing all models...')
+    // Re-enable foreign key checks
+    if (dialect === 'mysql' || dialect === 'postgres') {
+      await sequelize.query('SET FOREIGN_KEY_CHECKS = 1;')
+    }
+
     await sequelize.sync()
     console.log('All models synced.')
 
@@ -41,11 +49,6 @@ const seedDatabase = async () => {
     console.error('Failed to seed database:', error)
     process.exit(1)
   } finally {
-    if (sequelize.getDialect() === 'postgres') {
-      await sequelize.query(
-        `SELECT setval('\"Users_user_id_seq\"', (SELECT MAX(user_id) FROM "Users"))`
-      )
-    }
     await sequelize.close()
   }
 }
