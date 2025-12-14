@@ -17,16 +17,16 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { useAuthStore } from '../../store/useAuthStore'
 
-export const ManageReviews = () => {
+const ManageReviews = () => {
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Modal state for delete confirmation
+  
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [reviewToDelete, setReviewToDelete] = useState(null)
 
-  // Get current user
+
   const user = useAuthStore((state) => state.user)
 
   const getReviews = async () => {
@@ -42,12 +42,10 @@ export const ManageReviews = () => {
         return review.service_id
       })
 
-      const reviewsForUser = []
-      data.forEach((review) => {
-        if (userServiceIds.includes(review.service_id)) {
-          reviewsForUser.push(review)
-        }
-      })
+      const reviewsForUser = data.filter((review) =>
+        userServiceIds.includes(review.service_id)
+      )
+
       setReviews(reviewsForUser)
     } catch (error) {
       setError(error)
@@ -69,10 +67,9 @@ export const ManageReviews = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = localStorage.getItem('authStore')
-      console.log(token, reviewToDelete)
-      // await axios.get(`/reviews/${reviewToDelete}`, {
-      //   headers: { Authorization: 'Bearer ' + token },
-      // })
+      await axios.get(`/reviews/${reviewToDelete}`, {
+        headers: { Authorization: 'Bearer ' + token },
+      })
     } catch (err) {
       console.error('Error deleting review:', err)
     } finally {
@@ -125,7 +122,7 @@ export const ManageReviews = () => {
           </CTableBody>
         </CTable>
       </CCardBody>
-      {/* Delete confirmation modal */}
+
       <Modal show={showDeleteModal} onHide={handleDeleteCancel} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Delete</Modal.Title>
@@ -143,3 +140,5 @@ export const ManageReviews = () => {
     </CCard>
   )
 }
+
+export default ManageReviews

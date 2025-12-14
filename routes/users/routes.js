@@ -27,4 +27,4 @@ router.delete('/users/:id', authorize, deleteUser)
 router.put('/users/:id', authorize, updateUser)
 
 // Request Role change
-router.put('/users/:id/request-role', requestRole)
+router.put('/users/:id/request-role', authorize, requestRole)

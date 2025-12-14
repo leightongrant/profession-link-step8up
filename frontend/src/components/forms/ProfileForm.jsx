@@ -7,10 +7,10 @@ import Alert from 'react-bootstrap/Alert'
 import { api as axios } from '../../api'
 import { isAxiosError } from 'axios'
 import { LuBrain } from 'react-icons/lu'
+import { useState } from 'react'
 
 export const ProfileForm = ({ setShow, refetch }) => {
-  const formError = useAuthStore((state) => state.formError)
-  const setError = useAuthStore((state) => state.setError)
+  const [feedback, setFeedback] = useState('')
   const user = useAuthStore((state) => state.user)
   const {
     register,
@@ -27,17 +27,22 @@ export const ProfileForm = ({ setShow, refetch }) => {
         { headers: { Authorization: 'Bearer ' + token } }
       )
       setShow(false)
-      refetch()
+      setFeedback('Profile submitted successfully!')
+      setTimeout(() => {
+        refetch()
+      }, 3000)
     } catch (error) {
       if (isAxiosError(error)) {
-        setError(await error.response.data.message)
+        setFeedback(
+          (await error.response.data?.message) || 'Error creating user profile'
+        )
       } else {
-        setError(error.message || 'Error creating user profile')
+        setFeedback(error.message || 'Error creating user profile')
       }
     } finally {
       setTimeout(() => {
-        setError(null)
-      }, 5000)
+        setFeedback(null)
+      }, 3000)
     }
   }
 
@@ -49,7 +54,13 @@ export const ProfileForm = ({ setShow, refetch }) => {
         style={{ maxWidth: 500 }}
       >
         <h5>Add profile details</h5>
-        {formError && <Alert variant="info">{formError}</Alert>}
+        {feedback && (
+          <Alert
+            variant={feedback.includes('successfully') ? 'success' : 'info'}
+          >
+            {feedback}
+          </Alert>
+        )}
         <Form.Group className="mb-3" controlId="specialization">
           <Form.Label>Specialization</Form.Label>
           {errors.specialization?.type === 'required' && (

@@ -62,10 +62,10 @@ const ManageServices = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = localStorage.getItem('authStore')
-      console.log(token, serviceToDelete)
-      // await axios.get(`/services/${serviceToDelete}`, {
-      //   headers: { Authorization: 'Bearer ' + token },
-      // })
+    
+      await axios.get(`/services/${serviceToDelete}`, {
+        headers: { Authorization: 'Bearer ' + token },
+      })
     } catch (err) {
       console.error('Error deleting user:', err)
     } finally {

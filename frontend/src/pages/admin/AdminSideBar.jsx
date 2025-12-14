@@ -16,6 +16,7 @@ import {
   cilAddressBook,
   cilApplicationsSettings,
   cilBookmark,
+  cilBullhorn,
 } from '@coreui/icons'
 
 export const AdminSideBar = ({ sidebarShow }) => {
@@ -42,12 +43,16 @@ export const AdminSideBar = ({ sidebarShow }) => {
                 <CIcon customClassName="nav-icon" icon={cilAddressBook} /> Users
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/admin/requests" className="nav-link">
+                <CIcon customClassName="nav-icon" icon={cilBullhorn} />
+                Requests
+              </Link>
+            </li>
           </>
         )}
 
-        {(user.role === 'accountant' ||
-          user.role === 'lawyer' ||
-          user.role === 'client') && (
+        {(user.role === 'accountant' || user.role === 'lawyer') && (
           <li className="nav-item">
             <Link to="/admin/bookings" className="nav-link">
               <CIcon customClassName="nav-icon" icon={cilBookmark} />

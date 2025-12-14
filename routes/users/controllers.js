@@ -23,9 +23,11 @@ export const getAllUsers = async (_, res) => {
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      console.log(error)
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    console.log(error)
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -35,7 +37,7 @@ export const getOneUser = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid user id' })
+      return res.status(400).json('Invalid user id')
     }
 
     const result = await User.findByPk(id, {
@@ -74,15 +76,17 @@ export const getOneUser = async (req, res) => {
     })
 
     if (!result) {
-      return res.status(404).json({ message: 'User not found' })
+      return res.status(404).json('User not found')
     }
 
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      console.log(error)
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    console.log(error)
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -100,9 +104,7 @@ export const createUser = async (req, res) => {
       password_hash: await bcrypt.hash(validatedUser.password, 10),
     })
 
-    return res
-      .status(201)
-      .json({ name: newUser.name, email: newUser.email, role: newUser.role })
+    return res.status(201).json(`User created (${newUser.email})`)
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
@@ -111,6 +113,7 @@ export const createUser = async (req, res) => {
         if (error.details[0].context.message) {
           message = error.details[0].context.message
         }
+        console.log(error)
         return res.status(422).json(message || 'An error has occured')
       }
       console.log(error)
@@ -127,7 +130,7 @@ export const updateUser = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid user id' })
+      return res.status(400).json('Invalid user id')
     }
 
     const { body } = req
@@ -146,7 +149,7 @@ export const updateUser = async (req, res) => {
       ],
     })
     if (!user) {
-      return res.status(404).json({ message: 'User not found' })
+      return res.status(404).json('User not found')
     }
 
     const userUpdate = {
@@ -162,15 +165,23 @@ export const updateUser = async (req, res) => {
 
     await user.update(userUpdate)
 
-    return res.status(200).json({ message: 'User updated', user })
+    return res.status(200).json(`User updated (${user.email})`)
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
-        return res.status(422).json(error.details)
+        console.log(error.details)
+        let { message } = error.details[0]
+        if (error.details[0].context.message) {
+          message = error.details[0].context.message
+        }
+        console.log(error)
+        return res.status(422).json(message || 'An error has occured')
       }
-      return res.status(400).json({ message: error.message })
+      console.log(error)
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    console.log(error)
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -180,7 +191,7 @@ export const deleteUser = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid user id' })
+      return res.status(400).json('Invalid user id')
     }
 
     const user = await User.findByPk(id, {
@@ -199,11 +210,13 @@ export const deleteUser = async (req, res) => {
 
     await user.destroy()
 
-    return res.status(200).json('User deleted')
+    return res.status(200).json(`User deleted ${user.email}`)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json(error.message)
+      console.log(error)
+      return res.status(400).json(error.message || 'An error has occured')
     }
+    console.log(error)
     return res.status(500).json('An error has occured')
   }
 }
@@ -214,43 +227,38 @@ export const requestRole = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid user id' })
+      return res.status(400).json('Invalid user id')
     }
 
     const { body } = req
-    // const validatedUser = await updateUserSchema.validateAsync(body, {
-    //   abortEarly: false,
-    // })
-
-    const user = await User.findByPk(id, {
-      attributes: [
-        'user_id',
-        'name',
-        'email',
-        'role',
-        'pending_role',
-        'created_at',
-      ],
+    const validatedUser = await updateUserSchema.validateAsync(body, {
+      abortEarly: false,
     })
 
+    const user = await User.findByPk(id)
+
     if (!user) {
-      return res.status(404).json({ message: 'User not found' })
+      return res.status(404).json('User not found')
     }
 
-    const request = {
-      pending_role: body.pending_role,
-    }
-
-    await user.update(request)
+    await user.update(validatedUser)
 
     return res.status(200).json(user)
   } catch (error) {
     if (error instanceof Error) {
-      // if ('details' in error) {
-      //   return res.status(422).json(error.details)
-      // }
-      return res.status(400).json({ message: error.message })
+      if ('details' in error) {
+        console.log(error.details)
+        let { message } = error.details[0]
+        if (error.details[0].context.message) {
+          message = error.details[0].context.message
+        }
+        console.log(error)
+        return res.status(422).json(message || 'An error has occured')
+      }
+      console.log(error)
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    console.log(error)
+    return res.status(500).json('An error has occured')
   }
 }

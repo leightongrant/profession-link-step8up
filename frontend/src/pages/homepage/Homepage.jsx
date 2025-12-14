@@ -3,7 +3,7 @@ import Stack from 'react-bootstrap/esm/Stack'
 import { Hero } from './Hero'
 import { CallToAction } from './CallToAction'
 import { lazy, Suspense } from 'react'
-import { LoadingPage } from '../loading/LoadingPage'
+import PreLoader from '../../components/PreLoader'
 
 // Lazy loaded
 const Profiles = lazy(() => import('../profiles/Profiles'))
@@ -12,7 +12,7 @@ export const Homepage = () => {
   return (
     <Stack as="main">
       <Hero />
-      <Suspense fallback={<LoadingPage />}>
+      <Suspense fallback={<PreLoader />}>
         <Profiles title="Featured Profiles" limit={4} />
       </Suspense>
       <CallToAction />

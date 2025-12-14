@@ -3,15 +3,14 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Stack from 'react-bootstrap/Stack'
 import { useAuthStore } from '../../store/useAuthStore'
-import Alert from 'react-bootstrap/Alert'
 import { api as axios } from '../../api'
 import { isAxiosError } from 'axios'
 import { useState } from 'react'
+import Modal from 'react-bootstrap/esm/Modal'
 
-export const BookingForm = ({ setShow, service_id, refetch }) => {
-  const [feedback, setFeedback] = useState('')
-  const formError = useAuthStore((state) => state.formError)
-  const setError = useAuthStore((state) => state.setError)
+export const BookingForm = ({ setShow, service_id, refetch, setFeedback }) => {
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [pendingBookingData, setPendingBookingData] = useState(null)
   const user = useAuthStore((state) => state.user)
   const {
     register,
@@ -19,27 +18,49 @@ export const BookingForm = ({ setShow, service_id, refetch }) => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = async (bookingData) => {
+  const handleConfirmSubmit = async () => {
     try {
       const token = localStorage.getItem('authToken')
       await axios.post(
         '/bookings',
-        { ...bookingData, client_id: user.user_id, service_id: service_id },
+        {
+          ...pendingBookingData,
+          client_id: user.user_id,
+          service_id: service_id,
+        },
         { headers: { Authorization: 'Bearer ' + token } }
       )
+      setFeedback('Booking submitted successfully!')
       setShow(false)
-      refetch()
+      setTimeout(() => {
+        refetch()
+      }, 3000)
     } catch (error) {
       if (isAxiosError(error)) {
-        setError(await error.response.data.message)
+        setFeedback(
+          (await error.response.data?.message) ||
+            'Error submitting your booking'
+        )
       } else {
-        setError(error.message || 'Error creating user profile')
+        setFeedback(error.message || 'Error submitting your booking')
       }
     } finally {
+      setShowConfirmModal(false)
+      setPendingBookingData(null)
+
       setTimeout(() => {
-        setError(null)
-      }, 5000)
+        setFeedback(null)
+      }, 3000)
     }
+  }
+  const onSubmit = async (bookingData) => {
+    setPendingBookingData(bookingData)
+    setShowConfirmModal(true)
+  }
+
+  const handleCancelConfirm = () => {
+    setShowConfirmModal(false)
+    setPendingBookingData(null)
   }
 
   return (
@@ -50,7 +71,6 @@ export const BookingForm = ({ setShow, service_id, refetch }) => {
         style={{ maxWidth: 500 }}
       >
         <h5>Add booking message</h5>
-        {formError && <Alert variant="info">{formError}</Alert>}
         <Form.Group className="mb-3" controlId="message">
           <Form.Label>Booking Message</Form.Label>
           {errors.message?.type === 'required' && (
@@ -78,6 +98,21 @@ export const BookingForm = ({ setShow, service_id, refetch }) => {
           Close
         </Button>
       </Form>
+      {/* Confirm modal for form submission */}
+      <Modal show={showConfirmModal} onHide={handleCancelConfirm} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Booking Submission</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to submit this booking?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancelConfirm}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={() => handleConfirmSubmit()}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Stack>
   )
 }

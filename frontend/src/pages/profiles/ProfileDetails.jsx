@@ -14,10 +14,12 @@ import { LoadingPage } from '../loading/LoadingPage'
 import { BookingForm } from '../../components/forms/BookingForm'
 import { ReviewForm } from '../../components/forms/ReviewForm'
 import { useState, useMemo } from 'react'
+import Alert from 'react-bootstrap/esm/Alert'
 
 const ServiceCard = ({ service, refetch }) => {
   const [show, setShow] = useState(false)
   const [showReview, setShowReview] = useState(false)
+  const [feedback, setFeedback] = useState('')
 
   return (
     <Card className="bg-dark-subtle">
@@ -26,16 +28,28 @@ const ServiceCard = ({ service, refetch }) => {
         <Card.Text>{service.description}</Card.Text>
         <Card.Text>{service.price_range}</Card.Text>
         <Card.Text className="fw-semibold">{service.availability}</Card.Text>
+        {/* Feeback */}
+        {feedback && (
+          <Alert
+            variant={feedback.includes('successfully') ? 'success' : 'info'}
+          >
+            {feedback}
+          </Alert>
+        )}
+
+        {/* Buttons and Forms */}
         {!show && !showReview && (
           <Card.Link className="btn btn-primary" onClick={() => setShow(true)}>
             Book This Service
           </Card.Link>
         )}
+
         {show && (
           <BookingForm
             setShow={setShow}
             service_id={service.service_id}
             refetch={refetch}
+            setFeedback={setFeedback}
           />
         )}
 
@@ -47,7 +61,14 @@ const ServiceCard = ({ service, refetch }) => {
             Review This Service
           </Card.Link>
         )}
-        {showReview && <ReviewForm setShow={setShowReview} />}
+        {showReview && (
+          <ReviewForm
+            setShow={setShowReview}
+            serviceId={service.service_id}
+            refetch={refetch}
+            setFeedback={setFeedback}
+          />
+        )}
       </Card.Body>
     </Card>
   )

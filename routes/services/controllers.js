@@ -11,9 +11,9 @@ export const getAllServices = async (_, res) => {
     return res.status(200).json(services)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -23,41 +23,41 @@ export const getOneService = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid service id' })
+      return res.status(400).json('Invalid service id')
     }
 
     const service = await Service.findByPk(id)
     if (!service) {
-      return res.status(404).json({ message: 'Service not found' })
+      return res.status(404).json('Service not found')
     }
 
     return res.status(200).json(service)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
 // Create Service
 export const createService = async (req, res) => {
   try {
-    const body = req.body
+    const { body } = req
     const validatedService = await createServiceSchema.validateAsync(body, {
       abortEarly: false,
     })
     const service = await Service.create(validatedService)
 
-    return res.status(201).json({ message: 'Service created', service })
+    return res.status(201).json(`Service created (${service.title})`)
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
         return res.status(422).json(error.details)
       }
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -67,10 +67,10 @@ export const updateService = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid service id' })
+      return res.status(400).json('Invalid service id')
     }
 
-    const body = req.body
+    const { body } = req
     const serviceUpdate = await updateServiceSchema.validateAsync(body, {
       abortEarly: false,
     })
@@ -78,20 +78,20 @@ export const updateService = async (req, res) => {
     const service = await Service.findByPk(id)
 
     if (!service) {
-      return res.status(404).json({ message: 'Service Not found' })
+      return res.status(404).json('Service Not found')
     }
 
     await service.update(serviceUpdate)
 
-    return res.status(200).json({ message: 'Service updated', service })
+    return res.status(200).json(`Service updated (${service.title})`)
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
         return res.status(422).json(error.details)
       }
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -101,22 +101,22 @@ export const deleteService = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid service id' })
+      return res.status(400).json('Invalid service id')
     }
 
     const service = await Service.findByPk(id)
 
     if (!service) {
-      return res.status(404).json({ message: 'Service Not found' })
+      return res.status(404).json('Service Not found')
     }
 
     await service.destroy()
 
-    return res.status(200).json({ message: 'Service deleted', service })
+    return res.status(200).json(`Service deleted (${service.title})`)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message)
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }

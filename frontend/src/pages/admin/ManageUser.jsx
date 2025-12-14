@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { api as axios } from '../../api'
 import {
   CTable,
@@ -21,26 +21,13 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
 const ManageUsers = () => {
-  const { loading, data: initialData, error } = useFetchUsers()
-  const [users, setUsers] = useState([])
+  const { loading, data, error, refetch } = useFetchUsers()
 
   const [pageSize] = useState(15)
   const [currentOffset, setCurrentOffset] = useState(0)
 
-  // Modal state for delete confirmation
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [userToDelete, setUserToDelete] = useState(null)
-
-  // Modal state for role approval
-  const [showApproveModal, setShowApproveModal] = useState(false)
-  const [userToApprove, setUserToApprove] = useState(null)
-  const [roleToApprove, setRoleToApprove] = useState('')
-
-  useEffect(() => {
-    if (initialData) {
-      setUsers(initialData)
-    }
-  }, [initialData])
 
   const handleDeleteClick = (userId) => {
     setUserToDelete(userId)
@@ -49,13 +36,16 @@ const ManageUsers = () => {
 
   const handleDeleteConfirm = async () => {
     try {
-      await axios.delete(`/users/${userToDelete}`)
-      setUsers(users.filter((u) => u.user_id !== userToDelete))
+      const token = localStorage.getItem('authToken')
+      await axios.delete(`/users/${userToDelete}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
     } catch (err) {
       console.error('Error deleting user:', err)
     } finally {
       setShowDeleteModal(false)
       setUserToDelete(null)
+      refetch()
     }
   }
 
@@ -64,57 +54,11 @@ const ManageUsers = () => {
     setUserToDelete(null)
   }
 
-  const handleApproveClick = (userId, role) => {
-    setUserToApprove(userId)
-    setRoleToApprove(role)
-    setShowApproveModal(true)
-  }
-
-  const handleApproveRole = async () => {
-    const userId = userToApprove
-    const role = roleToApprove
-    const originalUsers = users
-    const updatedUsers = users.map((user) =>
-      user.user_id === userId
-        ? { ...user, role: role, pending_role: null }
-        : user
-    )
-    setUsers(updatedUsers)
-
-    try {
-      const token = localStorage.getItem('authToken')
-      await axios.put(
-        `/users/${userId}`,
-        { role: role, pending_role: null },
-        {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        }
-      )
-      // Optionally show a toast or notification here
-    } catch (err) {
-      console.error('Error approving role:', err)
-      setUsers(originalUsers)
-    } finally {
-      setShowApproveModal(false)
-      setUserToApprove(null)
-      setRoleToApprove('')
-    }
-  }
-
-  const handleApproveCancel = () => {
-    setShowApproveModal(false)
-    setUserToApprove(null)
-    setRoleToApprove('')
-  }
-
   if (error) return <p>Error</p>
   if (loading) return <CSpinner color="primary" />
 
-  // Sort users so pending_role users are at the top, then slice for current page
-  const paginatedUsers = users
-    .slice() // create a copy
+  const paginatedUsers = data
+    .slice()
     .sort((a, b) => {
       if (a.pending_role && !b.pending_role) return -1
       if (!a.pending_role && b.pending_role) return 1
@@ -144,35 +88,6 @@ const ManageUsers = () => {
                 <CTableDataCell>{user.email}</CTableDataCell>
                 <CTableDataCell>{user.role}</CTableDataCell>
                 <CTableDataCell>
-                  {user.pending_role ? (
-                    <>
-                      {user.pending_role === 'lawyer' ? (
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="me-2"
-                          onClick={() =>
-                            handleApproveClick(user.user_id, 'lawyer')
-                          }
-                        >
-                          Approve Lawyer
-                        </CButton>
-                      ) : (
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="me-2"
-                          onClick={() =>
-                            handleApproveClick(user.user_id, 'accountant')
-                          }
-                        >
-                          Approve Accountant
-                        </CButton>
-                      )}
-                    </>
-                  ) : (
-                    ''
-                  )}
                   <CButton
                     color="danger"
                     className="bg-transparent border-0"
@@ -188,7 +103,7 @@ const ManageUsers = () => {
         </CTable>
         <CCardFooter className="d-flex justify-content-center">
           <AdminPagination
-            data={users.slice().sort((a, b) => {
+            data={data.slice().sort((a, b) => {
               if (a.pending_role && !b.pending_role) return -1
               if (!a.pending_role && b.pending_role) return 1
               return 0
@@ -211,27 +126,6 @@ const ManageUsers = () => {
           </Button>
           <Button variant="danger" onClick={handleDeleteConfirm}>
             Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {/* Role approval modal */}
-      <Modal show={showApproveModal} onHide={handleApproveCancel} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Role Approval</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to approve this user as{' '}
-          <strong>{roleToApprove}</strong>?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleApproveCancel}>
-            Cancel
-          </Button>
-          <Button
-            variant={roleToApprove === 'lawyer' ? 'success' : 'info'}
-            onClick={handleApproveRole}
-          >
-            Approve
           </Button>
         </Modal.Footer>
       </Modal>

@@ -15,9 +15,9 @@ export const getAllBookings = async (_, res) => {
     return res.status(200).json(bookings)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -27,22 +27,22 @@ export const getOneBooking = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json('Invalid booking id')
     }
 
     const result = await Booking.findByPk(id, {
       include: [{ model: User, attributes: ['user_id', 'name', 'email'] }],
     })
     if (!result) {
-      return res.status(404).json({ message: 'Booking not found' })
+      return res.status(404).json('Booking not found')
     }
 
     return res.status(200).json(result)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -55,15 +55,15 @@ export const createBooking = async (req, res) => {
     })
     const booking = await Booking.create(validatedBooking)
 
-    return res.status(201).json({ message: 'Booking created', booking })
+    return res.status(201).json('Booking created')
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
         return res.status(422).json(error.details)
       }
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -73,7 +73,7 @@ export const updateBooking = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json('Invalid booking id')
     }
 
     const { body } = req
@@ -84,7 +84,7 @@ export const updateBooking = async (req, res) => {
     const booking = await Booking.findByPk(id)
 
     if (!booking) {
-      return res.status(404).json({ message: 'Booking Not found' })
+      return res.status(404).json('Booking Not found')
     }
 
     await booking.update({
@@ -92,15 +92,15 @@ export const updateBooking = async (req, res) => {
       message: validatedBooking.message,
     })
 
-    return res.status(200).json({ message: 'Booking updated', booking })
+    return res.status(200).json('Booking updated')
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
         return res.status(422).json(error.details)
       }
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message ||'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -110,22 +110,22 @@ export const deleteBooking = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid booking id' })
+      return res.status(400).json('Invalid booking id')
     }
 
     const booking = await Booking.findByPk(id)
 
     if (!booking) {
-      return res.status(404).json({ message: 'Booking Not found' })
+      return res.status(404).json('Booking Not found')
     }
 
     await booking.destroy()
 
-    return res.status(200).json({ message: 'Booking deleted', booking })
+    return res.status(200).json('Booking deleted')
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
