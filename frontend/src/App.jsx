@@ -8,6 +8,7 @@ import { useAuthStore } from './store/useAuthStore'
 import { api as axios } from './api'
 import { useEffect, lazy, Suspense, useState, useCallback } from 'react'
 import { LoadingPage } from './pages/loading/LoadingPage.jsx'
+import PreLoader from './components/PreLoader.jsx'
 
 // Lazy loaded components
 const About = lazy(() => import('./pages/about/About'))
@@ -24,6 +25,10 @@ const ManageServices = lazy(() => import('./pages/admin/ManageServices.jsx'))
 const ManageReviews = lazy(() => import('./pages/admin/ManageReviews.jsx'))
 const MyAccount = lazy(() => import('./pages/admin/MyAccount.jsx'))
 const SignupRequest = lazy(() => import('./pages/signup/SignupRequest.jsx'))
+const ManageRequests = lazy(() => import('./pages/admin/ManageRequests.jsx'))
+const ManageBookingDetails = lazy(
+  () => import('./pages/admin/ManageBookingDetails.jsx')
+)
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -55,10 +60,11 @@ function App() {
   if (loading) return <LoadingPage />
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<PreLoader />}>
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Homepage />} />
+
           <Route path="/profiles" element={<Profiles />} />
           <Route
             path="profiles/:user_id"
@@ -70,7 +76,6 @@ function App() {
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<Signup />} />
-
         <Route
           path="/admin"
           element={user ? <AdminDashboard /> : <UnauthorizedPage />}
@@ -78,8 +83,12 @@ function App() {
           <Route path="my-account" element={<MyAccount />} />
 
           <Route path="users" element={<ManageUsers />} />
-
+          <Route path="requests" element={<ManageRequests />} />
           <Route path="bookings" element={<ManageBookings />} />
+          <Route
+            path="bookings/:booking_id"
+            element={<ManageBookingDetails />}
+          />
           <Route path="services" element={<ManageServices />} />
           <Route path="reviews" element={<ManageReviews />} />
         </Route>

@@ -9,9 +9,9 @@ export const getAllProfiles = async (_, res) => {
     return res.status(200).json(profiles)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -21,19 +21,19 @@ export const getOneProfile = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid profile id' })
+      return res.status(400).json('Invalid profile id')
     }
     const profile = await Profile.findByPk(id)
     if (!profile) {
-      return res.status(404).json({ message: 'Profile Not found' })
+      return res.status(404).json('Profile Not found')
     }
 
     return res.status(200).json(profile)
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -45,15 +45,15 @@ export const createProfile = async (req, res) => {
       abortEarly: false,
     })
     const profile = await Profile.create(validatedProfile)
-    return res.status(201).json({ message: 'Profile created', profile })
+    return res.status(201).json('Profile created')
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
         return res.status(422).json(error.details)
       }
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -63,7 +63,7 @@ export const updateProfile = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid profile id' })
+      return res.status(400).json('Invalid profile id')
     }
 
     const body = req.body
@@ -73,20 +73,20 @@ export const updateProfile = async (req, res) => {
 
     const profile = await Profile.findByPk(id)
     if (!profile) {
-      return res.status(404).json({ message: 'Profile not found' })
+      return res.status(404).json('Profile not found')
     }
 
     await profile.update(profileUpdate)
 
-    return res.status(200).json({ message: 'Profile updated', profile })
+    return res.status(200).json('Profile updated')
   } catch (error) {
     if (error instanceof Error) {
       if ('details' in error) {
         return res.status(422).json(error.details)
       }
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }
 
@@ -96,21 +96,21 @@ export const deleteProfile = async (req, res) => {
     const id = Number.parseInt(req.params.id, 10)
 
     if (Number.isNaN(id)) {
-      return res.status(400).json({ message: 'Invalid profile id' })
+      return res.status(400).json('Invalid profile id')
     }
 
     const profile = await Profile.findByPk(id)
     if (!profile) {
-      return res.status(404).json({ message: 'Profile Not found' })
+      return res.status(404).json('Profile Not found')
     }
 
     await profile.destroy()
 
-    return res.status(200).json({ message: 'Profile deleted', profile })
+    return res.status(200).json('Profile deleted')
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json(error.message || 'An error has occured')
     }
-    return res.status(500).json({ message: 'An error has occured' })
+    return res.status(500).json('An error has occured')
   }
 }

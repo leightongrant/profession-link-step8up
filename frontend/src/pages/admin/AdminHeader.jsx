@@ -26,6 +26,7 @@ import {
   cilAddressBook,
   cilBookmark,
   cilAppsSettings,
+  cilBullhorn,
 } from '@coreui/icons'
 
 export const AdminHeader = ({ sidebarShow, setbarShow }) => {
@@ -54,7 +55,6 @@ export const AdminHeader = ({ sidebarShow, setbarShow }) => {
     return () => document.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Get current user from zustand
   const user = useAuthStore((state) => state.user)
 
   return (
@@ -74,22 +74,26 @@ export const AdminHeader = ({ sidebarShow, setbarShow }) => {
             </CNavLink>
           </CNavItem>
           {user && user.role === 'admin' && (
+            <>
+              <CNavItem>
+                <CNavLink to="/admin/users" as={NavLink}>
+                  <CIcon icon={cilAddressBook} className="me-1" /> Users
+                </CNavLink>
+              </CNavItem>
+              <CNavItem>
+                <CNavLink to="/admin/requests" as={NavLink}>
+                  <CIcon icon={cilBullhorn} className="me-1" /> Requests
+                </CNavLink>
+              </CNavItem>
+            </>
+          )}
+          {user && (user.role === 'accountant' || user.role === 'lawyer') && (
             <CNavItem>
-              <CNavLink to="/admin/users" as={NavLink}>
-                <CIcon icon={cilAddressBook} className="me-1" /> Users
+              <CNavLink to="/admin/bookings" as={NavLink}>
+                <CIcon icon={cilBookmark} className="me-1" /> Bookings
               </CNavLink>
             </CNavItem>
           )}
-          {user &&
-            (user.role === 'accountant' ||
-              user.role === 'lawyer' ||
-              user.role === 'client') && (
-              <CNavItem>
-                <CNavLink to="/admin/bookings" as={NavLink}>
-                  <CIcon icon={cilBookmark} className="me-1" /> Bookings
-                </CNavLink>
-              </CNavItem>
-            )}
           {user && (user.role === 'accountant' || user.role === 'lawyer') && (
             <>
               <CNavItem>
@@ -105,12 +109,8 @@ export const AdminHeader = ({ sidebarShow, setbarShow }) => {
               </CNavItem>
             </>
           )}
-        </CHeaderNav>
-        <CHeaderNav className="ms-auto">
-          {/* You can add notification or message icons here in the future if needed */}
-        </CHeaderNav>
+        </CHeaderNav>        
         <CHeaderNav>
-          {/* User dropdown with name and logout */}
           {user && user.name && (
             <CDropdown variant="nav-item" placement="bottom-end">
               <CDropdownToggle
@@ -185,9 +185,6 @@ export const AdminHeader = ({ sidebarShow, setbarShow }) => {
             </CDropdownMenu>
           </CDropdown>
         </CHeaderNav>
-      </CContainer>
-      <CContainer className="px-4" fluid>
-        {/* <AppBreadcrumb /> */}
       </CContainer>
     </CHeader>
   )
